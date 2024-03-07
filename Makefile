@@ -14,7 +14,7 @@ CFLAGS		= -Wextra -Wall -Werror -g
 
 HEADERS		= -I./include
 
-LIBRARIES	= -L./printf -lftprintf -L./libft -lft
+LIBRARIES	= -L./printf -lftprintf -L./libft -lft -lreadline
 
 all			: $(NAME)
 
