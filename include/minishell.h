@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/07 15:26:29 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:52:35 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@
 # include <errno.h>
 # include "libft.h"
 # include "ft_printf.h"
-# include "get_next_line.h"
 
 typedef struct data_s
 {
-	char	**av;
+	char	**env;
 
 }		t_data;
 

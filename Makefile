@@ -2,13 +2,10 @@ CC			= cc
 
 NAME		= minishell
 
-SRC			= $(addprefix ./src/, main.c)
-
-GNL_SRC		= $(addprefix ./gnl/, get_next_line.c get_next_line_utils.c)
+SRC			= $(addprefix ./src/, main.c)					\
+			  $(addprefix ./lexer/, lexer.c)
 
 OBJ			:= $(SRC:.c=.o)
-
-GNL_OBJ		:= $(GNL_SRC:.c=.o)
 
 CFLAGS		= -Wextra -Wall -Werror -g
 
@@ -18,7 +15,7 @@ LIBRARIES	= -L./printf -lftprintf -L./libft -lft -lreadline
 
 all			: $(NAME)
 
-$(NAME)		: $(OBJ) $(GNL_OBJ)
+$(NAME)		: $(OBJ)
 		make -C printf
 		make -C libft
 		$(CC) $(CFLAGS) $^ $(LIBRARIES) -o $@
@@ -27,7 +24,7 @@ $(NAME)		: $(OBJ) $(GNL_OBJ)
 		$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@
 
 clean		:
-		rm -f $(OBJ) $(GNL_OBJ)
+		rm -f $(OBJ)
 		make clean -C printf
 		make clean -C libft
 
