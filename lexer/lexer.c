@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:25 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/08 16:01:08 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/08 18:55:14 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,89 @@
 
 static int	istok(char c)
 {
-	if (c == '|' || c == '>' || c == '<')
+	if (c == '|' || c == '>' || c == '<' || c == ' ')
 		return (1);
 	else
 		return (0);
 }
 
-void	create_list_node(t_list *list, char *read, int *i, int *j)
+void	create_node_pipe(t_lst *list, int i, int *j)
 {
-	t_list	*new;
+	t_lst	*new;
+	
+	new = ft_listnew(ft_strdup("|"), PIPE);
+	ft_listadd_back(&list, new);
+	*j = i + 1;
+}
 
-	if (read[*i] == '|')
-	if (*i > 0 && read[*i - 1] != '<' && read[*i - 1] != '>')
+void	create_node_out(t_lst *list, char *read, int i, int *j)
+{
+	t_lst	*new;
+	
+	if (i > 0 && read[i - 1] == '>')
+		return ;
+	if (read[i + 1] == '>')
 	{
-		new = ft_lstnew(ft_substr(read, *j, *i - *j));
-		ft_lstadd_back(&list, new);
-		new = ft_lstnew(read[*i]);
-		ft_lstadd_back(&list, new);
+		new = ft_listnew(ft_strdup(">>"), DOUT);
+		ft_listadd_back(&list, new);
+		while (read[i] == '>')
+			i++;
+		*j = i;
+	}
+	else
+	{
+		new = ft_listnew(ft_strdup(">"), OUT);
+		ft_listadd_back(&list, new);
 	}
 }
+
+void	create_node_in(t_lst *list, char *read, int i, int *j)
+{
+	t_lst	*new;
+	
+	if (i > 0 && read[i - 1] == '<')
+		return ;
+	if (read[i + 1] == '<')
+	{
+		new = ft_listnew(ft_strdup("<<"), DIN);
+		ft_listadd_back(&list, new);
+		while (read[i] == '<')
+			i++;
+		*j = i;
+	}
+	else
+	{
+		new = ft_listnew(ft_strdup("<"), IN);
+		ft_listadd_back(&list, new);
+	}
+}
+
+void	create_list_node(t_lst *list, char *read, int i, int *j)
+{
+	t_lst	*new;
+
+	if (i > *j)
+	{
+		new = ft_listnew(ft_substr(read, *j, i - *j), CMD);
+		ft_listadd_back(&list, new);
+	}
+	if (read[i] == '|')
+		create_node_pipe(list, i, j);
+	if (read[i] == '>')
+		create_node_out(list, read, i, j);
+	if (read[i] == '<')
+		create_node_in(list, read, i, j);
+}
+
 int	count_token(char *read)
 {
 	int	i;
-	int	count;
+	int	j;
+	t_lst	lex;
 
-	count = 0;
+	i = 0;
+	j = 0;
+	ft_bzero(&lex, sizeof(t_lst));
 	if (read)
 	{
 		while(read[i])
@@ -56,22 +114,10 @@ int	count_token(char *read)
 					i++;
 			}
 			if (read[i] && istok(read[i]))
-				create_list_node(read, &i, &j);
-			if (read[i] && read[i] == '|')
-				count += 2;
-			if (read[i] && read[i] == ' ')
-				count += 1;
-			if (read[i] && read[i] == '<')
-			{
-				if (i > 0 && read[i - 1] != '<')
-					count += 2;
-			}
-			if (read[i] && read[i] == '>')
-			{
-				if (i > 0 && read[i - 1] != '>')
-					count += 2;
-			}
+				create_list_node(&lex, read, i, &j);
 		}
+		i++;
 	}
+	return (i);
 }
 
