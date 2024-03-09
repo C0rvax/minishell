@@ -1,17 +1,25 @@
+#------------ NAME -------------#
 CC			= cc
 
 NAME		= minishell
 
-SRC			= $(addprefix ./src/, main.c)					\
-			  $(addprefix ./lexer/, lexer.c list.c)
+#------------ SOURCE -------------#
+LEX			= $(addprefix ./lexer/, lexer.c list.c lex_utils.c parse_read.c	\
+			  replace_argument.c)
 
-OBJ			:= $(SRC:.c=.o)
+MAIN		= $(addprefix ./src/, main.c)					\
 
+SRC			= $(LEX) $(MAIN)	
+
+#------------ FLAGS + INCLUDE -------------#
 CFLAGS		= -Wextra -Wall -Werror -g
 
 HEADERS		= -I./include
 
 LIBRARIES	= -L./printf -lftprintf -L./libft -lft -lreadline
+
+#------------ COMPILING -------------#
+OBJ			:= $(SRC:.c=.o)
 
 all			: $(NAME)
 

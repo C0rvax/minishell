@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 19:49:01 by aduvilla         ###   ########.fr       */
+/*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
+/*   Updated: 2024/03/09 19:57:02 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "lexer.h"
 
-int	main(int ac, char **av, char **env)
+int	parse_read(char *read, char **env)
 {
-	char	*read;
+	t_parse	data;
 
-	(void)av;
-	if (ac > 1)
-		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
-	while (1)
-	{
-		read = readline("minishell > ");
-		parse_read(read, env);
-		free(read);
-	}
+	data.lexer = NULL;
+	if (!read)
+		return (1);
+	create_token_list(&data.lexer, read);
+	replace_argument(&data.lexer, env);
+	print_lst(data.lexer);
+	ft_listclear(&data.lexer);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:49:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 15:22:45 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:48:49 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_listclear(t_lst **list)
 {
 	t_lst	*buf;
 
-	while (*list)
+	while ((*list)->next)
 	{
 		buf = (*list)->next;
 		free((*list)->str);
@@ -35,7 +35,7 @@ t_lst	*ft_listnew(char *str, t_token token)
 	new = malloc(sizeof(t_lst) * 1);
 	if (!new)
 		return (NULL);
-	new->str = ft_strdup(str);
+	new->str = str;
 	if (!new->str)
 		return (free(new), NULL);
 	new->token = token;
@@ -64,5 +64,21 @@ void	ft_listadd_back(t_lst **list, t_lst *new)
 	{
 		buf = ft_listlast(*(list));
 		buf->next = new;
+	}
+}
+
+void	print_lst(t_lst *lexer)
+{
+	int	i;
+
+	i = 0;
+	if (lexer)
+	{
+		while (lexer)
+		{
+			ft_printf("str[%d] = %s\n", i, lexer->str);
+			lexer = lexer->next;
+			i++;
+		}
 	}
 }

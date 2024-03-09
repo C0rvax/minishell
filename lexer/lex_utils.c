@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 19:49:01 by aduvilla         ###   ########.fr       */
+/*   Created: 2024/03/09 15:45:30 by aduvilla          #+#    #+#             */
+/*   Updated: 2024/03/09 19:51:50 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "lexer.h"
 
-int	main(int ac, char **av, char **env)
+int	is_token(char c)
 {
-	char	*read;
+	if (c == '|' || c == '>' || c == '<' || c == ' ')
+		return (1);
+	else
+		return (0);
+}
 
-	(void)av;
-	if (ac > 1)
-		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
-	while (1)
-	{
-		read = readline("minishell > ");
-		parse_read(read, env);
-		free(read);
-	}
+char	*ft_trijoin(char *s1, char *s2, char *s3)
+{
+	char	*cpy;
+	char	*join;
+
+	join = ft_strjoin(s1, s2);
+	if (!join)
+		return (free(s1), free(s2), free(s3), NULL);
+	cpy = join;
+	join = ft_strjoin(cpy, s3);
+	free(cpy);
+	free(s1);
+	free(s2);
+	free(s3);
+	if (!join)
+		return (NULL);
+	return (join);
 }
