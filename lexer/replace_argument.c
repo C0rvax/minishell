@@ -6,31 +6,11 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 19:56:51 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:36:30 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-static int	check_line_argument(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == 34)
-		{
-			i++;
-			while (str[i] && str[i] != 34)
-				i++;
-		}
-		if (str[i] && str[i] == '$')
-			return (i);
-		i++;
-	}
-	return (-1);
-}
 
 static char	*check_in_env(char *arg, char **env)
 {
@@ -56,6 +36,80 @@ static char	*check_in_env(char *arg, char **env)
 		exit (1);
 	value[0] = '\0';
 	return (value);
+}
+
+static int	replace_in_list(t_lst *lst, char *arg, char *value, int index)
+{
+	char	*cpy;
+	char	*cpy2;
+	char	*new;
+	size_t	index2;
+
+	index2 = index + ft_strlen(arg) + 1;
+	if (index == 0)
+		cpy = ft_strdup("");
+	else
+		cpy = ft_substr(lst->str, 0, index);
+	if (!cpy)
+		return (1);
+	if (index2 == ft_strlen(lst->str))
+		cpy2 = ft_strdup("");
+	else
+		cpy2 = ft_substr(lst->str, index2, ft_strlen(lst->str) - index2);
+	if (!cpy2)
+		return (free(cpy), 1);
+	new = ft_trijoin(cpy, value, cpy2);
+	if (!new)
+		exit (1);
+	cpy = lst->str;
+	lst->str = new;
+	free(cpy);
+	return (0);
+}
+
+static void	find_and_replace(t_lst *lst, int index, char **env)
+{
+	int		j;
+	char	*arg;
+	char	*value;
+
+	j = index;
+	while (lst->str[j] != '\0' && lst->str[j] != 34 && lst->str[j] != 39
+		&& lst->str[j] != ' ')
+		j++;
+	arg = ft_substr(lst->str, index + 1, j - index - 1);
+	if (!arg)
+		exit(1);
+	value = check_in_env(arg, env);
+	if (value)
+		replace_in_list(lst, arg, value, index);
+	free(arg);
+}
+
+int	replace_argument(t_lst **lexer, char **env)
+{
+	t_lst	*buf;
+	int		i;
+
+	buf = *lexer;
+	while (buf)
+	{
+		i = 0;
+		while (buf->str[i])
+		{
+			if (buf->str[i] == 39)
+			{
+				i++;
+				while (buf->str[i] && buf->str[i] != 39)
+					i++;
+			}
+			if (buf->str[i] && buf->str[i] == '$')
+				find_and_replace(buf, i, env);
+			i++;
+		}
+		buf = buf->next;
+	}
+	return (0);
 }
 /*
 void	replace_in_list(t_lst *lst, char *arg, char *value, int index)
@@ -90,66 +144,3 @@ void	replace_in_list(t_lst *lst, char *arg, char *value, int index)
 	free(cpy);
 }
 */
-
-static int	replace_in_list(t_lst *lst, char *arg, char *value, int index)
-{
-	char	*cpy;
-	char	*cpy2;
-	char	*new;
-	size_t	index2;
-
-	index2 = index + ft_strlen(arg) + 1;
-	if (index == 0)
-		cpy = ft_strdup("");
-	else
-		cpy = ft_substr(lst->str, 0, index - 1);
-	if (!cpy)
-		return (1);
-	if (index2 == ft_strlen(lst->str))
-		cpy2 = ft_strdup("");
-	else
-		cpy2 = ft_substr(lst->str, index2, ft_strlen(lst->str) - index2);
-	if (!cpy2)
-		return (free(cpy), 1);
-	new = ft_trijoin(cpy, value, cpy2);
-	if (!new)
-		exit (1);
-	cpy = lst->str;
-	lst->str = new;
-	free(cpy);
-	return (0);
-}
-
-static void	find_and_replace(t_lst *lst, int index, char **env)
-{
-	int		j;
-	char	*arg;
-	char	*value;
-
-	j = index;
-	while (lst->str[j] != '\0' && lst->str[j] != 34 && lst->str[j] != 39)
-		j++;
-	arg = ft_substr(lst->str, index + 1, j - index);
-	if (!arg)
-		exit(1);
-	value = check_in_env(arg, env);
-	if (value)
-		replace_in_list(lst, arg, value, index);
-	free(arg);
-}
-
-int	replace_argument(t_lst **lexer, char **env)
-{
-	t_lst	*buf;
-	int		index;
-
-	buf = *lexer;
-	while (buf)
-	{
-		index = check_line_argument(buf->str);
-		if (index >= 0)
-			find_and_replace(buf, index, env);
-		buf = buf->next;
-	}
-	return (0);
-}
