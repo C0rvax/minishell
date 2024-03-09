@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:25 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 19:46:04 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:40:17 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ static void	create_list_node(t_lst **list, char *read, int i, int *j)
 		create_node_in(*list, read, i, j);
 	if (read[i] == ' ')
 		*j = i + 1;
+	if (read[i] == '$')
+		*j = i;
 }
 
 void	create_token_list(t_lst **lexer, char *read)
