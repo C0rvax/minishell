@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:25 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/08 18:55:14 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:22:08 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,32 @@ void	create_node_in(t_lst *list, char *read, int i, int *j)
 	}
 }
 
-void	create_list_node(t_lst *list, char *read, int i, int *j)
+void	create_list_node(t_lst **list, char *read, int i, int *j)
 {
 	t_lst	*new;
 
 	if (i > *j)
 	{
 		new = ft_listnew(ft_substr(read, *j, i - *j), CMD);
-		ft_listadd_back(&list, new);
+		ft_listadd_back(list, new);
 	}
 	if (read[i] == '|')
-		create_node_pipe(list, i, j);
+		create_node_pipe(*list, i, j);
 	if (read[i] == '>')
-		create_node_out(list, read, i, j);
+		create_node_out(*list, read, i, j);
 	if (read[i] == '<')
-		create_node_in(list, read, i, j);
+		create_node_in(*list, read, i, j);
+	if (read[i] == ' ')
+		*j = i + 1;
 }
 
-int	count_token(char *read)
+void	count_token(t_lst **lexer, char *read)
 {
 	int	i;
 	int	j;
-	t_lst	lex;
 
 	i = 0;
 	j = 0;
-	ft_bzero(&lex, sizeof(t_lst));
 	if (read)
 	{
 		while(read[i])
@@ -114,10 +114,9 @@ int	count_token(char *read)
 					i++;
 			}
 			if (read[i] && istok(read[i]))
-				create_list_node(&lex, read, i, &j);
+				create_list_node(lexer, read, i, &j);
+			i++;
 		}
-		i++;
 	}
-	return (i);
 }
 

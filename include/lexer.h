@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/08 18:06:34 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:20:55 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "libft.h"
+# include "ft_printf.h"
 
 typedef enum token_e
 {
@@ -37,5 +38,7 @@ typedef struct s_lst
 t_lst	*ft_listnew(char *str, t_token token);
 void	ft_listclear(t_lst **list);
 void	ft_listadd_back(t_lst **list, t_lst *new);
+void	count_token(t_lst **lexer, char *read);
+void	print_lst(t_lst *lexer);
 
 #endif

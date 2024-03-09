@@ -3,7 +3,7 @@ CC			= cc
 NAME		= minishell
 
 SRC			= $(addprefix ./src/, main.c)					\
-			  $(addprefix ./lexer/, lexer.c)
+			  $(addprefix ./lexer/, lexer.c list.c)
 
 OBJ			:= $(SRC:.c=.o)
 
