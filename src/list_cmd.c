@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:13:14 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/10 15:48:33 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:58:09 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	print_cmd_lst(t_cmd *cmd)
 		while (cmd)
 		{
 			ft_putar(cmd->argv);
-			ft_printf("in : %s out : %s\n", i, cmd->infile, cmd->outfile);
+			ft_printf("in : %s out : %s\n", cmd->infile, cmd->outfile);
 			cmd = cmd->next;
 			i++;
 		}

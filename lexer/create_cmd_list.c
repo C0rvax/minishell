@@ -6,59 +6,11 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:07:55 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/10 15:53:25 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:58:01 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-int	count_argv(t_lst *lexer)
-{
-	int		i;
-	t_lst	*buf;
-
-	buf = lexer;
-	i = 0;
-	while (buf && buf->token != PIPE)
-	{
-		if (buf->token == CMD)
-			i++;
-		if (buf->token != CMD)
-			i--;
-		buf = buf->next;
-	}
-	return (i);
-}
-
-char	**create_arg_array(t_lst *lexer)
-{
-	t_lst	*buf;
-	char	**argv;
-	int		count;
-
-	buf = lexer;
-	count = count_argv(buf);
-	argv = malloc(sizeof(char *) * (count + 1));
-	if (!argv)
-		return (ft_printf("Error: mallocarg1!\n"), NULL);
-	count = 0;
-	while (buf && buf->token != PIPE)
-	{
-		if (buf->token != CMD)
-			buf = buf->next;
-		else
-		{
-			argv[count] = ft_strdup(buf->str);
-			if (!argv[count])
-				return (ft_freetab(argv), ft_printf("Error: mallocarg2\n"), NULL);
-			count++;
-		}
-		if (buf->next)
-			buf = buf->next;
-	}
-	argv[count] = NULL;
-	return (argv);
-}
 
 char	*find_last_token(t_lst *lexer, t_token token)
 {
@@ -68,18 +20,18 @@ char	*find_last_token(t_lst *lexer, t_token token)
 	t_lst	*buf;
 
 	i = 0;
-	j = -1;
+	j = 0;
 	buf = lexer;
-	ft_printf("dans le find\n");
 	while (buf && buf->token != PIPE)
 	{
 		if (buf->token == token)
-			break ;
+			j = i;
 		i++;
 		buf = buf->next;
 	}
-	ft_printf("dans le find\n");
-	while (++j <= i && buf->next)
+	i = -1;
+	buf = lexer;
+	while (++i <= j && buf->next)
 		buf = buf->next;
 	path = ft_strdup(buf->str);
 	if (!path)
@@ -110,30 +62,27 @@ void	get_redirect_stat(t_lst *lexer, t_cmd *cmd)
 
 int	get_infile_outfile(t_cmd *cmd, t_lst *lexer)
 {
-	t_lst	*buf;
-
-	buf = lexer;
 	if (cmd->in == SIMPLE)
 	{
-		cmd->infile = find_last_token(buf, IN);
+		cmd->infile = find_last_token(lexer, IN);
 		if (!cmd->infile)
 			return (1);
 	}
 	if (cmd->in == DOUBLE)
 	{
-		cmd->infile = find_last_token(buf, DIN);
+		cmd->infile = find_last_token(lexer, DIN);
 		if (!cmd->infile)
 			return (1);
 	}
 	if (cmd->out == SIMPLE)
 	{
-		cmd->outfile = find_last_token(buf, OUT);
+		cmd->outfile = find_last_token(lexer, OUT);
 		if (!cmd->outfile)
 			return (1);
 	}
 	if (cmd->out == DOUBLE)
 	{
-		cmd->outfile = find_last_token(buf, DOUT);
+		cmd->outfile = find_last_token(lexer, DOUT);
 		if (!cmd->outfile)
 			return (1);
 	}
@@ -157,7 +106,6 @@ int	create_node_cmd(t_cmd **cmd, t_lst *lexer)
 	if (get_infile_outfile(new, buf))
 		return (1);
 	ft_cmd_lstadd_back(cmd, new);
-	print_cmd_lst(*cmd);
 	return (0);
 }
 
@@ -166,13 +114,12 @@ void	create_cmd_list(t_parse *parse)
 	t_lst	*lex;
 
 	lex = parse->lexer;
-	if (lex && lex->str)
+	while (lex && lex->str)
 	{
-		ft_printf("dans le create\n");
 		create_node_cmd(&parse->cmd, lex);
 		while (lex && lex->token != PIPE)
 			lex = lex->next;
-		if (lex->next)
+		if (lex && lex->next)
 			lex = lex->next;
 	}
 }

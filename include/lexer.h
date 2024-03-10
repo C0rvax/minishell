@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/10 15:53:27 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:58:07 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ int		create_token_list(t_lst **lexer, char *read);
 int		parse_read(char *read, char **env);
 int		replace_argument(t_lst **lexer, char **env);
 int		delete_quotes(t_lst **list);
+
+/*------- PARSER -------*/
 void	create_cmd_list(t_parse *parse);
+char	**create_arg_array(t_lst *lexer);
 
 #endif
