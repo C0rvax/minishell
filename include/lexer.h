@@ -6,17 +6,15 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 19:55:43 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/10 02:08:27 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include <unistd.h>
 # include <stdlib.h>
-# include "libft.h"
-# include "ft_printf.h"
+# include "minishell.h"
 
 /*------- ENUM -------*/
 typedef enum token_e
@@ -40,6 +38,7 @@ typedef struct s_lst
 typedef struct s_parse
 {
 	t_lst		*lexer;
+	t_cmd		*cmd;
 }			t_parse;
 
 /*------- LISTS -------*/
@@ -51,10 +50,12 @@ void	print_lst(t_lst *lexer);
 /*------- UTILS -------*/
 int		is_token(char c);
 char	*ft_trijoin(char *s1, char *s2, char *s3);
+void	pass_quote(char *str, int *i);
 
 /*------- LEXER -------*/
-void	create_token_list(t_lst **lexer, char *read);
+int		create_token_list(t_lst **lexer, char *read);
 int		parse_read(char *read, char **env);
 int		replace_argument(t_lst **lexer, char **env);
+int		delete_quotes(t_lst **list);
 
 #endif

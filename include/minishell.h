@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 16:36:44 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/10 00:07:48 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,18 @@
 /*------- ENUM -------*/
 
 /*------- STRUCT -------*/
+typedef struct cmd_s
+{
+	char			**argv;
+	int				in;
+	int				out;
+	struct cmd_s	*next;
+}		t_cmd;
+
 typedef struct data_s
 {
 	char	**env;
-
+	t_cmd	*cmd;
 }		t_data;
 
 /*------- UTILS -------*/

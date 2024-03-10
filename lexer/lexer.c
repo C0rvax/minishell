@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:25 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 20:40:17 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/10 02:09:10 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ static void	create_node_pipe(t_lst *list, int i, int *j)
 	*j = i + 1;
 }
 
-static void	create_node_out(t_lst *list, char *read, int i, int *j)
+static int	create_node_out(t_lst *list, char *read, int i, int *j)
 {
 	t_lst	*new;
 
 	if (i > 0 && read[i - 1] == '>')
-		return ;
+		return (0);
 	if (read[i + 1] == '>')
 	{
 		new = ft_listnew(ft_strdup(">>"), DOUT);
 		ft_listadd_back(&list, new);
-		while (read[i] == '>')
-			i++;
-		*j = i;
+		if (read[i + 2] == '>')
+			return (ft_printf("wrong\n"), 1);
+		*j = i + 2;
 	}
 	else
 	{
@@ -41,21 +41,22 @@ static void	create_node_out(t_lst *list, char *read, int i, int *j)
 		ft_listadd_back(&list, new);
 		*j = i + 1;
 	}
+	return (0);
 }
 
-static void	create_node_in(t_lst *list, char *read, int i, int *j)
+static int	create_node_in(t_lst *list, char *read, int i, int *j)
 {
 	t_lst	*new;
 
 	if (i > 0 && read[i - 1] == '<')
-		return ;
+		return (0);
 	if (read[i + 1] == '<')
 	{
 		new = ft_listnew(ft_strdup("<<"), DIN);
 		ft_listadd_back(&list, new);
-		while (read[i] == '<')
-			i++;
-		*j = i;
+		if (read[i + 2] == '<')
+			return (ft_printf("bash: syntax error near unexpected tok\n"), 1);
+		*j = i + 2;
 	}
 	else
 	{
@@ -63,57 +64,55 @@ static void	create_node_in(t_lst *list, char *read, int i, int *j)
 		ft_listadd_back(&list, new);
 		*j = i + 1;
 	}
+	return (0);
 }
 
-static void	create_list_node(t_lst **list, char *read, int i, int *j)
+static int	create_list_node(t_lst **list, char *read, int i, int *j)
 {
 	t_lst	*new;
 	char	*sub;
+	int		res;
 
+	res = 0;
 	if (i > *j)
 	{
 		sub = ft_substr(read, *j, i - *j);
 		if (!sub)
-			exit (1);
+			return (1);
 		new = ft_listnew(sub, CMD);
 		ft_listadd_back(list, new);
 	}
 	if (read[i] == '|')
 		create_node_pipe(*list, i, j);
 	if (read[i] == '>')
-		create_node_out(*list, read, i, j);
+		res = create_node_out(*list, read, i, j);
 	if (read[i] == '<')
-		create_node_in(*list, read, i, j);
+		res = create_node_in(*list, read, i, j);
 	if (read[i] == ' ')
 		*j = i + 1;
 	if (read[i] == '$')
 		*j = i;
+	return (res);
 }
 
-void	create_token_list(t_lst **lexer, char *read)
+int	create_token_list(t_lst **lexer, char *read)
 {
 	int	i;
 	int	j;
+	int	res;
 
 	i = 0;
 	j = 0;
+	res = 0;
 	while (read && read[i])
 	{
-		if (read[i] && read[i] == 39)
-		{
-			i++;
-			while (read[i] && read[i] != 39)
-				i++;
-		}
-		if (read[i] && read[i] == 34)
-		{
-			i++;
-			while (read[i] && read[i] != 34)
-				i++;
-		}
+		pass_quote(read, &i);
 		if (read[i] && is_token(read[i]))
-			create_list_node(lexer, read, i, &j);
+			res = create_list_node(lexer, read, i, &j);
+		if (res)
+			return (res);
 		i++;
 	}
-	create_list_node(lexer, read, i, &j);
+	res = create_list_node(lexer, read, i, &j);
+	return (res);
 }
