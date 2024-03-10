@@ -5,9 +5,10 @@ NAME		= minishell
 
 #------------ SOURCE -------------#
 LEX			= $(addprefix ./lexer/, lexer.c list.c lex_utils.c parse_read.c	\
-			  replace_argument.c delete_quotes.c)
+			  replace_argument.c delete_quotes.c create_cmd_list.c			\
+			  search_errors.c)
 
-MAIN		= $(addprefix ./src/, main.c)					\
+MAIN		= $(addprefix ./src/, main.c list_cmd.c)					
 
 SRC			= $(LEX) $(MAIN)	
 

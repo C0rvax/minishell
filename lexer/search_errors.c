@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   search_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/10 15:10:15 by aduvilla         ###   ########.fr       */
+/*   Created: 2024/03/10 13:04:58 by aduvilla          #+#    #+#             */
+/*   Updated: 2024/03/10 13:06:50 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "lexer.h"
 
-int	main(int ac, char **av, char **env)
+static int	search_parser_err(t_lst *list)
 {
-	char	*read;
+	t_lst	*buf;
 
-	(void)av;
-	if (ac > 1)
-		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
-	while (1)
+	buf = list;
+	while (buf)
 	{
-		read = readline("minishell > ");
-		parse_read(read, env);
-		add_history(read);
-		free(read);
+		if (buf->token != CMD && buf->token != PIPE)
+		{
+			if (buf->next == NULL || buf->next->token != CMD)
+				return (ft_printf("bash: syntax error near unexpected tok"), 1);
+		}
+		buf = buf->next;
 	}
+	return (0);
+}
+
+int	search_errors(t_lst *list)
+{
+	if (search_parser_err(list))
+		return (1);
+	return (0);
 }
