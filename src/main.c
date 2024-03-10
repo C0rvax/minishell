@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 19:49:01 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/10 02:15:53 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int ac, char **av, char **env)
 	{
 		read = readline("minishell > ");
 		parse_read(read, env);
+		add_history(read);
 		free(read);
 	}
 }
