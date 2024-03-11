@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:07:55 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 16:35:48 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:00:47 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	get_list_infile(t_lst *lexer, t_cmd *cmd)
 			if (add_redirect_node(cmd, buf->next->str, SIMPLE, 1))
 				return (1);
 		}
-		if (buf->token == DIN && buf->next)
+		else if (buf->token == DIN && buf->next)
 		{
 			if (add_redirect_node(cmd, buf->next->str, DOUBLE, 1))
 				return (1);
@@ -64,7 +64,7 @@ static int	get_list_outfile(t_lst *lexer, t_cmd *cmd)
 			if (add_redirect_node(cmd, buf->next->str, SIMPLE, 2))
 				return (1);
 		}
-		if (buf->token == DOUT && buf->next)
+		else if (buf->token == DOUT && buf->next)
 		{
 			if (add_redirect_node(cmd, buf->next->str, DOUBLE, 2))
 				return (1);

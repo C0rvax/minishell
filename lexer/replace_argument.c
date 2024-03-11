@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/09 20:36:30 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:55:02 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ int	replace_argument(t_lst **lexer, char **env)
 	while (buf)
 	{
 		i = 0;
-		while (buf->str[i])
+		if (buf->token == DIN && buf->next)
+			buf = buf->next->next;
+		while (buf && buf->str[i])
 		{
 			if (buf->str[i] == 39)
 			{
@@ -107,7 +109,8 @@ int	replace_argument(t_lst **lexer, char **env)
 				find_and_replace(buf, i, env);
 			i++;
 		}
-		buf = buf->next;
+		if (buf)
+			buf = buf->next;
 	}
 	return (0);
 }
