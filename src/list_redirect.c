@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 15:28:58 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:02:32 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@ void	ft_redir_listclear(t_redirect **list)
 {
 	t_redirect	*buf;
 
-	while ((*list)->next)
+	if (*list)
 	{
-		buf = (*list)->next;
+		while ((*list)->next)
+		{
+			buf = (*list)->next;
+			free((*list)->path);
+			free(*list);
+			*list = buf;
+		}
 		free((*list)->path);
 		free(*list);
-		*list = buf;
+		*list = NULL;
 	}
-	free((*list)->path);
-	free(*list);
-	*list = NULL;
 }
 
 t_redirect	*ft_redir_listnew(char *str, t_mode mode)
@@ -69,19 +72,21 @@ void	ft_redir_listadd_back(t_redirect **list, t_redirect *new)
 
 void	print_redir_lst(t_redirect *list)
 {
-	int	i;
+	int			i;
+	t_redirect	*buf;
 
 	i = 0;
-	if (list)
+	buf = list;
+	if (buf)
 	{
-		while (list)
+		while (buf)
 		{
-			ft_printf("path[%d] = %s\n", i, list->path);
-			if (list->mode == SIMPLE)
+			ft_printf("path[%d] = %s\n", i, buf->path);
+			if (buf->mode == SIMPLE)
 				ft_printf("mode : simple\n");
-			if (list->mode == DOUBLE)
+			if (buf->mode == DOUBLE)
 				ft_printf("mode : double\n");
-			list = list->next;
+			buf = buf->next;
 			i++;
 		}
 	}
