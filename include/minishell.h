@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/10 14:26:46 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:51:27 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,24 @@
 # include "ft_printf.h"
 
 /*------- ENUM -------*/
-typedef enum redirect_e
+typedef enum mode_e
 {
-	NONE,
 	SIMPLE,
 	DOUBLE,
-}		t_redirect;
+}		t_mode;
 
 /*------- STRUCT -------*/
+typedef struct redirect_s
+{
+	t_mode	mode;
+	char	*path;
+}		t_redirect;
+
 typedef struct cmd_s
 {
 	char			**argv;
-	t_redirect		in;
-	t_redirect		out;
-	char			*infile;
-	char			*outfile;
+	t_redirect		*in;
+	t_redirect		*out;
 	struct cmd_s	*next;
 }		t_cmd;
 
