@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 14:51:27 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:35:18 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ typedef enum mode_e
 /*------- STRUCT -------*/
 typedef struct redirect_s
 {
-	t_mode	mode;
-	char	*path;
+	t_mode				mode;
+	char				*path;
+	struct redirect_s	*next;
 }		t_redirect;
 
 typedef struct cmd_s
@@ -58,5 +59,12 @@ void	ft_cmd_lstadd_back(t_cmd **list, t_cmd *new);
 t_cmd	*ft_cmd_lstlast(t_cmd *list);
 t_cmd	*ft_cmd_lstnew(char **argv);
 void	ft_cmd_lstclear(t_cmd **cmd);
+
+/*------- LIST REIDRECT -------*/
+void		ft_redir_listclear(t_redirect **list);
+t_redirect	*ft_redir_listnew(char *str, t_mode mode);
+t_redirect	*ft_redir_listlast(t_redirect *list);
+void		ft_redir_listadd_back(t_redirect **list, t_redirect *new);
+void		print_redir_lst(t_redirect *list);
 
 #endif

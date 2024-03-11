@@ -8,7 +8,7 @@ LEX			= $(addprefix ./lexer/, lexer.c list.c lex_utils.c parse_read.c	\
 			  replace_argument.c delete_quotes.c create_cmd_list.c			\
 			  search_errors.c create_parsarray.c)
 
-MAIN		= $(addprefix ./src/, main.c list_cmd.c)					
+MAIN		= $(addprefix ./src/, main.c list_cmd.c list_redirect.c)
 
 SRC			= $(LEX) $(MAIN)	
 
