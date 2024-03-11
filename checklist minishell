@@ -1,0 +1,33 @@
+1. bouger avec les fleches
+2. history
+3. gerer les single quotes ex. "tr 'r' ' '"
+3. Cas particuliers de la cmd echo :
+
+ctruchot@bess-f4r1s9:~$ echo -n salut
+salutctruchot@bess-f4r1s9:~$ echo -nnnnnnnnnnnnn salut
+salutctruchot@bess-f4r1s9:~$ echo -nnnnnnnnnnnnna salut
+-nnnnnnnnnnnnna salut
+ctruchot@bess-f4r1s9:~$ echo -nnnnnnnnnnnnn -n -n -n -n salut
+salutctruchot@bess-f4r1s9:~$ echo salutt
+salut
+ctruchot@bess-f4r1s9:~$ echo -n salut
+salutctruchot@bess-f4r1s9:~$ echo -nnnnnnnnnnn salut
+salutctruchot@bess-f4r1s9:~$ echo -nnnnnnnannnn salut
+-nnnnnnnannnn salut
+ctruchot@bess-f4r1s9:~$ echo -nnnnnnnnnnn -n -n -n -n salut -n
+salut -nctruchot@bess-f4r1s9:~$ echo $PW -n
+ctruchot@bess-f4r1s9:~$ echo '' -n
+ -n
+ctruchot@bess-f4r1s9:~$ echo -n $PW
+ctruchot@bess-f4r1s9:~$ echo -n $PW
+
+ctruchot@bess-f4r1s10:~$ echo "+2"2
++22
+ctruchot@bess-f4r1s10:~$ echo "+2 | cat "2
++2 | cat 2
+ctruchot@bess-f4r1s10:~$ echo "+2 | cat 2
+> cat
+> 2
+> ^C
+
+
