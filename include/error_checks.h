@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error_checks.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 18:06:05 by ctruchot         ###   ########.fr       */
+/*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
+/*   Updated: 2024/03/11 18:08:18 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "lexer.h"
-#include "error_checks.h"
+#include <fcntl.h>
+
+int	ft_cmd_lstsize(t_cmd *lst);
+int error_check(t_cmd *cmd);
+int	ft_inout_lstsize(t_redirect *lst);
+int	check_in(t_redirect *in);
+int	check_infile(char *path);
+int	check_out(t_redirect *out);
+int	check_outfile(char *path);
 
 
-int	main(int ac, char **av, char **env)
-{
-	char	*read;
-	t_cmd	*cmd;
-
-	(void)av;
-	if (ac > 1)
-		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
-	while (1)
-	{
-		read = readline("minishell > ");
-		cmd = parse_read(read, env);
-		error_check(cmd); // changer le nom
-		add_history(read);
-		free(read);
-	}
-}

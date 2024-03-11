@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/10 18:58:07 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:29:27 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		search_errors(t_lst *list);
 
 /*------- LEXER -------*/
 int		create_token_list(t_lst **lexer, char *read);
-int		parse_read(char *read, char **env);
+t_cmd		*parse_read(char *read, char **env);
 int		replace_argument(t_lst **lexer, char **env);
 int		delete_quotes(t_lst **list);
 
