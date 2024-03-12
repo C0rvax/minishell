@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/11 15:32:39 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:08:12 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	ft_exit() // tout cleaner
 {
 	// ft_printf("exit\n");
-	printf("exit\n");
+	ft_printf("exit\n");
 
 	exit(0);
 }
