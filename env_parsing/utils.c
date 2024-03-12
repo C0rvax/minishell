@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:55:56 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/11 15:36:55 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/12 21:37:38 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,22 @@ int	free_tab_int(int **fd, int nb)
 	return (0);
 }
 
-void	ft_env_lstclear(t_env *node)
-{
-	t_env	*last;
-	t_env	*almostlast;
+// void	ft_env_lstclear(t_env *env)
+// {
+// 	t_env	*last;
+// 	t_env	*almostlast;
 
-	last = NULL;
-	almostlast = NULL;
-	if (node == NULL)
-		return ;
-	while (node->next != NULL)
-	{
-		last = ft_env_lstlast(node);
-		almostlast = ft_env_lstalmostlast(node);
-		almostlast->next = NULL;
-		free(last);
-	}
-	free(node);
-	return ;
-}
+// 	last = NULL;
+// 	almostlast = NULL;
+// 	if (env == NULL)
+// 		return ;
+// 	while (env->next != NULL)
+// 	{
+// 		last = ft_env_lstlast(env);
+// 		almostlast = ft_env_lstalmostlast(env);
+// 		almostlast->next = NULL;
+// 		free(last);
+// 	}
+// 	free(env);
+// 	return ;
+// }

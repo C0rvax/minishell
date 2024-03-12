@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 18:52:07 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/12 20:49:35 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct cmd_s
 	char			**argv;
 	t_redirect		*in;
 	t_redirect		*out;
+	char 			*path_cmd; // ajout
 	struct cmd_s	*next;
 }		t_cmd;
 
