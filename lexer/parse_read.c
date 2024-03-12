@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/12 18:31:40 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 00:44:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cmd	*parse_read(char *read, char **env)
 	ft_bzero(&parse, sizeof(t_parse));
 	if (!read)
 		return (NULL);
-	if (check_read(read))
+	if (check_read(&read))
 		return (NULL);
 	if (create_token_list(&parse.lexer, read))
 		return (ft_listclear(&parse.lexer), NULL);
@@ -35,5 +35,6 @@ t_cmd	*parse_read(char *read, char **env)
 	print_lst(parse.lexer);
 	ft_listclear(&parse.lexer);
 	// ft_cmd_lstclear(&parse.cmd);
+	free(read);
 	return (parse.cmd);
 }

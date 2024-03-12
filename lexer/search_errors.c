@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:04:58 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/12 15:16:37 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 00:45:23 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,42 @@ void	msg_lex(t_msg msg, char c, char *str)
 	ft_putchar_fd('\n', 2);
 }
 
-int	check_read(char *read)
+int	append_new_read(char **read)
+{
+	char	*cpy;
+	char	*read2;
+
+	read2 = readline("> ");
+	cpy = read[0];
+	*read = ft_strjoin(cpy, read2);
+	free(cpy);
+	free(read2);
+	if (!*read)
+		return (msg_lex(MALLOC, 0, ""), 1);
+	else
+		return (0);
+}
+
+int	check_read(char **read)
 {
 	int	i;
 
 	i = 0;
-	if (!read || read[0] == '\0')
+	if (!*read || *read[0] == '\0')
 		return (1);
-	while (read[i])
+	while (read[0][i] != '\0')
 	{
-		if (pass_quote(read, &i))
+		if (pass_quote(*read, &i))
 			return (msg_lex(QUOTE, '\0', ""), 1);
-		if (is_special(read[i]))
-			return (msg_lex(SPECIAL, read[i], ""), 1);
-		if (read[i] == '$' && read[i + 1] == '$')
+		if (is_special(read[0][i]))
+			return (msg_lex(SPECIAL, read[0][i], ""), 1);
+		if (read[0][i] == '$' && read[0][i + 1] == '$')
 			return (msg_lex(SPECIAL, '\0', "$$"), 1);
+		if (read[0][i] == '|' && read[0][i + 1] == '\0')
+		{
+			if (append_new_read(read))
+				return (1);
+		}
 		i++;
 	}
 	return (0);

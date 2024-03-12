@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/12 18:31:43 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 00:47:47 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	replace_argument(t_lst **lexer, char **env)
 		{
 			pass_simple_quote(buf->str, &i);
 			if (buf->str[i] == '$' && find_and_replace(buf, i, env))
-					return (1);
+				return (1);
 			if (buf->str[i] != '\0')
 				i++;
 		}
@@ -113,36 +113,3 @@ int	replace_argument(t_lst **lexer, char **env)
 	}
 	return (0);
 }
-/*
-void	replace_in_list(t_lst *lst, char *arg, char *value, int index)
-{
-	char	*cpy;
-	char	*newstring;
-	int		i;
-	int		len;
-	int		size;
-
-	i = -1;
-	len = ft_strlen(value);
-	cpy = lst->str;
-	size = ft_strlen(cpy) - (ft_strlen(arg) + 1) + len; 
-	newstring = malloc(sizeof(char) * (size + 1));
-	while (++i < index)
-		newstring[i] = cpy[i];
-	index = index + ft_strlen(arg) + 1;
-	while (len)
-	{
-		newstring[i + len - 1] = value[len - 1];
-		len--;
-	}
-	i = i + ft_strlen(value);
-	while (i < size)
-	{
-		newstring[i] = cpy[index];
-		index++;
-		i++;
-	}
-	lst->str = newstring;
-	free(cpy);
-}
-*/

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/12 15:22:14 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 00:44:46 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,5 @@ int	main(int ac, char **av, char **env)
 		(void)cmd;
 //		error_check(cmd); // changer le nom
 		add_history(read);
-		free(read);
 	}
 }

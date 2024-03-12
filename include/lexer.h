@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/12 18:15:23 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 00:08:36 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		is_special(char c);
 /*------- ERRORS -------*/
 int		search_errors(t_lst *list);
 void	msg_lex(t_msg msg, char c, char *str);
-int		check_read(char *read);
+int		check_read(char **read);
 
 /*------- LEXER -------*/
 int		create_token_list(t_lst **lexer, char *read);

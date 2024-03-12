@@ -6,79 +6,64 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 00:08:43 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/12 18:38:46 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 00:24:08 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-static int	count_char(char *str, char c)
-{
-	int	count;
-	int	i;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-static void	delete_char(t_lst *list, char c)
+static int	delete_char(t_lst *list, char c, int *index)
 {
 	int		count;
 	int		i;
-	char	*new;
 	char	*cpy;
 
 	i = 0;
-	count = count_char(list->str, c);
-	new = malloc(sizeof(char) * (ft_strlen(list->str) - count + 1));
-	if (!new)
-		exit (1);
 	count = 0;
-	while (list->str[i + count])
+	cpy = list->str;
+	list->str = malloc(sizeof(char) * (ft_strlen(list->str) - 1));
+	if (!list->str)
+		return (msg_lex(MALLOC, 0, ""), 1);
+	while (cpy[i + count])
 	{
-		if (list->str[i + count] == c)
+		if (cpy[i + count] == c && count < 2 && i >= *index)
+		{
 			count++;
+			*index = i;
+		}
 		else
 		{
-			new[i] = list->str[i + count];
+			list->str[i] = cpy[i + count];
 			i++;
 		}
 	}
-	new[i] = '\0';
-	cpy = list->str;
-	list->str = new;
-	free(cpy);
+	list->str[i] = '\0';
+	return (free(cpy), 0);
 }
 
 int	delete_quotes(t_lst **list)
 {
 	t_lst	*buf;
 	int		i;
+	int		status_code1;
+	int		status_code2;
 
 	buf = *list;
+	status_code1 = 0;
+	status_code2 = 0;
 	while (buf)
 	{
 		i = 0;
 		while (buf->str[i])
 		{
 			if (buf->str[i] == 39)
-			{
-				delete_char(buf, 39);
-				break ;
-			}
+				status_code1 = delete_char(buf, 39, &i);
 			if (buf->str[i] == 34)
-			{
-				delete_char(buf, 34);
-				break ;
-			}
-			i++;
+				status_code2 = delete_char(buf, 34, &i);
+			if (status_code1 || status_code2)
+				return (1);
+			if (buf->str[i] && buf->str[i] != 39)
+				i++;
 		}
 		buf = buf->next;
 	}
