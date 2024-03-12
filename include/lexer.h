@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 17:29:27 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:15:23 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ typedef struct s_lst
 	struct s_lst	*next;
 }			t_lst;
 
+typedef enum e_msg
+{
+	SPECIAL,
+	TOKEN,
+	QUOTE,
+	MALLOC
+}			t_msg;
+
 typedef struct s_parse
 {
 	t_lst		*lexer;
@@ -50,19 +58,23 @@ void	print_lst(t_lst *lexer);
 /*------- UTILS -------*/
 int		is_token(char c);
 char	*ft_trijoin(char *s1, char *s2, char *s3);
-void	pass_quote(char *str, int *i);
+int		pass_quote(char *str, int *i);
+void	pass_simple_quote(char *str, int *i);
+int		is_special(char c);
 
 /*------- ERRORS -------*/
 int		search_errors(t_lst *list);
+void	msg_lex(t_msg msg, char c, char *str);
+int		check_read(char *read);
 
 /*------- LEXER -------*/
 int		create_token_list(t_lst **lexer, char *read);
-t_cmd		*parse_read(char *read, char **env);
+t_cmd	*parse_read(char *read, char **env);
 int		replace_argument(t_lst **lexer, char **env);
 int		delete_quotes(t_lst **list);
 
 /*------- PARSER -------*/
-void	create_cmd_list(t_parse *parse);
+int		create_cmd_list(t_parse *parse);
 char	**create_arg_array(t_lst *lexer);
 
 #endif

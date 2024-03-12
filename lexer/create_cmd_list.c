@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:07:55 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 18:00:47 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:43:27 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,21 @@ int	create_node_cmd(t_cmd **cmd, t_lst *lexer)
 	return (0);
 }
 
-void	create_cmd_list(t_parse *parse)
+int	create_cmd_list(t_parse *parse)
 {
 	t_lst	*lex;
 
 	lex = parse->lexer;
 	while (lex && lex->str)
 	{
-		create_node_cmd(&parse->cmd, lex);
+		if (create_node_cmd(&parse->cmd, lex))
+			return (1);
 		while (lex && lex->token != PIPE)
 			lex = lex->next;
-		if (lex && lex->next)
+		if (lex)
 			lex = lex->next;
 	}
+	return (0);
 }
 /*
 char	*find_last_token(t_lst *lexer, t_token token)

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 17:55:02 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:31:43 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ static char	*check_in_env(char *arg, char **env)
 		{
 			value = ft_substr(env[i], len + 1, ft_strlen(env[i]) - (len + 1));
 			if (!value)
-				exit(1);
+				return (msg_lex(MALLOC, 0, ""), NULL);
 			return (value);
 		}
 		i++;
 	}
 	value = malloc(1);
 	if (!value)
-		exit (1);
+		return (msg_lex(MALLOC, 0, ""), NULL);
 	value[0] = '\0';
 	return (value);
 }
@@ -51,39 +51,42 @@ static int	replace_in_list(t_lst *lst, char *arg, char *value, int index)
 	else
 		cpy = ft_substr(lst->str, 0, index);
 	if (!cpy)
-		return (1);
+		return (msg_lex(MALLOC, 0, ""), 1);
 	if (index2 == ft_strlen(lst->str))
 		cpy2 = ft_strdup("");
 	else
 		cpy2 = ft_substr(lst->str, index2, ft_strlen(lst->str) - index2);
 	if (!cpy2)
-		return (free(cpy), 1);
+		return (free(cpy), msg_lex(MALLOC, 0, ""), 1);
 	new = ft_trijoin(cpy, value, cpy2);
 	if (!new)
-		exit (1);
+		return (free(cpy), msg_lex(MALLOC, 0, ""), 1);
 	cpy = lst->str;
 	lst->str = new;
 	free(cpy);
 	return (0);
 }
 
-static void	find_and_replace(t_lst *lst, int index, char **env)
+static int	find_and_replace(t_lst *lst, int index, char **env)
 {
 	int		j;
 	char	*arg;
 	char	*value;
 
-	j = index;
+	j = index + 1;
 	while (lst->str[j] != '\0' && lst->str[j] != 34 && lst->str[j] != 39
-		&& lst->str[j] != ' ')
+		&& lst->str[j] != ' ' && lst->str[j] != '$')
 		j++;
 	arg = ft_substr(lst->str, index + 1, j - index - 1);
 	if (!arg)
-		exit(1);
+		return (msg_lex(MALLOC, 0, ""), 1);
 	value = check_in_env(arg, env);
-	if (value)
-		replace_in_list(lst, arg, value, index);
+	if (!value)
+		return (1);
+	if (replace_in_list(lst, arg, value, index))
+		return (free(arg), 1);
 	free(arg);
+	return (0);
 }
 
 int	replace_argument(t_lst **lexer, char **env)
@@ -99,15 +102,11 @@ int	replace_argument(t_lst **lexer, char **env)
 			buf = buf->next->next;
 		while (buf && buf->str[i])
 		{
-			if (buf->str[i] == 39)
-			{
+			pass_simple_quote(buf->str, &i);
+			if (buf->str[i] == '$' && find_and_replace(buf, i, env))
+					return (1);
+			if (buf->str[i] != '\0')
 				i++;
-				while (buf->str[i] && buf->str[i] != 39)
-					i++;
-			}
-			if (buf->str[i] && buf->str[i] == '$')
-				find_and_replace(buf, i, env);
-			i++;
 		}
 		if (buf)
 			buf = buf->next;

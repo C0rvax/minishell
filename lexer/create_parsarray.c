@@ -6,18 +6,20 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 18:55:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/10 18:56:54 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:00:42 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-static int	count_argv(t_lst *lexer)
+static char	**malloc_argv(t_lst *lexer)
 {
 	int		i;
 	t_lst	*buf;
+	char	**argv;
 
 	buf = lexer;
+	argv = NULL;
 	i = 0;
 	while (buf && buf->token != PIPE)
 	{
@@ -27,7 +29,16 @@ static int	count_argv(t_lst *lexer)
 			i--;
 		buf = buf->next;
 	}
-	return (i);
+	if (i == 0)
+	{
+		argv = malloc(sizeof(char *) * 1);
+		argv[0] = NULL;
+	}
+	else
+		argv = malloc(sizeof(char *) * (i + 1));
+	if (!argv)
+		return (msg_lex(MALLOC, 0, ""), NULL);
+	return (argv);
 }
 
 char	**create_arg_array(t_lst *lexer)
@@ -37,14 +48,13 @@ char	**create_arg_array(t_lst *lexer)
 	int		count;
 
 	buf = lexer;
-	count = count_argv(buf);
-	argv = malloc(sizeof(char *) * (count + 1));
-	if (!argv)
-		return (ft_printf("Error: mallocarg1!\n"), NULL);
+	argv = malloc_argv(buf);
+	if (!argv || argv[0] == NULL)
+		return (argv);
 	count = 0;
 	while (buf && buf->token != PIPE)
 	{
-		if (buf->next && buf->token != CMD)
+		if (buf->next && buf->token != CMD && buf->next->token != PIPE)
 			buf = buf->next->next;
 		else
 		{

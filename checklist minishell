@@ -1,6 +1,6 @@
-1. bouger avec les fleches
-2. history
-3. gerer les single quotes ex. "tr 'r' ' '"
+1. bouger avec les fleches ------------------------------------OK
+2. history ----------------------------------------------------OK
+3. gerer les single quotes ex. "tr 'r' ' '" -------------------OK
 3. Cas particuliers de la cmd echo :
 
 ctruchot@bess-f4r1s9:~$ echo -n salut
@@ -21,8 +21,8 @@ ctruchot@bess-f4r1s9:~$ echo '' -n
 ctruchot@bess-f4r1s9:~$ echo -n $PW
 ctruchot@bess-f4r1s9:~$ echo -n $PW
 
-ctruchot@bess-f4r1s10:~$ echo "+2"2
-+22
+ctruchot@bess-f4r1s10:~$ echo "+2"2 ---------------------------OK
++22 -----------------------------------------------------------OK
 ctruchot@bess-f4r1s10:~$ echo "+2 | cat "2
 +2 | cat 2
 ctruchot@bess-f4r1s10:~$ echo "+2 | cat 2

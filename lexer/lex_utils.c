@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:45:30 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/10 02:08:30 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:20:55 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,42 @@ int	is_token(char c)
 		return (0);
 }
 
+int	is_special(char c)
+{
+	if (c == '&' || c == '*' || c == ';' || c == '@' || c == '^' || c == '#'
+		|| c == '!')
+		return (1);
+	else
+		return (0);
+}
+
 char	*ft_trijoin(char *s1, char *s2, char *s3)
 {
-	char	*cpy;
+	char	*firstjoin;
 	char	*join;
 
-	join = ft_strjoin(s1, s2);
-	if (!join)
+	firstjoin = ft_strjoin(s1, s2);
+	if (!firstjoin)
 		return (free(s1), free(s2), free(s3), NULL);
-	cpy = join;
-	join = ft_strjoin(cpy, s3);
-	free(cpy);
+	join = ft_strjoin(firstjoin, s3);
+	free(firstjoin);
 	free(s1);
 	free(s2);
 	free(s3);
-	if (!join)
-		return (NULL);
 	return (join);
 }
 
-void	pass_quote(char *str, int *i)
+void	pass_simple_quote(char *str, int *i)
+{
+	if (str[*i] && str[*i] == 39)
+	{
+		*i = *i + 1;
+		while (str[*i] && str[*i] != 39)
+			*i = *i + 1;
+	}
+}
+
+int	pass_quote(char *str, int *i)
 {
 	if (str[*i] && str[*i] == 39)
 	{
@@ -53,4 +69,8 @@ void	pass_quote(char *str, int *i)
 		while (str[*i] && str[*i] != 34)
 			*i = *i + 1;
 	}
+	if (str[*i] == '\0')
+		return (1);
+	else
+		return (0);
 }
