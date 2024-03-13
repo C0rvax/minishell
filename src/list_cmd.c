@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:13:14 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 18:05:11 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:58:02 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,16 @@ void	ft_cmd_lstclear(t_cmd **cmd)
 	{
 		buf = (*cmd)->next;
 		ft_freetab((*cmd)->argv);
+		if ((*cmd)->path_cmd)
+			free((*cmd)->path_cmd);
 		ft_redir_listclear(&(*cmd)->in);
 		ft_redir_listclear(&(*cmd)->out);
 		free(*cmd);
 		*cmd = buf;
 	}
 	ft_freetab((*cmd)->argv);
+	if ((*cmd)->path_cmd)
+		free((*cmd)->path_cmd);
 	ft_redir_listclear(&((*cmd)->in));
 	ft_redir_listclear(&(*cmd)->out);
 	free(*cmd);
@@ -44,6 +48,7 @@ t_cmd	*ft_cmd_lstnew(char **argv)
 	new->argv = argv;
 	if (!new->argv)
 		return (free(new), NULL);
+	new->path_cmd = NULL;
 	new->in = NULL;
 	new->out = NULL;
 	new->next = NULL;
