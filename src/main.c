@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 12:50:08 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:54:03 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ int	main(int ac, char **av, char **env)
 	char	*read;
 	t_cmd	*cmd;
 	char	**mini_env;
+	t_read	*read_list;
 
 	read = NULL;
+	read_list = NULL;
 	(void)av;
 	if (ac > 1)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
+	mini_env = parse_env_array(env);
 	while (1)
 	{
 		/*
@@ -40,14 +43,16 @@ int	main(int ac, char **av, char **env)
 		add_history("<<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 		add_history("cat -e -n -s <<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 		*/
-		mini_env = parse_env_array(env);
-		while (!read || read[0] == '\0')
-			read = readline("minishell > ");
-//		cmd = parse_read(read, env); // @Corvax, j'ai change env en mini_env - verifier que ca te creer pas de bug
-		cmd = parse_read(read, mini_env); // @Corvax, j'ai change env en mini_env - verifier que ca te creer pas de bug
-		(void)cmd;
-//		if (error_checks(cmd, mini_env) != 0)
-//			return (ft_putstr_fd("\nSTOP\n", 2), 1);
-//		exec(cmd, mini_env);
+		read = readline("minishell > ");
+		if (read && read[0] != '\0')
+		{
+			add_to_history(read_list, read);
+			cmd = parse_read(read, mini_env); // @Corvax, j'ai change env en mini_env - verifier que ca te creer pas de bug
+			(void)cmd;
+			print_read_lst(read_list);
+//			if (error_checks(cmd, mini_env) != 0)
+//				return (ft_putstr_fd("\nSTOP\n", 2), 1);
+//			exec(cmd, mini_env);
+		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 11:54:42 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:37:58 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }		t_cmd;
 
+typedef struct s_read
+{
+	char			*read;
+	struct s_read	*next;
+}		t_read;
+
 typedef struct s_data
 {
 	char	**env;
@@ -55,6 +61,7 @@ typedef struct s_data
 }		t_data;
 
 /*------- UTILS -------*/
+int		add_to_history(t_read *list, char *read);
 
 /*------- LIST CMD -------*/
 void	print_cmd_lst(t_cmd *cmd);
@@ -62,6 +69,13 @@ void	ft_cmd_lstadd_back(t_cmd **list, t_cmd *new);
 t_cmd	*ft_cmd_lstlast(t_cmd *list);
 t_cmd	*ft_cmd_lstnew(char **argv);
 void	ft_cmd_lstclear(t_cmd **cmd);
+
+/*------- LIST READ -------*/
+void	ft_read_listclear(t_read **list);
+t_read	*ft_read_listnew(char *str);
+t_read	*ft_read_listlast(t_read *list);
+void	ft_read_listadd_back(t_read **list, t_read *new);
+void	print_read_lst(t_read *list);
 
 /*------- LIST REIDRECT -------*/
 void		ft_redir_listclear(t_redirect **list);
