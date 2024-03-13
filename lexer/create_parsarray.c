@@ -6,20 +6,18 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 18:55:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/12 16:00:42 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:08:04 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-static char	**malloc_argv(t_lst *lexer)
+static int	count_argv(t_lst *lexer)
 {
 	int		i;
 	t_lst	*buf;
-	char	**argv;
 
 	buf = lexer;
-	argv = NULL;
 	i = 0;
 	while (buf && buf->token != PIPE)
 	{
@@ -29,42 +27,34 @@ static char	**malloc_argv(t_lst *lexer)
 			i--;
 		buf = buf->next;
 	}
-	if (i == 0)
-	{
-		argv = malloc(sizeof(char *) * 1);
-		argv[0] = NULL;
-	}
-	else
-		argv = malloc(sizeof(char *) * (i + 1));
-	if (!argv)
-		return (msg_lex(MALLOC, 0, ""), NULL);
-	return (argv);
+	return (i);
 }
 
 char	**create_arg_array(t_lst *lexer)
 {
 	t_lst	*buf;
 	char	**argv;
-	int		count;
+	int		i;
 
 	buf = lexer;
-	argv = malloc_argv(buf);
-	if (!argv || argv[0] == NULL)
-		return (argv);
-	count = 0;
-	while (buf && buf->token != PIPE)
+	i = 0;
+	argv = malloc(sizeof(char *) * (count_argv(buf) + 1));
+	if (!argv)
+		return (msg_lex(MALLOC, 0, ""), NULL);
+	i = 0;
+	while (buf && buf->token != PIPE && count_argv(buf) > 0)
 	{
 		if (buf->next && buf->token != CMD && buf->next->token != PIPE)
 			buf = buf->next->next;
 		else
 		{
-			argv[count] = ft_strdup(buf->str);
-			if (!argv[count])
-				return (ft_freetab(argv), ft_printf("Error: malloc2\n"), NULL);
-			count++;
+			argv[i] = ft_strdup(buf->str);
+			if (!argv[i])
+				return (ft_freetab(argv), msg_lex(MALLOC, 0, ""), NULL);
+			i++;
 			buf = buf->next;
 		}
 	}
-	argv[count] = NULL;
+	argv[i] = NULL;
 	return (argv);
 }
