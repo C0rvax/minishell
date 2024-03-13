@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:37:33 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 12:41:42 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:40:53 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,14 @@ int	check_outfiles(t_cmd *cmd, int total_cmd)
 			if (check_out(cmd->out) != 0)
 				kill_child(cmd);
 			else
+			{
 				cmd->out = get_valid_out(cmd->out);
+				if (cmd->out)
+				{
+					ft_printf("cmbnb = %d\n", cmd_nb);
+					ft_printf("out = %s\n", cmd->out->path);
+				}
+			}
 		}
 		cmd_nb++;
 		cmd = cmd->next;

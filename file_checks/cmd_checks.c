@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/12 22:48:01 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:38:07 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 			cmd->path_cmd = check_paths(paths, cmd->argv[0]);
 			if (cmd->path_cmd == NULL)
 				return (1);
+			ft_printf("cmbnb = %d\n", cmd_nb);
+			ft_printf("cmd = %s\n", cmd->path_cmd);
 		}
 		cmd_nb++;
 		cmd = cmd->next;
