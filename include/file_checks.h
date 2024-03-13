@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/12 22:48:54 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:14:28 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #include "minishell.h"
 #include <fcntl.h>
 
-typedef struct s_super_cmd
-{
-	t_cmd	*head_cmd;
-	int		total_cmd;
-}		t_super_cmd;
+// typedef struct s_super_cmd
+// {
+// 	t_cmd	*head_cmd;
+// 	int		total_cmd;
+// }		t_super_cmd;
 
 // infile_checks.c
 int	error_checks(t_cmd *cmd, char **mini_env);

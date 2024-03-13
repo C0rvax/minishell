@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_parsing.h                                      :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 20:17:24 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 10:56:20 by ctruchot         ###   ########.fr       */
+/*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
+/*   Updated: 2024/03/13 10:59:48 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_PARSING_H
-# define ENV_PARSING_H
+#ifndef EXEC_H
+# define EXEC_H
 
 #include "minishell.h"
 
-typedef struct s_env
-{
-	char			*var;
-	struct s_env	*next;
-}		t_env;
-
-t_env	*parse_env_list(char **env);
-char	**env_list_to_array(t_env *env);
-char	**parse_env_array(char **env); 
+int	exec(t_cmd *cmd, char **mini_env);
+int	exec_uno(t_cmd *cmd, char **mini_env);
 
 #endif
