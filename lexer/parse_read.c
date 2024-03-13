@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 12:35:26 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:49:42 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_cmd	*parse_read(char *read, char **env)
 	t_parse	parse;
 
 	ft_bzero(&parse, sizeof(t_parse));
-	if (!read)
+	if (!read || read[0] == '\0')
 		return (NULL);
 	if (check_read(&read))
 		return (NULL);
@@ -39,3 +39,6 @@ t_cmd	*parse_read(char *read, char **env)
 	free(read);
 	return (parse.cmd);
 }
+/*
+ft_cmd_lstclear(&parse.cmd);
+*/
