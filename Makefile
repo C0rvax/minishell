@@ -16,8 +16,8 @@ ERRORS		= $(addprefix ./file_checks/, infile_checks.c outfile_checks.c cmd_check
 
 MAIN		= $(addprefix ./src/, main.c list_cmd.c list_redirect.c)
 
-SRC			= $(LEX) $(MAIN)	
-#SRC			= $(LEX) $(MAIN) $(ERRORS) $(ENV_PARSING) $(EXEC)
+# SRC			= $(LEX) $(MAIN)	
+SRC			= $(LEX) $(MAIN) $(ERRORS) $(ENV_PARSING)
 
 #------------ FLAGS + INCLUDE -------------#
 CFLAGS		= -Wextra -Wall -Werror -g

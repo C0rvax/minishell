@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 11:10:15 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:23:47 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 #include "env_parsing.h"
 #include "exec.h"
 
+// int	exec(t_cmd *cmd, char **mini_env)
+// {
+// 	// int total_cmd;
+// 	// // int pid;
+	
+// 	// total_cmd = ft_cmd_lstsize(cmd);
 
-int	exec(t_cmd *cmd, char **mini_env)
-{
-	ft_putstr_fd("total_cmd = ", 2);
-	ft_putnbr_fd(cmd->total_cmd, 2);
-	ft_putstr_fd("\n", 2);
-
-	if (cmd->total_cmd == 1)
-	{
-		pid = fork();
-		if (pid < 0)
-			return (ft_putstr_fd(strerror(errno), 2), 2);
-	}
-		exec_uno(cmd, mini_env);
-	return (0);
-}
+// 	// if (total_cmd == 1)
+// 	// {
+// 	// 	pid = fork();
+// 	// 	if (pid < 0)
+// 	// 		return (ft_putstr_fd(strerror(errno), 2), 2);
+// 	// }
+// 		exec_uno(cmd, mini_env);
+// 	return (0);
+// }
 
 int	exec_uno(t_cmd *cmd, char **mini_env)
 {

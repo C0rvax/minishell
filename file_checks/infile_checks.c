@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 11:02:23 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:41:32 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,18 @@
 
 int	error_checks(t_cmd *cmd, char **mini_env)
 {
-	cmd->total_cmd = ft_cmd_lstsize(cmd);
-	check_infiles(cmd, cmd->total_cmd);
-	ft_printf("in = %s\n", cmd->in->path);
-	check_outfiles(cmd, cmd->total_cmd);
-	ft_printf("out = %s\n", cmd->out->path);
+	int total_cmd;
+
+	total_cmd = ft_cmd_lstsize(cmd);
+	check_infiles(cmd, total_cmd);
+	if (cmd->in)
+		ft_printf("int = %s\n", cmd->in->path);	
+	check_outfiles(cmd, total_cmd);
+	if (cmd->out)
+		ft_printf("out = %s\n", cmd->out->path);
 
 	// check_options
-	check_cmd(cmd, cmd->total_cmd, mini_env);
+	check_cmd(cmd, total_cmd, mini_env);
 	ft_printf("cmd = %s\n", cmd->path_cmd);
 
 	return (0);
@@ -80,6 +84,7 @@ int	check_in(t_redirect *in)
 
 int	check_infile_errors(char *path)
 {
+	
 	if (access(path, F_OK) != 0)
 	{
 		print_str_fd("no such file or directory: ", path, 2);
