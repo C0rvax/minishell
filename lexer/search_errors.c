@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:04:58 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 00:45:23 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:08:56 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	search_parser_err(t_lst *list)
 		if (buf->token != CMD && buf->token != PIPE)
 		{
 			if (buf->next == NULL)
-				return (msg_lex(TOKEN, '\0', "'newline'"), 1);
+				return (msg_lex(TOKEN, '\0', "newline"), 1);
 			if (buf->next->token != CMD)
 				return (msg_lex(TOKEN, buf->next->str[0], ""), 1);
 		}
