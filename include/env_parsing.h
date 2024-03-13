@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_checks.h                                     :+:      :+:    :+:   */
+/*   env_parsing.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/11 18:08:18 by ctruchot         ###   ########.fr       */
+/*   Created: 2024/03/12 20:17:24 by ctruchot          #+#    #+#             */
+/*   Updated: 2024/03/13 10:56:20 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef ENV_PARSING_H
+# define ENV_PARSING_H
+
 #include "minishell.h"
-#include <fcntl.h>
 
-int	ft_cmd_lstsize(t_cmd *lst);
-int error_check(t_cmd *cmd);
-int	ft_inout_lstsize(t_redirect *lst);
-int	check_in(t_redirect *in);
-int	check_infile(char *path);
-int	check_out(t_redirect *out);
-int	check_outfile(char *path);
+typedef struct s_env
+{
+	char			*var;
+	struct s_env	*next;
+}		t_env;
 
+t_env	*parse_env_list(char **env);
+char	**env_list_to_array(t_env *env);
+char	**parse_env_array(char **env); 
 
+#endif

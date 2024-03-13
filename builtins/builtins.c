@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/11 15:32:39 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:48:15 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,33 @@
 
 #include "env_parsing.h"
 
-void	ft_exit() // tout cleaner
+void free_exit(t_cmd *cmd, char **mini_env)
 {
-	// ft_printf("exit\n");
-	printf("exit\n");
+	t_cmd	*buff;
 
+	if (!cmd)
+		return ;
+	while (cmd->next)
+	{
+		buff = cmd->next;
+		if (cmd->argv)
+			free_tab(cmd->argv);
+		if (cmd->in)
+			ft_in_lstclear(cmd->in)
+		if (cmd->out)			
+			ft_in_lstclear(cmd->out)
+		if (cmd->path_cmd)
+			free(cmd->path_cmd)
+		free(cmd);
+		cmd = buff;
+	}
+	free_tab(mini_env);
+}
+
+void	ft_exit(t_cmd *cmd, char **mini_env)
+{
+	free_exit(cmd, mini_env);
+	ft_printf("exit\n");
 	exit(0);
 }
 
