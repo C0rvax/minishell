@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 12:41:32 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:47:36 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,11 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 	int total_cmd;
 
 	total_cmd = ft_cmd_lstsize(cmd);
-	check_infiles(cmd, total_cmd);
-	if (cmd->in)
-		ft_printf("int = %s\n", cmd->in->path);	
+	ft_printf("total cmd = %d\n", total_cmd);	
+	check_infiles(cmd, total_cmd); // gerer les return 
 	check_outfiles(cmd, total_cmd);
-	if (cmd->out)
-		ft_printf("out = %s\n", cmd->out->path);
-
 	// check_options
 	check_cmd(cmd, total_cmd, mini_env);
-	ft_printf("cmd = %s\n", cmd->path_cmd);
 
 	return (0);
 }
@@ -48,7 +43,14 @@ int	check_infiles(t_cmd *cmd, int total_cmd)
 			if (check_in(cmd->in) != 0)
 				kill_child(cmd);
 			else
+			{
 				cmd->in = get_valid_in(cmd->in);
+				if (cmd->in)
+				{
+					ft_printf("cmbnb = %d\n", cmd_nb);
+					ft_printf("int = %s\n", cmd->in->path);
+				}
+			}
 		}
 		cmd_nb++;
 		cmd = cmd->next;

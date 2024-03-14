@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/12 22:48:01 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:02:29 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 			if (paths == NULL)
 				return (1); 
 			cmd->path_cmd = check_paths(paths, cmd->argv[0]);
-			if (cmd->path_cmd == NULL)
+			if (cmd->path_cmd == NULL) // si malloc pete -> on free la commande et on renvoie le prompt / distinguer de cas ou pas de commande 
 				return (1);
+			ft_printf("cmbnb = %d\n", cmd_nb);
+			ft_printf("cmd = %s\n", cmd->path_cmd);
 		}
 		cmd_nb++;
 		cmd = cmd->next;
@@ -100,7 +102,7 @@ char	*check_paths(char **paths, char *command)
 	i = 0;
 	if (access(command, F_OK | X_OK) == 0)
 		return (free_tab(paths), command);
-	while (paths[i])
+	while (paths[i]) // revoir si les mallocs
 	{
 		if (cpypath2 != NULL)
 			free(cpypath2);

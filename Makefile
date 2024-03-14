@@ -11,8 +11,7 @@ LEX			= $(addprefix ./lexer/, lexer.c list.c lex_utils.c parse_read.c	\
 BUILTINS	= $(addprefix ./builtins/, builtins.c)
 
 ENV_PARSING	= $(addprefix ./env_parsing/, env_parsing.c utils.c)
-
-EXEC		= $(addprefix ./exec/, exec.c)
+EXEC		= $(addprefix ./exec/, exec.c exec2.c)
 # SIGNALS	=
 ERRORS		= $(addprefix ./file_checks/, infile_checks.c outfile_checks.c	\
 			  cmd_checks.c here_doc.c utils_in_lists.c)
@@ -21,7 +20,7 @@ MAIN		= $(addprefix ./src/, main.c list_cmd.c list_redirect.c			\
 			  history.c list_read.c)
 
 # SRC			= $(LEX) $(MAIN)	
-SRC			= $(LEX) $(MAIN) $(ERRORS) $(ENV_PARSING)
+SRC			= $(LEX) $(MAIN) $(ERRORS) $(ENV_PARSING) $(EXEC)
 
 #------------ FLAGS + INCLUDE -------------#
 CFLAGS		= -Wextra -Wall -Werror -g
