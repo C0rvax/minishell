@@ -27,6 +27,7 @@ int	main(int ac, char **av, char **env)
 	read = NULL;
 	read_list = NULL;
 	(void)av;
+	mini_env = parse_env_array(env);
 	if (ac > 1)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
 	mini_env = parse_env_array(env);
@@ -46,13 +47,10 @@ int	main(int ac, char **av, char **env)
 		read = readline("minishell > ");
 		if (read && read[0] != '\0')
 		{
-			add_to_history(read_list, read);
-			cmd = parse_read(read, mini_env); // @Corvax, j'ai change env en mini_env - verifier que ca te creer pas de bug
-			(void)cmd;
-			print_read_lst(read_list);
-//			if (error_checks(cmd, mini_env) != 0)
-//				return (ft_putstr_fd("\nSTOP\n", 2), 1);
-//			exec(cmd, mini_env);
+			cmd = parse_read(read, mini_env); // if !cmd gerer 
+			if (error_checks(cmd, mini_env) != 0)
+				return (ft_putstr_fd("\nSTOP\n", 2), 1);
+			exec(cmd, mini_env);
 		}
 	}
 }

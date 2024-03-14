@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 14:13:02 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:38:24 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_cmd	*parse_read(char *read, char **env)
 {
 	t_parse	parse;
 
+///	(void)env;
 	ft_bzero(&parse, sizeof(t_parse));
 	if (!read || read[0] == '\0')
 		return (NULL);

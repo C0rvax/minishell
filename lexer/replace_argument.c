@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 00:47:47 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:23:50 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static int	find_and_replace(t_lst *lst, int index, char **env)
 	char	*value;
 
 	j = index + 1;
+	if (lst->str[j] == '\0')
+		return (0);
 	while (lst->str[j] != '\0' && lst->str[j] != 34 && lst->str[j] != 39
 		&& lst->str[j] != ' ' && lst->str[j] != '$')
 		j++;
@@ -86,6 +88,20 @@ static int	find_and_replace(t_lst *lst, int index, char **env)
 	if (replace_in_list(lst, arg, value, index))
 		return (free(arg), 1);
 	free(arg);
+	return (0);
+}
+
+static int	replace_dollar(t_lst *lst, int index, char **env)
+{
+//	int		j;
+	char	*value;
+
+//	j = index + 1;
+	value = check_in_env("SYSTEMD_EXEC_PID=", env);
+	if (!value)
+		return (1);
+	if (replace_in_list(lst, "SYSTEMD_EXEC_PID=", value, index))
+		return (1);
 	return (0);
 }
 
@@ -103,6 +119,9 @@ int	replace_argument(t_lst **lexer, char **env)
 		while (buf && buf->str[i])
 		{
 			pass_simple_quote(buf->str, &i);
+			if (buf->str[i] == '$' && buf->str[i + 1] == '$' 
+				&& replace_dollar(buf, i, env))
+				return (1);
 			if (buf->str[i] == '$' && find_and_replace(buf, i, env))
 				return (1);
 			if (buf->str[i] != '\0')
