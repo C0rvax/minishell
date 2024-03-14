@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:25 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 15:25:27 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:01:46 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ static int	create_list_node(t_lst **list, char *read, int i, int *j)
 		status_code = create_node_in(*list, read, i, j);
 	if (read[i] == ' ')
 		*j = i + 1;
-//	if (read[i] == '$')
-//		*j = i;
 	return (status_code);
 }
 

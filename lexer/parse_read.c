@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/14 12:38:24 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:02:30 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ t_cmd	*parse_read(char *read, char **env)
 {
 	t_parse	parse;
 
-///	(void)env;
 	ft_bzero(&parse, sizeof(t_parse));
 	if (!read || read[0] == '\0')
 		return (NULL);
@@ -36,7 +35,6 @@ t_cmd	*parse_read(char *read, char **env)
 	print_cmd_lst(parse.cmd);
 	ft_listclear(&parse.lexer);
 	add_history(read);
-//	free(read);
 	return (parse.cmd);
 }
 /*

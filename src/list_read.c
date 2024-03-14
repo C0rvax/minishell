@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:13:19 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 14:16:52 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:07:11 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_read_listadd_back(t_read **list, t_read *new)
 void	print_read_lst(t_read *list)
 {
 	int			i;
-	t_read	*buf;
+	t_read		*buf;
 
 	i = 0;
 	buf = list;

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 00:08:36 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:10:05 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ t_lst	*ft_listnew(char *str, t_token token);
 void	ft_listclear(t_lst **list);
 void	ft_listadd_back(t_lst **list, t_lst *new);
 void	print_lst(t_lst *lexer);
+
+/*------- MAIN TOOLS -------*/
+char	*get_prompt(void);
 
 /*------- UTILS -------*/
 int		is_token(char c);
