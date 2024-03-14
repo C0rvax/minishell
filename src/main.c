@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 15:42:11 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:15:25 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ int	main(int ac, char **av, char **env)
 		read = readline("minishell > ");
 		if (read && read[0] != '\0')
 		{
-			cmd = parse_read(read, mini_env); // @Corvax, j'ai change env en mini_env - verifier que ca te creer pas de bug
-			(void)cmd;
-//			if (error_checks(cmd, mini_env) != 0)
-//				return (ft_putstr_fd("\nSTOP\n", 2), 1);
-//			exec(cmd, mini_env);
+			cmd = parse_read(read, mini_env); // if !cmd gerer 
+			if (error_checks(cmd, mini_env) != 0)
+				return (ft_putstr_fd("\nSTOP\n", 2), 1);
+			exec(cmd, mini_env);
 		}
 	}
 }
