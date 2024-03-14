@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 10:48:15 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:57:04 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,86 @@
 // env only prints all environment variables
 
 #include "env_parsing.h"
+
+int	exec_pwd(t_cmd *cmd)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (1);
+	ft_printf("%s\n", pwd);
+	return (0);
+}
+
+int	exec_cd(t_cmd *cmd)
+{
+	int	fd;
+
+	fd = open(cmd->argv[1], O_DIRECTORY);
+	if (fd == -1)
+		return (1);
+	close(fd);
+	chdir(cmd->argv[1]);
+	return (0);
+}
+
+int	check_flag_echo(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] != '-')
+		return (1);
+	while (str[++i])
+	{
+		if (str[i] != 'n')
+			return (1);
+	}
+	return (0);
+}
+
+int	exec_echo(t_cmd *cmd)
+{
+	int	i;
+
+	i = 1;
+	if (!cmd->argv[1])
+		return (1);
+	else if (cmd->argv[1] && !check_flag_echo(cmd->argv[1]))
+	{
+		while (cmd->argv[++i])
+			ft_printf("%s", cmd->argv[i]);
+	}
+	else if (cmd->argv[1] && check_flag_echo(cmd->argv[1]))
+	{
+		i = 0;
+		while (cmd->argv[++i])
+			ft_printf("%s", cmd->argv[i]);
+		ft_printf("\n");
+	}
+	return (0);
+}
+
+int	is_a_builtin(t_cmd *cmd)
+{
+	char	*str;
+	char	**builtarr;
+	int		i;
+
+	i = 0;
+	str = "echo;cd;pwd;export;unset;env;exit";
+	builtarr = ft_split(str, ';');
+	if (!builtarr)
+		return (-2);
+	while (builtarr[i])
+	{
+		if (builtarr[i] == cmd->argv[0])
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 
 void free_exit(t_cmd *cmd, char **mini_env)
 {
