@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 16:37:23 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:47:36 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 
 	total_cmd = ft_cmd_lstsize(cmd);
 	ft_printf("total cmd = %d\n", total_cmd);	
-	check_infiles(cmd, total_cmd);
+	check_infiles(cmd, total_cmd); // gerer les return 
 	check_outfiles(cmd, total_cmd);
 	// check_options
 	check_cmd(cmd, total_cmd, mini_env);

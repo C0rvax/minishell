@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 18:22:08 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:19:40 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	exec(t_cmd *cmd, char **mini_env)
 
 	if (initialize_exec(&exec, cmd, mini_env) != 0)
 		return (1); // gerer
-	
 	// if (exec->total_cmd == 1)
 	// {
 	// 	exec->pid = fork();
@@ -68,7 +67,7 @@ int	exec(t_cmd *cmd, char **mini_env)
 	// 		exec_uno(cmd, mini_env);
 	// 	waitpid(exec->pid, NULL, 0);
 	// }
-	if (exec.total_cmd == 2)
+	if (exec.total_cmd > 1)
 	{
 		create_pipes(&exec, exec.total_cmd);
 		if (ft_fork(&exec) != 0)

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 18:15:54 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:03:28 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ typedef struct s_exec
 	int		*pid;
 	t_cmd	*cmd;
 	char **mini_env;
-	int		fdinfile;
-	int		fdoutfile;
+	// int		fdinfile;
+	// int		fdoutfile;
 }			t_exec;
 
 typedef struct s_child
