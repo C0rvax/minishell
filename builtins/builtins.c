@@ -6,36 +6,35 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/14 17:57:04 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:57:17 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// env with no options or arguments
-// env only prints all environment variables
+#include "builtin.h"
 
-#include "env_parsing.h"
-
-int	exec_pwd(t_cmd *cmd)
+void	exec_pwd(t_exec *exec, t_child *child)
 {
 	char	*pwd;
 
+	// est ce qu'on verifie qu'il n'y ai pas d'autres argv[+1] ??
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		return (1);
+		clear_built(exec, child, msg_built(PWD, 1));
 	ft_printf("%s\n", pwd);
-	return (0);
+		clear_built(exec, child, 0);
 }
 
-int	exec_cd(t_cmd *cmd)
+void	exec_cd(t_exec *exec, t_child *child)
 {
 	int	fd;
 
-	fd = open(cmd->argv[1], O_DIRECTORY);
+	// est ce qu'on verifie qu'il n'y ai pas d'autres argv[+1] ??
+	fd = open(child->current_cmd->argv[1], O_DIRECTORY);
 	if (fd == -1)
-		return (1);
+		clear_built(exec, child, msg_built(CD, 1));
 	close(fd);
-	chdir(cmd->argv[1]);
-	return (0);
+	chdir(child->current_cmd->argv[1]);
+	clear_built(exec, child, 0);
 }
 
 int	check_flag_echo(char *str)
@@ -53,28 +52,119 @@ int	check_flag_echo(char *str)
 	return (0);
 }
 
-int	exec_echo(t_cmd *cmd)
+void	exec_echo(t_exec *exec, t_child *child)
+{
+	int	i;
+	char	**buf;
+
+	buf = child->current_cmd->argv;
+	i = 1;
+	if (!buf[1])
+		ft_printf("\n");
+	else if (buf[1] && !check_flag_echo(buf[1]))
+	{
+		i = 0;
+		while (buf[++i])
+			ft_printf("%s", buf[i]);
+	}
+	else if (buf[1] && check_flag_echo(buf[1]))
+	{
+		i = 0;
+		while (buf[++i])
+			ft_printf("%s", buf[i]);
+		ft_printf("\n");
+	}
+	clear_built(exec, child, 0);
+}
+
+int	ft_lenarr(char **arr)
+{
+	int	i;
+	int	res;
+
+	i = 0;
+	res = 0;
+	if (!arr)
+		return (0);
+	while (arr[i])
+	{
+		if (arr[i] && ft_strchr(arr[i], '=') != NULL)
+			res++;
+		i++;
+	}
+	return (res);
+}
+
+char	**ft_joinarr(char **exp, char **env)
+{
+	int		i;
+	int		j;
+	char	**new;
+
+	i = ft_lenarr(exp);
+	j = ft_lenarr(env);
+	if (!i)
+		return (NULL);
+	new = malloc(sizeof(char *) * (i + j + 1));
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (env && env[++i])
+		new[i] = env[i];
+	j = 0;
+	while (exp[j])
+	{
+		if (ft_strchr(exp[j], '=') != NULL)
+			new[i + j] = exp[j];
+		j++;
+	}
+	new[i + j] = NULL;
+	return (new);
+}
+
+void	exec_export(t_exec *exec, t_child *child)
+{
+	char	**new;
+	char	**cpy;
+
+	cpy = exec->mini_env;
+	new = ft_joinarr(child->current_cmd->argv, cpy);
+	if (!new)
+		clear_built(exec, child, 0);
+	exec->mini_env = new;
+	ft_freetab(cpy);
+}
+
+void	exec_env(t_exec *exec, t_child *child)
 {
 	int	i;
 
-	i = 1;
-	if (!cmd->argv[1])
-		return (1);
-	else if (cmd->argv[1] && !check_flag_echo(cmd->argv[1]))
+	i = 0;
+	if (!child->current_cmd->argv[1])
 	{
-		while (cmd->argv[++i])
-			ft_printf("%s", cmd->argv[i]);
+		while (exec->mini_env[i])
+		{
+			ft_printf("%s\n", exec->mini_env[i]);
+			i++;
+		}
+		clear_built(exec, child, 0);
 	}
-	else if (cmd->argv[1] && check_flag_echo(cmd->argv[1]))
-	{
-		i = 0;
-		while (cmd->argv[++i])
-			ft_printf("%s", cmd->argv[i]);
-		ft_printf("\n");
-	}
-	return (0);
+	// on peut ignorer ou erreur si argv[1]
+	else
+		clear_built(exec, child, msg_built(ENV, 1));
 }
 
+void	exec_exit(t_exec *exec, t_child *child)
+{
+	ft_printf("exit\n");
+	clear_built(exec, child, 0);
+}
+
+// void	ft_unset(t_env *node, char *arg) // revoir si l'argument de unset sera envoye comme string 
+// + voir si on doit gerer la definition de variables
+// {
+// 	// if (arg) n'existe pas dans env ou ailleurs si ailleurs doit etre couvert
+// }
 int	is_a_builtin(t_cmd *cmd)
 {
 	char	*str;
@@ -88,54 +178,33 @@ int	is_a_builtin(t_cmd *cmd)
 		return (-2);
 	while (builtarr[i])
 	{
-		if (builtarr[i] == cmd->argv[0])
-			return (i);
+		if (!strncmp(builtarr[i], cmd->argv[0], ft_strlen(cmd->argv[0])))
+			return (ft_freetab(builtarr), i);
 		i++;
 	}
-	return (-1);
+	return (ft_freetab(builtarr), -1);
 }
 
-void free_exit(t_cmd *cmd, char **mini_env)
+int	exec_builtin(t_exec *exec, t_child *child)
 {
-	t_cmd	*buff;
+	int	i;
 
-	if (!cmd)
-		return ;
-	while (cmd->next)
-	{
-		buff = cmd->next;
-		if (cmd->argv)
-			free_tab(cmd->argv);
-		if (cmd->in)
-			ft_in_lstclear(cmd->in)
-		if (cmd->out)			
-			ft_in_lstclear(cmd->out)
-		if (cmd->path_cmd)
-			free(cmd->path_cmd)
-		free(cmd);
-		cmd = buff;
-	}
-	free_tab(mini_env);
+	i = is_a_builtin(child->current_cmd);
+	if (i == 0)
+		exec_echo(exec, child);
+	else if (i == 1)
+		exec_cd(exec, child);
+	else if (i == 2)
+		exec_pwd(exec, child);
+	else if (i == 3)
+		exec_export(exec, child);
+	else if (i == 4)
+		exec_unset(exec, child);
+	else if (i == 5)
+		exec_env(exec, child);
+	else if (i == 6)
+		exec_exit(exec, child);
+	else
+		clear_built(exec, child, 0);
 }
 
-void	ft_exit(t_cmd *cmd, char **mini_env)
-{
-	free_exit(cmd, mini_env);
-	ft_printf("exit\n");
-	exit(0);
-}
-
-void	ft_env(t_env *node)
-{
-	while (node != NULL)
-	{
-		printf("%s\n", node->var); // remplacer par ft_printf
-		node = node->next;
-	}
-}
-
-// void	ft_unset(t_env *node, char *arg) // revoir si l'argument de unset sera envoye comme string 
-// + voir si on doit gerer la definition de variables
-// {
-// 	// if (arg) n'existe pas dans env ou ailleurs si ailleurs doit etre couvert
-// }
