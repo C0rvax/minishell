@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:08:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/14 16:12:49 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:42:09 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static char	*get_path(void)
 
 	pwd = getenv("PWD");
 	home = getenv("HOME");
+	if (!pwd || !home)
+		return (NULL);
 	path_raw = ft_substr(pwd, ft_strlen(home),
 			ft_strlen(pwd) - ft_strlen(home));
 	path = malloc(sizeof(char) * (ft_strlen(path_raw) + 2));
