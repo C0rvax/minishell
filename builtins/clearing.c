@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/15 15:44:41 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:19:53 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	clear_built(t_exec *exec, t_child *child, int status_code)
 
 	i = 0;
 	ft_cmd_lstclear(&exec->cmd);
-	close_fd(exec->fd);
+//	close_fd(exec->fd);
 	while (exec->fd[i])
 	{
 		free(exec->fd[i]);

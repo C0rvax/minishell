@@ -17,6 +17,7 @@
 // check si des erreurs dans les fichiers,
 // mais surtout si plusieurs in/outfiles, renvoie le bon (dernier)
 
+// Cam c'est normale que la fonction renvoie tjrs 0 ??
 int	error_checks(t_cmd *cmd, char **mini_env)
 {
 	int total_cmd;

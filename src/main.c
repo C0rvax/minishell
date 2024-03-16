@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/14 16:14:00 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:04:32 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,26 @@ int	main(int ac, char **av, char **env)
 
 	read = NULL;
 	(void)av;
-	prompt = get_prompt();
-	mini_env = parse_env_array(env);
 	if (ac > 1)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
-	mini_env = parse_env_array(env);
+	mini_env = parse_env_array(env); // penser a free le mini_env !!!
 	while (1)
 	{
-		read = readline(prompt);
+		prompt = get_prompt(); // penser a free le prompt !!!
+		read = readline(prompt); // si ctrl-c free le prompt !!!
+		free(prompt);
 		if (read && read[0] != '\0')
 		{
 			cmd = parse_read(read, mini_env);
 			if (cmd)
 			{
-				if (error_checks(cmd, mini_env) != 0)
-					return (ft_putstr_fd("\nSTOP\n", 2), 1);
+				if (error_checks(cmd, mini_env) != 0) // je crois que la fonction return toujours 0
+					return (ft_putstr_fd("\nSTOP\n", 2), 1); // si return alors free
 				exec(cmd, mini_env);
 			}
 		}
 	}
+	ft_freetab(mini_env);
 	rl_clear_history();
 	return (0);
 }

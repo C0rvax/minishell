@@ -8,7 +8,7 @@ LEX			= $(addprefix ./lexer/, lexer.c list.c lex_utils.c parse_read.c	\
 			  replace_argument.c delete_quotes.c create_cmd_list.c			\
 			  search_errors.c create_parsarray.c)
 
-BUILTINS	= $(addprefix ./builtins/, builtins.c)
+BUILTINS	= $(addprefix ./builtins/, builtins.c clearing.c)
 
 ENV_PARSING	= $(addprefix ./env_parsing/, env_parsing.c utils.c)
 EXEC		= $(addprefix ./exec/, exec.c exec2.c)
@@ -20,7 +20,7 @@ MAIN		= $(addprefix ./src/, main.c list_cmd.c list_redirect.c			\
 			  history.c list_read.c prompt.c)
 
 # SRC			= $(LEX) $(MAIN)	
-SRC			= $(LEX) $(MAIN) $(ERRORS) $(ENV_PARSING) $(EXEC)
+SRC			= $(LEX) $(MAIN) $(ERRORS) $(ENV_PARSING) $(EXEC) $(BUILTINS)
 
 #------------ FLAGS + INCLUDE -------------#
 CFLAGS		= -Wextra -Wall -Werror -g

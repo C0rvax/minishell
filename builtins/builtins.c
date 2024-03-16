@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/15 16:57:17 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:21:25 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,11 +184,17 @@ int	is_a_builtin(t_cmd *cmd)
 	}
 	return (ft_freetab(builtarr), -1);
 }
+void	exec_unset(t_exec *exec, t_child *child)
+{
+	(void)exec;
+	(void)child;
+}
 
 int	exec_builtin(t_exec *exec, t_child *child)
 {
 	int	i;
 
+	ft_printf("dans le builtin\n");
 	i = is_a_builtin(child->current_cmd);
 	if (i == 0)
 		exec_echo(exec, child);
@@ -204,7 +210,6 @@ int	exec_builtin(t_exec *exec, t_child *child)
 		exec_env(exec, child);
 	else if (i == 6)
 		exec_exit(exec, child);
-	else
-		clear_built(exec, child, 0);
+	return (0);
 }
 

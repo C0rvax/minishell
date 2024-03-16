@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/14 12:19:40 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:39:44 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 	k = -1;
 	ft_bzero(exec, sizeof(t_exec));
 	exec->total_cmd = ft_cmd_lstsize(cmd);
+	ft_printf("total cmd : %d cmd no : %d\n", exec->total_cmd, exec->cmdno);
 	exec->fd = malloc(sizeof(int *) * exec->total_cmd - 1);
 	if (!exec->fd)
 		return (/*clean_exit_parent(exec, 1),*/ 1);
@@ -67,7 +68,7 @@ int	exec(t_cmd *cmd, char **mini_env)
 	// 		exec_uno(cmd, mini_env);
 	// 	waitpid(exec->pid, NULL, 0);
 	// }
-	if (exec.total_cmd > 1)
+	if (exec.total_cmd > 1) // si cmd = 1 alors pas de fork ???
 	{
 		create_pipes(&exec, exec.total_cmd);
 		if (ft_fork(&exec) != 0)

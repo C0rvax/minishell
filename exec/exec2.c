@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/14 12:21:04 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:30:42 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "env_parsing.h"
 #include "exec.h"
 #include "file_checks.h"
+#include "builtin.h"
 
 int initialize_child(t_child *child, t_exec *exec)
 {
@@ -65,7 +66,7 @@ int	ft_fork(t_exec *exec)
 {
 	while (exec->cmdno < exec->total_cmd)
 	{
-		exec->pid[exec->cmdno] = fork();
+		exec->pid[exec->cmdno] = fork(); // @Cam pas de fork donc child si cmd total = 1 ????
 		if (exec->pid[exec->cmdno] < 0)
 			return (2); // clean_exit_parent(exec, 1), 
 		if (exec->pid[exec->cmdno] == 0)
@@ -246,6 +247,8 @@ int manage_fd_lastchild(t_exec *exec, t_child *child)
 
 void	redirect_pipes(t_exec *exec, t_child *child) // redirect pipe
 {
+	if (child->current_cmd->argv)
+		exec_builtin(exec, child);
 	if (exec->cmdno == 0)
 	{
 		manage_fd_firstchild(exec, child);

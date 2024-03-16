@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:08:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/15 01:42:09 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/16 15:27:03 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static char	*get_path(void)
 		path[i + 1] = path_raw[i];
 		i++;
 	}
-	path[i + 2] = '\0';
+	path[i + 1] = '\0';
 	return (free(path_raw), path);
 }
 
@@ -100,8 +100,9 @@ char	*get_prompt(void)
 	session = get_sess();
 	path = get_path();
 	if (!user || !session || !path)
-		return (free(path), free(session), NULL);
-	prompt = mix_all(user, session, path);
+		prompt = ft_strdup("minishell$ ");
+	else
+		prompt = mix_all(user, session, path);
 	if (!prompt)
 		return (free(path), free(session), NULL);
 	return (free(path), free(session), prompt);
