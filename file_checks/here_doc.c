@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:37:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/12 22:30:00 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:58:13 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_here_doc(char *path)
 	line = NULL;
 	lim = ft_strjoin(path, "\n");
 	if (lim == NULL)
-		exit(2);
+		return (ft_putstr_fd(strerror(errno), 2), 1);
 	fd = open(".tmpheredoc", O_RDWR | O_TRUNC | O_CREAT, 0777);
 	if (fd == -1)
 		return (clean_exit_here_doc(lim, fd), 1);
@@ -63,17 +63,23 @@ void	kill_child(t_cmd *cmd)
 {
 	if (cmd->argv != NULL) // confirmer
 	{
-		free(cmd->argv = NULL);
+		free_tab(cmd->argv);
 		cmd->argv = NULL;
 	}
 	if (cmd->in != NULL)
 	{
-		free(cmd->in = NULL);
+		ft_in_lstclear(cmd->in);
 		cmd->in = NULL;
 	}
 	if (cmd->out != NULL)
 	{
-		free(cmd->out = NULL);
+		ft_in_lstclear(cmd->out);
 		cmd->out = NULL;
 	}
+	if (cmd->path_cmd != NULL)
+	{
+		free(cmd->path_cmd);
+		cmd->path_cmd = NULL;
+	}
+	cmd->type = KILLED;
 }

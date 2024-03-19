@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/14 13:22:08 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:40:57 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int ac, char **av, char **env)
 	read = NULL;
 	read_list = NULL;
 	(void)av;
-	mini_env = parse_env_array(env);
 	if (ac > 1)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
 	mini_env = parse_env_array(env);
@@ -45,12 +44,11 @@ int	main(int ac, char **av, char **env)
 		add_history("cat -e -n -s <<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 		*/
 		read = readline("minishell > ");
-		if (read && read[0] != '\0')
-		{
-			cmd = parse_read(read, mini_env); // if !cmd gerer 
-			if (error_checks(cmd, mini_env) != 0)
-				return (ft_putstr_fd("\nSTOP\n", 2), 1);
-			exec(cmd, mini_env);
-		}
+		// if (read && read[0] != '\0')
+		// {
+		cmd = parse_read(read, mini_env); // if !cmd gerer 
+		if (error_checks(cmd, mini_env) != 0)
+			return (ft_putstr_fd("\nSTOP\n", 2), 1);
+		exec(cmd, mini_env);
 	}
 }
