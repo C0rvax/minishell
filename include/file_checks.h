@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/13 10:14:28 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:16:40 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,14 @@ void kill_child(t_cmd *cmd);
 int	check_cmd(t_cmd *cmd, int total_cmd, char **env);
 char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd);
 char	**get_all_paths(char *ptr);
-char	*check_paths(char **paths, char *tab);
+// char	*check_paths(char **paths, char *tab);
+char	*check_paths(char **paths, char *command, t_cmd *cmd);
+// int is_valid_path(char **ptr, char *command);
+int is_valid_path(char *path, char **ptr, char *command);
+
 
 // utils_in_lists.c
-void print_str_fd(char *message, char *variable, int fd);
+void	print_str_fd(char *s1, char *s2, char *s3, int fd);
 int	ft_cmd_lstsize(t_cmd *lst);
 t_redirect	*ft_in_lstlast(t_redirect *lst);
 void	ft_in_lstclear(t_redirect *lst);

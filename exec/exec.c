@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/16 16:39:44 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:55:49 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,33 @@
 #include "env_parsing.h"
 #include "exec.h"
 #include "file_checks.h"
+#include <sys/wait.h> 
 
- #include <sys/wait.h> 
+int	exec(t_cmd *cmd, char **mini_env)
+{
+	t_exec exec;
+
+	if (initialize_exec(&exec, cmd, mini_env) != 0)
+		return (1); // gerer
+	// if (exec.total_cmd == 1)
+	// {
+	// 	exec.pid = fork();
+	// 	if (exec.pid < 0)
+	// 		return (ft_putstr_fd(strerror(errno), 2), 2);
+	// 	if (exec.pid == 0)
+	// 		exec_uno(cmd, mini_env);
+	// 	waitpid(exec.pid, NULL, 0);
+	// }
+	if (exec.total_cmd > 1)
+	{
+		if (create_pipes(&exec, exec.total_cmd) != 0)
+			return (1); // parent clean only
+		if (ft_fork(&exec) != 0)
+			return (1); // parent clean only
+		clean_end(&exec);
+	}
+	return (0);
+}
 
  int initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env)
 {
@@ -27,54 +52,18 @@
 	ft_printf("total cmd : %d cmd no : %d\n", exec->total_cmd, exec->cmdno);
 	exec->fd = malloc(sizeof(int *) * exec->total_cmd - 1);
 	if (!exec->fd)
-		return (/*clean_exit_parent(exec, 1),*/ 1);
+		return (clean_exit_parent(exec, 1), 1);
 	while (++k < exec->total_cmd - 1)
 	{
 		exec->fd[k] = malloc(sizeof(int) * 2);
 		if (!exec->fd[k])
-			return (/*clean_exit_parent(exec, 1),*/ 1);
+			return (clean_exit_parent(exec, 1), 1);
 	}
 	exec->pid = malloc(sizeof(int) * exec->total_cmd);
 	if (!exec->pid)
-		return (/*clean_exit_parent(exec, 1),*/ 1);
-	exec->cmd = cmd;
+		return (clean_exit_parent(exec, 1), 1);
+	exec->cmd = cmd; // free cmd et mini_env la plus haut dans la chaine ?
 	exec->mini_env = mini_env;
-	return (0);
-}
-
-int	clean_end(t_exec *exec)
-{
-	int	j;
-
-	j = exec->total_cmd;
-	while (--j >= 0)
-		waitpid(exec->pid[j], NULL, 0);
-	// clean_exit_parent(exec, 0);
-	return (0);
-}
-
-int	exec(t_cmd *cmd, char **mini_env)
-{
-	t_exec exec;
-
-	if (initialize_exec(&exec, cmd, mini_env) != 0)
-		return (1); // gerer
-	// if (exec->total_cmd == 1)
-	// {
-	// 	exec->pid = fork();
-	// 	if (exec->pid < 0)
-	// 		return (ft_putstr_fd(strerror(errno), 2), 2);
-	// 	if (exec->pid == 0)
-	// 		exec_uno(cmd, mini_env);
-	// 	waitpid(exec->pid, NULL, 0);
-	// }
-	if (exec.total_cmd > 1) // si cmd = 1 alors pas de fork ???
-	{
-		create_pipes(&exec, exec.total_cmd);
-		if (ft_fork(&exec) != 0)
-			return (1);
-		clean_end(&exec);
-	}
 	return (0);
 }
 

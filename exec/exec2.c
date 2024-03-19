@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/16 16:30:42 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:55:19 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,48 @@
 #include "file_checks.h"
 #include "builtin.h"
 
+int	create_pipes(t_exec *exec, int total_cmd)
+{
+	int	l;
+
+	l = 0;
+	while (l < total_cmd - 1)
+	{
+		if (pipe(exec->fd[l]) == -1)
+		{
+			clean_exit_parent(exec, 1);
+			return (1);
+		}
+		l++;
+	}
+	return (0);
+}
+
+int	ft_fork(t_exec *exec)
+{
+	while (exec->cmdno < exec->total_cmd)
+	{
+		exec->pid[exec->cmdno] = fork();
+		if (exec->pid[exec->cmdno] < 0)
+			return (clean_exit_parent(exec, 1), 2);
+		if (exec->pid[exec->cmdno] == 0)
+		{
+			t_child child;
+			if (initialize_child(&child, exec) != 0)
+				return (1); // pas de return
+			if (redirect_pipes(exec, &child) != 0)
+				return (1); // ds quel cas
+		}
+		if (exec->cmdno >= 1)
+		{
+			close(exec->fd[exec->cmdno - 1][0]);
+			close(exec->fd[exec->cmdno - 1][1]);
+		}
+		exec->cmdno++;
+	}
+	return (0);
+}
+
 int initialize_child(t_child *child, t_exec *exec)
 {
 	int i;
@@ -24,10 +66,10 @@ int initialize_child(t_child *child, t_exec *exec)
 	ft_bzero(child, sizeof(t_child));
 	child->cmdno = exec->cmdno;
 	child->current_cmd = exec->cmd; // attention revoir pour intermediaires
-	ft_putstr_fd("cmdno = ", 2);
-	ft_putnbr_fd(child->cmdno, 2);
-	ft_putnbr_fd(exec->total_cmd, 2);
-	ft_putstr_fd("\n ", 2);
+	// ft_putstr_fd("cmdno = ", 2);
+	// ft_putnbr_fd(child->cmdno, 2);
+	// ft_putnbr_fd(exec->total_cmd, 2);
+	// ft_putstr_fd("\n ", 2);
 	if (child->cmdno > 0 && child->cmdno < exec->total_cmd)
 	{
 		// ft_putstr_fd("TEST", 2);
@@ -45,50 +87,34 @@ int initialize_child(t_child *child, t_exec *exec)
 	return (0);
 }
 
-int	create_pipes(t_exec *exec, int total_cmd)
+int	redirect_pipes(t_exec *exec, t_child *child)
 {
-	int	l;
-
-	l = 0;
-	while (l < total_cmd - 1)
+	if (child->current_cmd->type == KILLED)
+		return (1); 
+	if (exec->cmdno == 0)
 	{
-		if (pipe(exec->fd[l]) == -1)
-		{
-			// clean_exit_parent(data, 1); // revoir
-			exit(2);
-		}
-		l++;
+		if (manage_fd_firstchild(exec, child) != 0)
+			return (1); // free(child) + clean exec
+		if (execve(exec->cmd->path_cmd, exec->cmd->argv, exec->mini_env) == -1)
+			return (1); // free(child) + clean exec a ce stade ?  
+	}
+	if (exec->cmdno > 0 && exec->cmdno < exec->total_cmd - 1)
+	{
+		if (manage_fd_middlechild(exec, child) != 0)
+			return (1); // free(child)
+		if (execve(child->current_cmd->path_cmd, child->current_cmd->argv, exec->mini_env) == -1)
+			return (1); // free(child)
+	}
+	if (exec->cmdno == exec->total_cmd - 1)
+	{
+		if (manage_fd_lastchild(exec, child) != 0)
+			return (1); // free(child)
+		if (execve(child->current_cmd->path_cmd, child->current_cmd->argv, exec->mini_env) == -1)
+			return (1); // free(child)
 	}
 	return (0);
 }
 
-int	ft_fork(t_exec *exec)
-{
-	while (exec->cmdno < exec->total_cmd)
-	{
-		exec->pid[exec->cmdno] = fork(); // @Cam pas de fork donc child si cmd total = 1 ????
-		if (exec->pid[exec->cmdno] < 0)
-			return (2); // clean_exit_parent(exec, 1), 
-		if (exec->pid[exec->cmdno] == 0)
-		{
-			// if (parsing(av, env, exec) != 0)
-			// {
-			// 	clean_exit_parent(exec, 0);
-			// 	exit (0);
-			// }
-			t_child child;
-			initialize_child(&child, exec); // if <<<
-			redirect_pipes(exec, &child);
-		}
-		if (exec->cmdno >= 1)
-		{
-			close(exec->fd[exec->cmdno - 1][0]);
-			close(exec->fd[exec->cmdno - 1][1]);
-		}
-		exec->cmdno++;
-	}
-	return (0);
-}
 void	close_higher_fds(t_exec *exec)
 {
 	int	l;
@@ -103,18 +129,6 @@ void	close_higher_fds(t_exec *exec)
 	close(exec->fd[exec->cmdno][0]);
 }
 
-// void	close_below_fds(t_exec *exec)
-// {
-// 	int	l;
-
-// 	l = exec->cmdno - 1;
-// 	while (l <= 0)
-// 	{
-// 		close(exec->fd[l][0]);
-// 		close(exec->fd[l][1]);
-// 		l--;
-// 	}
-// }
 int manage_fd_firstchild(t_exec *exec, t_child *child)
 {
 	close_higher_fds(exec);
@@ -122,53 +136,33 @@ int manage_fd_firstchild(t_exec *exec, t_child *child)
 	{
 		child->fdout = exec->fd[0][1];
 		// ft_putstr_fd("fdoutchild0=\n", 2);
-		ft_putnbr_fd(child->fdout, 2);
+		// ft_putnbr_fd(child->fdout, 2);
 	}
 	else
 	{
-		child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_TRUNC);
+		if (child->current_cmd->out->mode == SIMPLE)
+			child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_TRUNC);
+		else if (child->current_cmd->out->mode == DOUBLE)
+			child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_APPEND);
 		if (child->fdout < 0)
-			return (ft_putstr_fd("EROOR", 2), 1); // gerer
-
+			return (clean_exit_fds(exec, child), 1); // revoir si fds relevant et clean child
 	}
 	if (dup2(child->fdout, STDOUT_FILENO) == -1)
-		return (ft_putstr_fd("EROOR", 2), 1);
-		// clean_exit_process(exec);
+		return (clean_exit_fds(exec, child), 1);
 	close(child->fdout);
 	if (child->current_cmd->in)
 	{
 		child->fdin = open(child->current_cmd->in->path, O_RDONLY);
-		ft_putstr_fd("fdin child0=\n", 2);
-		ft_putnbr_fd(child->fdin, 2);
+		// ft_putstr_fd("fdin child0=\n", 2);
+		// ft_putnbr_fd(child->fdin, 2);
 		if (child->fdin < 0)
-			return (ft_putstr_fd("EROOR", 2), 1); // gerer
+			return (clean_exit_fds(exec, child), 1);
 		if (dup2(child->fdin, STDIN_FILENO) == -1)
-			return (1);
-			// (/*clean_exit_cmd(exec, arg, fd)*/);
+			return (clean_exit_fds(exec, child), 1);
 		close (child->fdin);
 	}
 	return (0);
 }
-
-// int get_fd_files(t_child *child, char which)
-// {
-// 	int fd;
-
-// 	fd = 0;
-// 	if (which == 'i' && child->current_cmd->in)
-// 	{
-// 		fd = open(child->current_cmd->in->path, O_RDONLY);
-// 		if (fd < 0)
-// 			return (1); // gerer
-// 	}
-// 	if (which == 'o' && child->current_cmd->out)
-// 	{
-// 		fd = open(child->current_cmd->out->path, O_WRONLY | O_TRUNC); // se placer ds le bon cmd
-// 		if (fd < 0)
-// 			return (1); // gerer
-// 	}
-// 	return (fd);
-// }
 
 int manage_fd_middlechild(t_exec *exec, t_child *child)
 {
@@ -180,11 +174,10 @@ int manage_fd_middlechild(t_exec *exec, t_child *child)
 	{
 		child->fdin = open(child->current_cmd->in->path, O_RDONLY);
 		if (child->fdin < 0)
-			return (1); // gerer
+			return (clean_exit_fds(exec, child), 1); // gerer
 	}
 	if (dup2(child->fdin, STDIN_FILENO) == -1)
-		// clean_exit_process(exec);
-		return (1);
+		return (clean_exit_fds(exec, child), 1);
 	close(child->fdin);
 	if (!child->current_cmd->out)
 	{
@@ -195,17 +188,16 @@ int manage_fd_middlechild(t_exec *exec, t_child *child)
 	}
 	else
 	{
-		child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_TRUNC);
+		if (child->current_cmd->out->mode == SIMPLE)
+			child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_TRUNC);
+		else if (child->current_cmd->out->mode == DOUBLE)
+			child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_APPEND);
 		if (child->fdout < 0)
-			return (ft_putstr_fd("EROOR", 2), 1); // gerer
-
+			return (clean_exit_fds(exec, child), 1); // revoir si fds relevant et clean child
 	}
 	if (dup2(child->fdout, STDOUT_FILENO) == -1)
-		return (ft_putstr_fd("EROOR", 2), 1);
-		// clean_exit_process(exec);
+		return (clean_exit_fds(exec, child), 1);
 	close(child->fdout);
-	if (execve(child->current_cmd->path_cmd, child->current_cmd->argv, exec->mini_env) == -1)
-		return (1);
 	return (0);
 }
 
@@ -219,54 +211,29 @@ int manage_fd_lastchild(t_exec *exec, t_child *child)
 	{
 		child->fdin = open(child->current_cmd->in->path, O_RDONLY);
 		if (child->fdin < 0)
-			return (1); // gerer
+			return (clean_exit_fds(exec, child), 1); // gerer
 	}
-	ft_printf("fdin child1=%d\n", child->fdin);
+	// ft_printf("fdin child1=%d\n", child->fdin);
 	if (dup2(child->fdin, STDIN_FILENO) == -1)
-		// clean_exit_process(exec);
-		return (1);
-		// (/*clean_exit_cmd(exec, arg, fd)*/);
+		return (clean_exit_fds(exec, child), 1);
 	close(child->fdin);
 	if (child->current_cmd->out)
 	{
-		child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_TRUNC); // se placer ds le bon cmd
+		if (child->current_cmd->out->mode == SIMPLE)
+			child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_TRUNC);
+		else if (child->current_cmd->out->mode == DOUBLE)
+			child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_APPEND);
 		if (child->fdout < 0)
-			return (1); // gerer
-
-		if (dup2(child->fdout, STDOUT_FILENO) == -1)
-			return (1);
-			// (/*clean_exit_cmd(exec, arg, fd)*/);
-		close (child->fdout);
+			return (clean_exit_fds(exec, child), 1); // revoir si fds relevant et clean child
 	}
-	ft_putstr_fd("fdout child1=\n", 2);
-	ft_putnbr_fd(child->fdout, 2);
-	if (execve(child->current_cmd->path_cmd, child->current_cmd->argv, exec->mini_env) == -1)
-		return (1);
+	else
+		child->fdout = STDOUT_FILENO;
+	if (dup2(child->fdout, STDOUT_FILENO) == -1)
+		return (clean_exit_fds(exec, child), 1);
+	close (child->fdout);
+	// ft_putstr_fd("fdout child1=\n", 2);
+	// ft_putnbr_fd(child->fdout, 2);
 	return (0);
-}
-
-void	redirect_pipes(t_exec *exec, t_child *child) // redirect pipe
-{
-	if (child->current_cmd->argv)
-		exec_builtin(exec, child);
-	if (exec->cmdno == 0)
-	{
-		manage_fd_firstchild(exec, child);
-		if (execve(exec->cmd->path_cmd, exec->cmd->argv, exec->mini_env) == -1)
-			return;
-			//  (/*clean_exit_cmd(exec, arg, fd)*/);
-	}
-	if (exec->cmdno > 0 && exec->cmdno < exec->total_cmd - 1)
-	{
-		manage_fd_middlechild(exec, child);
-
-	}
-	if (exec->cmdno == exec->total_cmd - 1)
-	{
-		manage_fd_lastchild(exec, child);
-			// (/*clean_exit_cmd(exec, arg, fd)*/);
-		// exec_cmd(exec->fdoutfile, exec);
-	}
 }
 
 // // depending on the i (i.e which command is processed),

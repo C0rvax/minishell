@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 17:55:56 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/12 21:37:38 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:05:23 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ int	free_tab(char **tab)
 	return (0);
 }
 
-int	free_tab_int(int **fd, int nb)
-{
-	int	i;
+// int	free_tab_int(int **fd, int nb)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < nb && fd[i] != NULL)
-	{
-		free(fd[i]);
-		i++;
-	}
-	free(fd);
-	return (0);
-}
+// 	i = 0;
+// 	while (i < nb && fd[i] != NULL)
+// 	{
+// 		free(fd[i]);
+// 		i++;
+// 	}
+// 	free(fd);
+// 	return (0);
+// }
 
 // void	ft_env_lstclear(t_env *env)
 // {

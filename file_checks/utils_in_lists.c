@@ -12,11 +12,11 @@
 
 #include "file_checks.h"
 
-void	print_str_fd(char *message, char *variable, int fd)
+void	print_str_fd(char *s1, char *s2, char *s3, int fd)
 {
-	ft_putstr_fd(message, fd);
-	ft_putstr_fd(variable, fd);
-	ft_putstr_fd("\n", fd);
+	ft_putstr_fd(s1, fd);
+	ft_putstr_fd(s2, fd);
+	ft_putstr_fd(s3, fd);
 }
 
 int	ft_cmd_lstsize(t_cmd *lst) // necessaire de proteger ?

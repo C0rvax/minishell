@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/15 15:24:26 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:56:18 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,20 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
-
 /*------- ENUM -------*/
 typedef enum e_mode
 {
 	SIMPLE,
-	DOUBLE,
+	DOUBLE
 }		t_mode;
+
+typedef enum e_type
+{
+	COMMAND,
+	KILLED,
+	BUILTPAR,
+	BUILTCHILD
+}		t_type;
 
 /*------- STRUCT -------*/
 typedef struct s_redirect
@@ -45,6 +52,7 @@ typedef struct s_cmd
 	char			*path_cmd;
 	t_redirect		*in;
 	t_redirect		*out;
+	t_type			type;
 	struct s_cmd	*next;
 }		t_cmd;
 
