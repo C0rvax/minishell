@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/16 16:21:25 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:32:48 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,58 @@ void	exec_pwd(t_exec *exec, t_child *child)
 		clear_built(exec, child, 0);
 }
 
+char	*ft_getenv(char **env, char *str)
+{
+	char	*value;
+	int		i;
+	int		len;
+
+	i = 0;
+	while (env[i])
+	{
+		len = ft_strlen(str);
+		if (ft_strnstr(env[i], str, len))
+		{
+			value = ft_substr(env[i], len + 1, ft_strlen(env[i]) - (len + 1));
+			if (!value)
+				return (NULL);
+			return (value);
+		}
+		i++;
+	}
+	value = malloc(1);
+	if (!value)
+		return (NULL);
+	value[0] = '\0';
+	return (value);
+}
+
 void	exec_cd(t_exec *exec, t_child *child)
 {
-	int	fd;
+	int		fd;
+	int		malloc;
+	char	*built;
 
-	// est ce qu'on verifie qu'il n'y ai pas d'autres argv[+1] ??
-	fd = open(child->current_cmd->argv[1], O_DIRECTORY);
+	malloc = 0;
+	built = child->current_cmd->argv[1];	
+	if (!built)
+	{
+		built = ft_getenv(exec->mini_env, "HOME");
+		malloc = 1;
+	}
+	if (!built)
+		clear_built(exec, child, msg_built(BMALLOC, 1));
+	fd = open(built, O_DIRECTORY);
 	if (fd == -1)
+	{
+		if (malloc)
+			free(built);
 		clear_built(exec, child, msg_built(CD, 1));
+	}
 	close(fd);
-	chdir(child->current_cmd->argv[1]);
+	chdir(built);
+	if (malloc)
+		free(built);
 	clear_built(exec, child, 0);
 }
 
@@ -127,6 +169,8 @@ void	exec_export(t_exec *exec, t_child *child)
 	char	**new;
 	char	**cpy;
 
+	if (exec->total_cmd != 1)
+		clear_built(exec, child, 0);
 	cpy = exec->mini_env;
 	new = ft_joinarr(child->current_cmd->argv, cpy);
 	if (!new)
