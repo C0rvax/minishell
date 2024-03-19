@@ -6,12 +6,14 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 12:39:32 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:18:31 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file_checks.h"
 #include "minishell.h"
+#include "builtin.h"
+
 // si malloc pete -> on free la commande et 
 // on renvoie le prompt / distinguer de cas ou pas de commande 
 
@@ -20,13 +22,23 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 	char	*ptr;
 	char	**paths;
 	int		cmd_nb;
-
+	int i = -1;
 	cmd_nb = 0;
 	while (cmd_nb < total_cmd && cmd != NULL)
 	{
 		if (cmd->argv)
 		{
 			ptr = NULL;
+			i = is_a_builtin(cmd);
+			if (i != -1)
+			{
+				if (total_cmd != 1)
+					cmd->type = BUILTCHILD;
+				if (total_cmd == 1 && (i == 6 || i == 4 || i == 3))
+					cmd->type = BUILTPAR;
+				ft_printf("BUILTIN");
+				return (0);
+			}
 			ptr = get_env(env, ptr, cmd->argv[0], cmd);
 			if (ptr == NULL)
 				if (cmd->path_cmd == NULL)
@@ -40,7 +52,7 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 			ft_printf("cmbnb = %d\n", cmd_nb);
 			ft_printf("cmd = %s\n", cmd->path_cmd);
 			if (cmd->type == KILLED)
-				ft_printf("KILLED");
+				ft_printf("KILLED\n");
 		}
 		cmd_nb++;
 		cmd = cmd->next;

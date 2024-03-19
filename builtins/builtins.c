@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/16 16:21:25 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:01:28 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,23 @@ int	exec_builtin(t_exec *exec, t_child *child)
 		exec_env(exec, child);
 	else if (i == 6)
 		exec_exit(exec, child);
+	return (0);
+}
+
+void	exec_exit_par(t_exec *exec)
+{
+	ft_printf("exit\n");
+	final_exit(exec, 0);
+}
+
+int	exec_builtin_par(t_exec *exec)
+{
+	int	i;
+
+	ft_printf("dans le builtin\n");
+	i = is_a_builtin(exec->cmd);
+	if (i == 6)
+		exec_exit_par(exec);
 	return (0);
 }
 

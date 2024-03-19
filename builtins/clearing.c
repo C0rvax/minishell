@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clearing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/16 16:19:53 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:02:59 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,18 @@ int	clear_built(t_exec *exec, t_child *child, int status_code)
 	free(exec->pid);
 	ft_freetab(exec->mini_env);
 	free(child);
+	exit (status_code);
+}
+
+int	final_exit(t_exec *exec, int status_code)
+{
+	int	i;
+
+	i = 0;
+	ft_cmd_lstclear(&exec->cmd);
+//	close_fd(exec->fd);
+	free(exec->fd);
+	free(exec->pid);
+	ft_freetab(exec->mini_env);
 	exit (status_code);
 }

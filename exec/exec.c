@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 15:55:49 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:17:14 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "exec.h"
 #include "file_checks.h"
 #include <sys/wait.h> 
+#include "builtin.h"
 
 int	exec(t_cmd *cmd, char **mini_env)
 {
@@ -22,15 +23,18 @@ int	exec(t_cmd *cmd, char **mini_env)
 
 	if (initialize_exec(&exec, cmd, mini_env) != 0)
 		return (1); // gerer
-	// if (exec.total_cmd == 1)
-	// {
-	// 	exec.pid = fork();
-	// 	if (exec.pid < 0)
-	// 		return (ft_putstr_fd(strerror(errno), 2), 2);
-	// 	if (exec.pid == 0)
-	// 		exec_uno(cmd, mini_env);
-	// 	waitpid(exec.pid, NULL, 0);
-	// }
+	if (exec.total_cmd == 1)
+	{
+		exec_builtin_par(&exec);
+		exec.pid[0] = fork();
+		if (exec.pid[0] < 0)
+			return (ft_putstr_fd(strerror(errno), 2), 2);
+		if (exec.pid[0] == 0)
+			exec_uno(cmd, mini_env);
+		waitpid(exec.pid[0], NULL, 0);
+		clean_exit_parent(&exec, 0);
+
+	}
 	if (exec.total_cmd > 1)
 	{
 		if (create_pipes(&exec, exec.total_cmd) != 0)
@@ -69,7 +73,7 @@ int	exec(t_cmd *cmd, char **mini_env)
 
 int	exec_uno(t_cmd *cmd, char **mini_env)
 {
-	int fdin;
+	int fdin; // initialiser
 	int fdout;
 
 	if (cmd->in != NULL)
@@ -91,7 +95,8 @@ int	exec_uno(t_cmd *cmd, char **mini_env)
 	if (cmd->argv == NULL)
 		return (1);
 	close(fdin);
-	close(fdout);
+	close(fdout); // mettre une condition
+	// exec_builtin(exec, child);
 	if (execve(cmd->path_cmd, cmd->argv, mini_env) == -1)
 		return (1);
 	return (0);

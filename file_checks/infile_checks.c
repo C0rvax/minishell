@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 15:56:10 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:08:39 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 // checks all files in all cmd, then all outfiles in all cmd
 // and finally all options and cmd
 
-// Cam c'est normale que la fonction renvoie tjrs 0 ??
 int	error_checks(t_cmd *cmd, char **mini_env)
 {
 	int	total_cmd;
@@ -136,10 +135,6 @@ t_redirect	*get_valid_in(t_redirect *in)
 		{
 			if (in->mode == DOUBLE)
 				unlink(".tmpheredoc");
-			// @Corvax : si plusieurs << ds mm commande,
-			// reecrivent ds mm fichier temp
-			// -unlink only once,
-			// pas de message d'erreur associe au unlink pour cette raison
 			in = in->next;
 		}
 	}

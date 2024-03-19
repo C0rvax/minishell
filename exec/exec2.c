@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 15:55:19 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:51:14 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,15 @@ int initialize_child(t_child *child, t_exec *exec)
 	i = 0;
 	ft_bzero(child, sizeof(t_child));
 	child->cmdno = exec->cmdno;
-	child->current_cmd = exec->cmd; // attention revoir pour intermediaires
-	// ft_putstr_fd("cmdno = ", 2);
-	// ft_putnbr_fd(child->cmdno, 2);
-	// ft_putnbr_fd(exec->total_cmd, 2);
-	// ft_putstr_fd("\n ", 2);
+	child->current_cmd = exec->cmd;
 	if (child->cmdno > 0 && child->cmdno < exec->total_cmd)
 	{
-		// ft_putstr_fd("TEST", 2);
 		while (i < child->cmdno)
 		{
 			child->current_cmd = child->current_cmd->next;
 			i++;
 		}
 	}
-	// ft_putstr_fd("child path = ", 2);
-	// ft_putstr_fd(child->current_cmd->path_cmd, 2);
-	// ft_putstr_fd("\n ", 2);
-	// ft_printf("\ncmd=%d\nTEST=%p\n", child->cmdno, child->current_cmd);
-	// ft_putstr_fd(child->current_cmd->path_cmd, 2);
 	return (0);
 }
 
@@ -95,6 +85,7 @@ int	redirect_pipes(t_exec *exec, t_child *child)
 	{
 		if (manage_fd_firstchild(exec, child) != 0)
 			return (1); // free(child) + clean exec
+		exec_builtin(exec, child);
 		if (execve(exec->cmd->path_cmd, exec->cmd->argv, exec->mini_env) == -1)
 			return (1); // free(child) + clean exec a ce stade ?  
 	}
@@ -102,6 +93,7 @@ int	redirect_pipes(t_exec *exec, t_child *child)
 	{
 		if (manage_fd_middlechild(exec, child) != 0)
 			return (1); // free(child)
+		exec_builtin(exec, child);
 		if (execve(child->current_cmd->path_cmd, child->current_cmd->argv, exec->mini_env) == -1)
 			return (1); // free(child)
 	}
@@ -109,6 +101,7 @@ int	redirect_pipes(t_exec *exec, t_child *child)
 	{
 		if (manage_fd_lastchild(exec, child) != 0)
 			return (1); // free(child)
+		exec_builtin(exec, child);
 		if (execve(child->current_cmd->path_cmd, child->current_cmd->argv, exec->mini_env) == -1)
 			return (1); // free(child)
 	}

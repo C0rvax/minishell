@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 15:48:24 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:06:10 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	clean_exit_parent(t_exec *exec, int err) // clean exit exec ?
 			ft_putstr_fd(strerror(errno), 2);
 		}
 	}
+	ft_cmd_lstclear(&exec->cmd);
+
 }
 
 int	clean_exit_fds(t_exec *exec, t_child *child)
