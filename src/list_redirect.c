@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/11 18:02:32 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:01:16 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ void	ft_redir_listclear(t_redirect **list)
 		while ((*list)->next)
 		{
 			buf = (*list)->next;
-			free((*list)->path);
+			if ((*list)->path)
+				free((*list)->path);
 			free(*list);
 			*list = buf;
 		}
-		free((*list)->path);
+		if ((*list)->path)
+			free((*list)->path);
 		free(*list);
 		*list = NULL;
 	}

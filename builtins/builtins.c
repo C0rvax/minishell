@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 17:32:48 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:05:59 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*ft_getenv(char **env, char *str)
 	value[0] = '\0';
 	return (value);
 }
-
+// gerer les cas ou plusieurs argv (mettre un msg d'erreur)
 void	exec_cd(t_exec *exec, t_child *child)
 {
 	int		fd;
