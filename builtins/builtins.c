@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/20 15:05:59 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:57:49 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	exec_pwd(t_exec *exec, t_child *child)
 {
 	char	*pwd;
 
-	// est ce qu'on verifie qu'il n'y ai pas d'autres argv[+1] ??
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		clear_built(exec, child, msg_built(PWD, 1));
@@ -173,10 +172,10 @@ void	exec_export(t_exec *exec, t_child *child)
 		clear_built(exec, child, 0);
 	cpy = exec->mini_env;
 	new = ft_joinarr(child->current_cmd->argv, cpy);
+	ft_freetab(cpy);
 	if (!new)
 		clear_built(exec, child, 0);
 	exec->mini_env = new;
-	ft_freetab(cpy);
 }
 
 void	exec_env(t_exec *exec, t_child *child)
@@ -238,7 +237,6 @@ int	exec_builtin(t_exec *exec, t_child *child)
 {
 	int	i;
 
-	ft_printf("dans le builtin\n");
 	i = is_a_builtin(child->current_cmd);
 	if (i == 0)
 		exec_echo(exec, child);
