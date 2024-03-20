@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 17:01:28 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:16:46 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,20 +213,18 @@ int	exec_builtin(t_exec *exec, t_child *child)
 	return (0);
 }
 
-void	exec_exit_par(t_exec *exec)
+int	is_exit(t_exec *exec)
 {
-	ft_printf("exit\n");
-	final_exit(exec, 0);
-}
+	char	*str;
 
-int	exec_builtin_par(t_exec *exec)
-{
-	int	i;
-
-	ft_printf("dans le builtin\n");
-	i = is_a_builtin(exec->cmd);
-	if (i == 6)
-		exec_exit_par(exec);
+	str = "exit";
+	if (!strncmp(str, exec->cmd->argv[0], ft_strlen(exec->cmd->argv[0])))
+	{
+		ft_printf("exit\n");
+		final_exit(exec, 0);
+		return (1);
+	}
 	return (0);
 }
+
 

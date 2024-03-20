@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/19 17:18:59 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:32:35 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int	exec_builtin(t_exec *exec, t_child *child);
 int	final_exit(t_exec *exec, int status_code);
 
 int	is_a_builtin(t_cmd *cmd);
-int	exec_builtin_par(t_exec *exec);
+int	is_exit(t_exec *exec);
 
 #endif

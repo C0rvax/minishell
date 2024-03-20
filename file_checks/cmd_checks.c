@@ -6,13 +6,14 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 17:18:31 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:15:19 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file_checks.h"
 #include "minishell.h"
 #include "builtin.h"
+#include "lexer.h"
 
 // si malloc pete -> on free la commande et 
 // on renvoie le prompt / distinguer de cas ou pas de commande 
@@ -76,7 +77,7 @@ char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
 	{
 		if (access(command, F_OK | X_OK) == 0)
 		{
-			cmd->path_cmd = command;
+			cmd->path_cmd = ft_strdup(command);
 			return (NULL);
 		}
 		print_str_fd(command, "No such file or directory", "\n", 2); // ok avec ce message? comme ds bash si PATH supprime
@@ -111,14 +112,17 @@ char	*check_paths(char **paths, char *command, t_cmd *cmd)
 
 	i = 0;
 	valid = 1;
-	ptr = malloc(sizeof(char));
-	ptr[0] = '\0';
+	ptr = NULL;
 	if (!command)
 		return (free_tab(paths), NULL);
 	if (access(command, F_OK | X_OK) == 0)
-		return (free_tab(paths), command);
+	{
+		ptr = ft_strdup(command);
+		return (free_tab(paths), ptr);
+	}
 	while (paths[i])
 	{
+		ft_printf("i=%d\n", i);
 		valid = is_valid_path(paths[i], &ptr, command);
 		if (valid == 1) // = malloc
 			return (free_tab(paths), NULL);
@@ -145,11 +149,10 @@ int	is_valid_path(char *path, char **ptr, char *command)
 		return (ft_putstr_fd(strerror(errno), 2), 1);
 	if (access(cpypath2, F_OK | X_OK) == 0)
 	{
-		free(*ptr);
-		*ptr = NULL;
-		*ptr = cpypath2;
+		*ptr = ft_strdup(cpypath2);
+		free(cpypath2);
 		return (0);
 	}
 	else
-		return (2);
+		return (free(cpypath2), 2);
 }

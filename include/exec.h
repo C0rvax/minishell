@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 15:43:07 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:50:10 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	clean_exit_parent(t_exec *exec, int err);
 int	clean_end(t_exec *exec);
 int	clean_exit_fds(t_exec *exec, t_child *child);
 int	free_tab_int(int **fd, int nb);
+void	clean_exit_child(t_exec *exec, int err); // clean exit exec ?
+
 
 
 #endif

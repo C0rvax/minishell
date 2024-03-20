@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 16:51:14 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:39:31 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ int	ft_fork(t_exec *exec)
 		if (exec->pid[exec->cmdno] == 0)
 		{
 			t_child child;
-			if (initialize_child(&child, exec) != 0)
-				return (1); // pas de return
+			initialize_child(&child, exec);
 			if (redirect_pipes(exec, &child) != 0)
-				return (1); // ds quel cas
+				return (1); // ds quel cas - child killed OK
 		}
 		if (exec->cmdno >= 1)
 		{
@@ -76,18 +75,30 @@ int initialize_child(t_child *child, t_exec *exec)
 	}
 	return (0);
 }
+void close_all_fds(t_exec *exec)
+{
+	int	l;
+
+	l = 0;
+	while (l < exec->total_cmd - 1)
+	{
+		close(exec->fd[l][0]);
+		close(exec->fd[l][1]);
+		l++;
+	}
+}
 
 int	redirect_pipes(t_exec *exec, t_child *child)
 {
 	if (child->current_cmd->type == KILLED)
-		return (1); 
+		return (close_all_fds(exec), clean_exit_child(exec, 0), 1);
 	if (exec->cmdno == 0)
 	{
 		if (manage_fd_firstchild(exec, child) != 0)
-			return (1); // free(child) + clean exec
+			return (1);
 		exec_builtin(exec, child);
 		if (execve(exec->cmd->path_cmd, exec->cmd->argv, exec->mini_env) == -1)
-			return (1); // free(child) + clean exec a ce stade ?  
+			return (1);  
 	}
 	if (exec->cmdno > 0 && exec->cmdno < exec->total_cmd - 1)
 	{
@@ -138,7 +149,7 @@ int manage_fd_firstchild(t_exec *exec, t_child *child)
 		else if (child->current_cmd->out->mode == DOUBLE)
 			child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_APPEND);
 		if (child->fdout < 0)
-			return (clean_exit_fds(exec, child), 1); // revoir si fds relevant et clean child
+			return (clean_exit_fds(exec, child), 1); // revoir si fds relevant
 	}
 	if (dup2(child->fdout, STDOUT_FILENO) == -1)
 		return (clean_exit_fds(exec, child), 1);
@@ -167,7 +178,7 @@ int manage_fd_middlechild(t_exec *exec, t_child *child)
 	{
 		child->fdin = open(child->current_cmd->in->path, O_RDONLY);
 		if (child->fdin < 0)
-			return (clean_exit_fds(exec, child), 1); // gerer
+			return (clean_exit_fds(exec, child), 1);
 	}
 	if (dup2(child->fdin, STDIN_FILENO) == -1)
 		return (clean_exit_fds(exec, child), 1);
@@ -229,87 +240,3 @@ int manage_fd_lastchild(t_exec *exec, t_child *child)
 	return (0);
 }
 
-// // depending on the i (i.e which command is processed),
-// // closes and dup the relevant fd
-
-// void	which_process(t_exec *exec) // redirect pipe
-// {
-// 	if (exec->cmdno == 0)
-// 	{
-// 		close_higher_fds(exec);
-// 		if ()
-// 		if (exec->cmd->in)
-// 		if (dup2(exec->fd[0][1], STDOUT_FILENO) == -1)
-// 			clean_exit_process(exec);
-// 		close(exec->fd[0][1]);
-// 		exec_cmd(exec->fdinfile, exec);
-// 	}
-// 	if (exec->cmdno > 0 && exec->cmdno < exec->total_cmd - 1)
-// 	{
-// 		close_higher_fds(exec);
-// 		dup_reading_fd(exec);
-// 		exec_cmd(exec->fd[exec->cmdno][1], exec);
-// 	}
-// 	if (exec->cmdno == exec->total_cmd - 1)
-// 	{
-// 		dup_reading_fd(exec);
-// 		exec_cmd(exec->fdoutfile, exec);
-// 	}
-// }
-
-// void	dup_reading_fd(t_exec *exec)
-// {
-// 	close(exec->fd[exec->cmdno - 1][1]);
-// 	if (dup2(exec->fd[exec->cmdno - 1][0], STDIN_FILENO) == -1)
-// 		clean_exit_process(exec);
-// 	close(exec->fd[exec->cmdno - 1][0]);
-// }
-
-// // depending also on the i, dup the standard in or output
-// // and executes the command
-
-// int	exec_cmd(t_cmd *cmd, char **env, int fd,)
-// {
-// 	if 
-// 	int		fdstd;
-
-// 	fdstd = STDOUT_FILENO;
-// 	if (data->i == 0)
-// 		fdstd = STDIN_FILENO;
-	
-// 	if (arg == NULL)
-// 		return (clean_exit_cmd(data, arg, fd));
-// 	if (dup2(fd, fdstd) == -1)
-// 		return (clean_exit_cmd(data, arg, fd));
-// 	close(fd);
-// 	if (execve(data->cmd, arg, env) == -1)
-// 		return (clean_exit_cmd(data, arg, fd));
-// 	return (0);
-// }
-
-// int	exec_cmd(int fd, t_exec *exec)
-// {
-// 	// int		fdstd;
-
-// 	// fdstd = STDOUT_FILENO;
-// 	// if (exec->cmdno == 0)
-// 	// 	fdstd = STDIN_FILENO;
-// 	if (exec->cmd->in)
-// 		if (exec->cmdno = 0)
-// 			if (dup2(fdin, STDIN_FILENO) == -1)
-// 				return (/*clean_exit_cmd(exec, arg, fd)*/);
-// 		else
-// 			if (dup2(fdin, exec->fd[exec->cmdno - 1][0]) == -1)
-// 				return (/*clean_exit_cmd(exec, arg, fd)*/);	close(fd);
-// 	if (exec->cmd->out)
-// 		if (exec->cmdno = exec->total_cmd - 1)
-// 			if (dup2(fdout, STDOUT_FILENO) == -1)
-// 				return (/*clean_exit_cmd(exec, arg, fd)*/);
-// 		else
-// 			if (dup2(fdout, exec->fd[exec->cmdno][1]) == -1)
-// 				return (/*clean_exit_cmd(exec, arg, fd)*/);	close(fd);
-	
-// 	if (execve(exec->cmd->path_cmd, exec->cmd->argv, exec->mini_env) == -1)
-// 		return (/*clean_exit_cmd(exec, arg, fd)*/);
-// 	return (0);
-// }

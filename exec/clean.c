@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 18:06:10 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:56:16 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,39 @@ void	clean_exit_parent(t_exec *exec, int err) // clean exit exec ?
 		}
 	}
 	ft_cmd_lstclear(&exec->cmd);
-
 }
+
+
+void	clean_exit_child(t_exec *exec, int err) // clean exit exec ?
+{
+	if (err == 1)
+		ft_putstr_fd(strerror(errno), 2);
+	if (exec->fd != NULL)
+		free_tab_int(exec->fd, exec->total_cmd - 1);
+	if (exec->pid != NULL)
+		free(exec->pid);
+	if (access(".tmpheredoc", F_OK) == 0)
+	{
+		if (unlink(".tmpheredoc") != 0)
+		{
+			ft_putstr_fd(strerror(errno), 2);
+		}
+	}
+	// if (exec->mini_env != NULL)
+	// 	ft_freetab(exec->mini_env);
+	ft_cmd_lstclear(&exec->cmd);
+}
+
+// void	clean_exit_child(t_exec *exec, int err)
+// {
+// 	if (err == 1)
+// 		ft_putstr_fd(strerror(errno), 2);
+// 	if (exec->mini_env != NULL)
+// 		ft_freetab(exec->mini_env);
+// 	if (exec->pid != NULL)
+// 		free(exec->pid);
+// 	ft_cmd_lstclear(&exec->cmd);
+// }
 
 int	clean_exit_fds(t_exec *exec, t_child *child)
 {
@@ -77,8 +108,8 @@ int	clean_exit_fds(t_exec *exec, t_child *child)
 		else
 			close(exec->fd[child->cmdno][1]);
 	}
-	clean_exit_parent(exec, 0);
-	// clean_exit_child(child, 0);
+	// clean_exit_parent(exec, 0);
+	clean_exit_child(exec, 0);
 	exit(0); // vraiment ?? 
 }
 

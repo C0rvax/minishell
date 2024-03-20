@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 18:08:39 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:05:59 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 			return (1); //slmt si malloc pete mettre fin au prog
 		if (check_outfiles(cmd, total_cmd) != 0)
 			return (1); // seulement si pb de fd
-		// check_options
 		if (check_cmd(cmd, total_cmd, mini_env) != 0)
 			return (1); // slmt pb de malloc aussi
 	}
@@ -128,7 +127,7 @@ t_redirect	*get_valid_in(t_redirect *in)
 	first_in = in;
 	valid_in = ft_in_lstlast(in);
 	if (valid_in->mode == DOUBLE)
-		valid_in->path = ".tmpheredoc";
+		valid_in->path = ft_strdup(".tmpheredoc");
 	if (valid_in->mode == SIMPLE)
 	{
 		while (in)
