@@ -55,8 +55,6 @@ void	ft_listclear(t_lst **list);
 void	ft_listadd_back(t_lst **list, t_lst *new);
 void	print_lst(t_lst *lexer);
 
-/*------- MAIN TOOLS -------*/
-char	*get_prompt(void);
 
 /*------- UTILS -------*/
 int		is_token(char c);

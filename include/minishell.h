@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 17:16:38 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:11:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_cmd
 	t_redirect		*in;
 	t_redirect		*out;
 	t_type			type;
-	int				status_code;
 	struct s_cmd	*next;
 }		t_cmd;
 
@@ -69,8 +68,16 @@ typedef struct s_data
 	t_cmd	*cmd;
 }		t_data;
 
+typedef struct s_persistent
+{
+	char	**mini_env;
+	int		status_code;
+}		t_persistent;
+
 /*------- UTILS -------*/
 int		add_to_history(t_read *list, char *read);
+char	*ft_getenv(char **env, char *str);
+char	*get_prompt(char **env);
 
 /*------- LIST CMD -------*/
 void	print_cmd_lst(t_cmd *cmd);

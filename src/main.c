@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 16:33:50 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:13:15 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,33 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char	*read;
-	t_cmd	*cmd;
-	char	**mini_env;
-	char	*prompt;
+	char			*read;
+	t_cmd			*cmd;
+	t_persistent	persistent;
+	char			*prompt;
 
 	read = NULL;
 	(void)av;
 	if (ac > 1)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
-	mini_env = parse_env_array(env); // penser a free le mini_env !!!
+	persistent.mini_env = parse_env_array(env); // penser a free le mini_env !!!
 	while (1)
 	{
-		prompt = get_prompt(); // penser a free le prompt !!!
+		prompt = get_prompt(persistent.mini_env); // penser a free le prompt !!!
 		read = readline(prompt); // si ctrl-c free le prompt !!!
 		free(prompt);
 		if (read && read[0] != '\0')
 		{
-			cmd = parse_read(read, mini_env);
+			cmd = parse_read(read, persistent.mini_env);
 			if (cmd)
 			{
-				if (error_checks(cmd, mini_env) != 0) // je crois que la fonction return toujours 0
+				if (error_checks(cmd, persistent.mini_env) != 0) // je crois que la fonction return toujours 0
 					return (ft_putstr_fd("\nSTOP\n", 2), 1); // si return alors free
-				exec(cmd, mini_env);
+				exec(cmd, persistent.mini_env);
 			}
 		}
 	}
-	ft_freetab(mini_env);
+	ft_freetab(persistent.mini_env);
 	rl_clear_history();
 	return (0);
 }

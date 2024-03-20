@@ -3,211 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/20 18:06:29 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:51:37 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	exec_pwd(t_exec *exec, t_child *child)
-{
-	char	*pwd;
-
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		clear_built(exec, child, msg_built(PWD, 1));
-	ft_printf("%s\n", pwd);
-		clear_built(exec, child, 0);
-}
-
-char	*ft_getenv(char **env, char *str)
-{
-	char	*value;
-	int		i;
-	int		len;
-
-	i = 0;
-	while (env[i])
-	{
-		len = ft_strlen(str);
-		if (ft_strnstr(env[i], str, len))
-		{
-			value = ft_substr(env[i], len + 1, ft_strlen(env[i]) - (len + 1));
-			if (!value)
-				return (NULL);
-			return (value);
-		}
-		i++;
-	}
-	value = malloc(1);
-	if (!value)
-		return (NULL);
-	value[0] = '\0';
-	return (value);
-}
-// gerer les cas ou plusieurs argv (mettre un msg d'erreur)
-void	exec_cd(t_exec *exec, t_child *child)
-{
-	int		fd;
-	int		malloc;
-	char	*built;
-
-	malloc = 0;
-	built = child->current_cmd->argv[1];	
-	if (!built)
-	{
-		built = ft_getenv(exec->mini_env, "HOME");
-		malloc = 1;
-	}
-	if (!built)
-		clear_built(exec, child, msg_built(BMALLOC, 1));
-	fd = open(built, O_DIRECTORY);
-	if (fd == -1)
-	{
-		if (malloc)
-			free(built);
-		clear_built(exec, child, msg_built(CD, 1));
-	}
-	close(fd);
-	chdir(built);
-	if (malloc)
-		free(built);
-	clear_built(exec, child, 0);
-}
-
-int	check_flag_echo(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] != '-')
-		return (1);
-	while (str[++i])
-	{
-		if (str[i] != 'n')
-			return (1);
-	}
-	return (0);
-}
-
-void	exec_echo(t_exec *exec, t_child *child)
-{
-	int	i;
-	char	**buf;
-
-	buf = child->current_cmd->argv;
-	i = 1;
-	if (!buf[1])
-		ft_printf("\n");
-	else if (buf[1] && !check_flag_echo(buf[1]))
-	{
-		i = 0;
-		while (buf[++i])
-			ft_printf("%s", buf[i]);
-	}
-	else if (buf[1] && check_flag_echo(buf[1]))
-	{
-		i = 0;
-		while (buf[++i])
-			ft_printf("%s", buf[i]);
-		ft_printf("\n");
-	}
-	clear_built(exec, child, 0);
-}
-
-int	ft_lenarr(char **arr)
-{
-	int	i;
-	int	res;
-
-	i = 0;
-	res = 0;
-	if (!arr)
-		return (0);
-	while (arr[i])
-	{
-		if (arr[i] && ft_strchr(arr[i], '=') != NULL)
-			res++;
-		i++;
-	}
-	return (res);
-}
-
-char	**ft_joinarr(char **exp, char **env)
-{
-	int		i;
-	int		j;
-	char	**new;
-
-	i = ft_lenarr(exp);
-	j = ft_lenarr(env);
-	if (!i)
-		return (NULL);
-	new = malloc(sizeof(char *) * (i + j + 1));
-	if (!new)
-		return (NULL);
-	i = -1;
-	while (env && env[++i])
-		new[i] = env[i];
-	j = 0;
-	while (exp[j])
-	{
-		if (ft_strchr(exp[j], '=') != NULL)
-			new[i + j] = exp[j];
-		j++;
-	}
-	new[i + j] = NULL;
-	return (new);
-}
-
-void	exec_export(t_exec *exec, t_child *child)
-{
-	char	**new;
-	char	**cpy;
-
-	if (exec->total_cmd != 1)
-		clear_built(exec, child, 0);
-	cpy = exec->mini_env;
-	new = ft_joinarr(child->current_cmd->argv, cpy);
-	ft_freetab(cpy);
-	if (!new)
-		clear_built(exec, child, 0);
-	exec->mini_env = new;
-}
-
-void	exec_env(t_exec *exec, t_child *child)
-{
-	int	i;
-
-	i = 0;
-	if (!child->current_cmd->argv[1])
-	{
-		while (exec->mini_env[i])
-		{
-			ft_printf("%s\n", exec->mini_env[i]);
-			i++;
-		}
-		clear_built(exec, child, 0);
-	}
-	// on peut ignorer ou erreur si argv[1]
-	else
-		clear_built(exec, child, msg_built(ENV, 1));
-}
-
-void	exec_exit(t_exec *exec, t_child *child)
-{
-	ft_printf("exit\n");
-	clear_built(exec, child, 0);
-}
-
-// void	ft_unset(t_env *node, char *arg) // revoir si l'argument de unset sera envoye comme string 
-// + voir si on doit gerer la definition de variables
-// {
-// 	// if (arg) n'existe pas dans env ou ailleurs si ailleurs doit etre couvert
-// }
 int	is_a_builtin(t_cmd *cmd)
 {
 	char	*str;
@@ -226,36 +30,6 @@ int	is_a_builtin(t_cmd *cmd)
 		i++;
 	}
 	return (ft_freetab(builtarr), -1);
-}
-int	str_in_arr(char **tab, char *str)
-{
-	int i;
-
-	i = 0;
-	if (!tab || !str)
-		return (0);
-	while (tab[i])
-	{
-		if (ft_strncmp(tab[i], str, ft_strlen(str)))
-			return (1);
-	}
-	return (0);
-}
-
-void	exec_unset(t_exec *exec, t_child *child)
-{
-	char	**cpy;
-	int		i;
-	int		count;
-
-	i = 1;
-	count = 0;
-	cpy = exec->mini_env;
-	while (child->current_cmd->argv[i])
-	{
-		if (str_in_arr(cpy, child->current_cmd->argv[i]))
-			count++;
-	}
 }
 
 int	exec_builtin(t_exec *exec, t_child *child)
@@ -293,5 +67,3 @@ int	is_exit(t_exec *exec)
 	}
 	return (0);
 }
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:13:14 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 18:06:43 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 19:48:34 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_cmd	*ft_cmd_lstnew(char **argv)
 	new->out = NULL;
 	new->next = NULL;
 	new->type = COMMAND;
-	new->status_code = 0;
 	return (new);
 }
 
