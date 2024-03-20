@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/14 16:02:30 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:48:18 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ t_cmd	*parse_read(char *read, char **env)
 		return (ft_listclear(&parse.lexer), NULL);
 	if (create_cmd_list(&parse))
 		return (ft_listclear(&parse.lexer), ft_cmd_lstclear(&parse.cmd), NULL);
-	print_lst(parse.lexer);
-	print_cmd_lst(parse.cmd);
 	ft_listclear(&parse.lexer);
 	add_history(read);
 	return (parse.cmd);

@@ -20,7 +20,7 @@ ERRORS		= $(addprefix ./file_checks/, infile_checks.c outfile_checks.c	\
 			  cmd_checks.c here_doc.c utils_in_lists.c)
 
 MAIN		= $(addprefix ./src/, main.c list_cmd.c list_redirect.c			\
-			  history.c list_read.c prompt.c utils.c)
+			  list_read.c prompt.c utils.c)
 
 # SRC			= $(LEX) $(MAIN)	
 SRC			= $(LEX) $(MAIN) $(ERRORS) $(ENV_PARSING) $(EXEC) $(BUILTINS)

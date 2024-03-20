@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 20:11:29 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:51:45 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,6 @@ typedef struct s_read
 	struct s_read	*next;
 }		t_read;
 
-typedef struct s_data
-{
-	char	**env;
-	t_cmd	*cmd;
-}		t_data;
-
 typedef struct s_persistent
 {
 	char	**mini_env;
@@ -75,7 +69,6 @@ typedef struct s_persistent
 }		t_persistent;
 
 /*------- UTILS -------*/
-int		add_to_history(t_read *list, char *read);
 char	*ft_getenv(char **env, char *str);
 char	*get_prompt(char **env);
 
