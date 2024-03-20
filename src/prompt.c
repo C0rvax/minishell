@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:08:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 20:15:51 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/20 22:13:39 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ char	*get_prompt(char **env)
 	char	*path;
 	char	*prompt;
 
-//	user = getenv("USER");
 	user = ft_getenv(env, "USER");
 	session = get_sess(env);
 	path = get_path(env);
