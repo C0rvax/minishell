@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:08:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/12 21:36:29 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:28:57 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ char	**parse_env_array(char **env) // necessaire ?
 	i = 0;
 	while (env[i])
 	{
-		// tab[i] = ft_strdup(env[i]);
-		tab[i] = env[i];
+		tab[i] = ft_strdup(env[i]);
 		i++;
 	}
 	return (tab);
