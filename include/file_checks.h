@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 12:16:40 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:10:36 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FILE_CHECKS_H
 
 #include "minishell.h"
-#include <fcntl.h>
 
 // typedef struct s_super_cmd
 // {
