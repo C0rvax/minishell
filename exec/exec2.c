@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 16:09:40 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:34:39 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	create_pipes(t_exec *exec, int total_cmd)
 
 int	ft_fork(t_exec *exec)
 {
-	int k = -1;
 	while (exec->cmdno < exec->total_cmd)
 	{
 		exec->pid[exec->cmdno] = fork();

@@ -6,13 +6,13 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 15:23:33 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:30:09 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	ft_lenarr(char **arr)
+int	ft_lenarr(char **arr, int mode)
 {
 	int	i;
 	int	res;
@@ -21,6 +21,15 @@ int	ft_lenarr(char **arr)
 	res = 0;
 	if (!arr)
 		return (0);
+	if (mode == 1)
+	{
+		while(arr[i])
+		{
+			res++;
+			i++;
+		}
+		return (res);
+	}
 	while (arr[i])
 	{
 		if (arr[i] && ft_strchr(arr[i], '=') != NULL)
@@ -36,8 +45,8 @@ char	**ft_joinarr(char **exp, char **env)
 	int		j;
 	char	**new;
 
-	i = ft_lenarr(exp);
-	j = ft_lenarr(env);
+	i = ft_lenarr(exp, 0);
+	j = ft_lenarr(env, 1);
 	if (!i)
 		return (NULL);
 	new = malloc(sizeof(char *) * (i + j + 1));
@@ -45,15 +54,14 @@ char	**ft_joinarr(char **exp, char **env)
 		return (NULL);
 	i = -1;
 	while (env && env[++i])
-		new[i] = env[i];
-	j = 0;
-	while (exp[j])
+		new[i] = ft_strdup(env[i]);
+	j = -1;
+	while (exp && exp[++j])
 	{
 		if (ft_strchr(exp[j], '=') != NULL)
-			new[i + j] = exp[j];
-		j++;
+			new[i++] = ft_strdup(exp[j]);
 	}
-	new[i + j] = NULL;
+	new[i] = NULL;
 	return (new);
 }
 
@@ -85,6 +93,7 @@ void	exec_export(t_exec *exec)
 	if (!new)
 		exit (1);
 	exec->mini_env = new;
+	clean_exit_parent(exec, 0);
 }
 
 void	exec_unset(t_exec *exec)

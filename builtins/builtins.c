@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 14:13:42 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:38:19 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_a_builtin(t_cmd *cmd)
 		return (-2);
 	while (builtarr[i])
 	{
-		if (!strncmp(builtarr[i], cmd->argv[0], ft_strlen(cmd->argv[0])))
+		if (!strncmp(builtarr[i], cmd->argv[0], ft_strlen(builtarr[i])))
 			return (ft_freetab(builtarr), i);
 		i++;
 	}
