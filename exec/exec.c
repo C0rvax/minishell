@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 12:06:23 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:33:45 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,48 +17,27 @@
 #include <sys/wait.h> 
 #include "builtin.h"
 
-int	exec_justone(t_exec *exec)
-{
-	if (exec->cmd->type == BUILTPAR)
-	{
-		exec_builtin_parent(exec);
-		return (0);
-	}
-	else
-	{
-		exec->pid[0] = fork();
-		if (exec->pid[0] < 0)
-			return (ft_putstr_fd(strerror(errno), 2), 2);
-		if (exec->pid[0] == 0)
-			exec_uno(exec->cmd, exec->mini_env);
-		waitpid(exec->pid[0], NULL, 0);
-		clean_exit_parent(exec, 0);
-	}
-	return (0);
-}
-
 int	exec(t_cmd *cmd, t_persistent *pers)
 {
-	t_exec exec;
+	t_exec	exec;
 
 	//gerer pers->status_code
 	if (initialize_exec(&exec, cmd, pers->mini_env) != 0)
-		return (1); // gerer
-	ft_printf("total_cmd =%d\n", exec.total_cmd);
+		return (1); // ok avec status_code - seulment des mallocs foireux
 	if (exec.total_cmd == 1)
 	{
-		if (exec.cmd->type != KILLED)
-		{
-			if (exec_justone(&exec))
-				return (1);
-		}
-		else if (exec.cmd->type == KILLED)
-			clean_exit_parent(&exec, 0);
+		if (exec.cmd->type == KILLED)
+			return (clean_exit_parent(&exec, 0), 0);
+		else if (exec.cmd->type == BUILTPAR)
+			return (exec_builtin_parent(&exec));
+		else
+			return (exec_uno(&exec) != 0); // si pb de fork, si argv NULL, si fd ou dup foire et si execve foire.
+// ok avec status code ?? / si pas d'erreur retombe en bas et renvoi 0 donc return (fct?)
 	}
 	else if (exec.total_cmd > 1)
 	{
 		if (create_pipes(&exec, exec.total_cmd) != 0)
-			return (1); // parent clean only
+			return (1);
 		if (ft_fork(&exec) != 0)
 			return (1); // SI ENFANT KILLED 
 		clean_end(&exec);
@@ -66,7 +45,7 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 	return (0);
 }
 
- int initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env)
+ int	initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env)
 {
 	int	k;
 
@@ -90,33 +69,73 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 	return (0);
 }
 
-int	exec_uno(t_cmd *cmd, char **mini_env)
+int	initialize_child(t_child *child, t_exec *exec)
 {
-	int fdin; // initialiser
+	int	i;
+
+	i = 0;
+	ft_bzero(child, sizeof(t_child));
+	child->cmdno = exec->cmdno;
+	child->current_cmd = exec->cmd;
+	if (child->cmdno > 0 && child->cmdno < exec->total_cmd)
+	{
+		while (i < child->cmdno)
+		{
+			child->current_cmd = child->current_cmd->next;
+			i++;
+		}
+	}
+	return (0);
+}
+
+int	exec_uno(t_exec *exec)
+{
+	if (exec->cmd->argv == NULL) // pas verifie ds error ? @Corvax, revoir le parsing car prend le infile ou outfile en argv
+		return (1);
+	if (exec->cmd->type == BUILTPAR)
+		return (exec_builtin_parent(exec));
+	else
+	{
+		exec->pid[0] = fork();
+		if (exec->pid[0] < 0)
+			return (ft_putstr_fd(strerror(errno), 2), 2);
+		if (exec->pid[0] == 0)
+		{
+			if (manage_fds(exec->cmd) != 0)
+				return (1);
+			if (execve(exec->cmd->path_cmd, exec->cmd->argv, exec->mini_env) == -1)
+				return (ft_putstr_fd(strerror(errno), 2), 1); // revoir le message ?
+		}
+		waitpid(exec->pid[0], NULL, 0);
+		clean_exit_parent(exec, 0);
+	}
+	return (0);
+}
+
+int	manage_fds(t_cmd *cmd)
+{
+	int fdin;
 	int fdout;
 
-	if (cmd->argv == NULL)
-		return (1);
+	fdin = 0;
+	fdout = 0;
 	if (cmd->in != NULL)
 	{
 		fdin = open(cmd->in->path, O_RDONLY);
 		if (fdin < 0)
-			return(1);
+			return (ft_putstr_fd(strerror(errno), 2), 1);
 		if (dup2(fdin, STDIN_FILENO) == -1)
-			return (1); // revoir le return clean_exit_cmd()
+			return (ft_putstr_fd(strerror(errno), 2), 1);
 		close(fdin);
 	}
 	if (cmd->out != NULL)
 	{
 		fdout = open(cmd->out->path, O_WRONLY);
 		if (fdout < 0)
-			return(1);
+			return (ft_putstr_fd(strerror(errno), 2), 1);
 		if (dup2(fdout, STDOUT_FILENO) == -1)
-			return (1); // revoir le return
+			return (ft_putstr_fd(strerror(errno), 2), 1);
 		close(fdout);
 	}
-	// exec_builtin(exec, child);
-	if (execve(cmd->path_cmd, cmd->argv, mini_env) == -1)
-		return (1);
 	return (0);
 }

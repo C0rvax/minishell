@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 12:36:21 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:15:44 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,18 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 	cmd_nb = 0;
 	while (cmd_nb < total_cmd && cmd != NULL)
 	{
-		if (cmd->argv)
+		if (cmd->argv == NULL)
+			return (ft_printf("LAAA"), 1); // @Corvax, revoir car pas NULL
+		else
 		{
 			ptr = NULL;
 			i = is_a_builtin(cmd);
 			if (i != -1)
 			{
-				if (total_cmd != 1)
-					cmd->type = BUILTCHILD;
 				if (total_cmd == 1)
 					cmd->type = BUILTPAR;
-				ft_printf("BUILTIN");
+				else if (total_cmd > 1)
+					cmd->type = BUILTCHILD;
 				return (0);
 			}
 			ptr = get_env(env, ptr, cmd->argv[0], cmd);
@@ -50,8 +51,6 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 			cmd->path_cmd = check_paths(paths, cmd->argv[0], cmd);
 			if (cmd->path_cmd == NULL && cmd->type != KILLED)
 				return (1); // enfant pas tue donc si pb malloc
-			ft_printf("cmbnb = %d\n", cmd_nb);
-			ft_printf("cmd = %s\n", cmd->path_cmd);
 			if (cmd->type == KILLED)
 				ft_printf("KILLED\n");
 		}
