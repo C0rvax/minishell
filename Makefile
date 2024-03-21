@@ -8,8 +8,8 @@ LEX			= $(addprefix ./lexer/, lexer.c list.c lex_utils.c parse_read.c	\
 			  replace_argument.c delete_quotes.c create_cmd_list.c			\
 			  search_errors.c create_parsarray.c)
 
-BUILTINS	= $(addprefix ./builtins/, builtins.c clearing.c env_exit.c		\
-			  pwd_cd_echo.c export_import.c)
+BUILTINS	= $(addprefix ./builtins/, builtins.c clearing.c echo.c			\
+			  env_exit.c pwd_cd.c export_import.c)
 
 ENV_PARSING	= $(addprefix ./env_parsing/, env_parsing.c utils.c)
 

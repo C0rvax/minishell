@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 12:08:09 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:15:34 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,22 @@ typedef struct s_persistent
 }		t_persistent;
 
 /*------- UTILS -------*/
-char	*ft_getenv(char **env, char *str);
-char	*get_prompt(char **env);
+char		*ft_getenv(char **env, char *str);
+char		*get_prompt(char **env);
 
 /*------- LIST CMD -------*/
-void	print_cmd_lst(t_cmd *cmd);
-void	ft_cmd_lstadd_back(t_cmd **list, t_cmd *new);
-t_cmd	*ft_cmd_lstlast(t_cmd *list);
-t_cmd	*ft_cmd_lstnew(char **argv);
-void	ft_cmd_lstclear(t_cmd **cmd);
+void		print_cmd_lst(t_cmd *cmd);
+void		ft_cmd_lstadd_back(t_cmd **list, t_cmd *new);
+t_cmd		*ft_cmd_lstlast(t_cmd *list);
+t_cmd		*ft_cmd_lstnew(char **argv);
+void		ft_cmd_lstclear(t_cmd **cmd);
 
 /*------- LIST READ -------*/
-void	ft_read_listclear(t_read **list);
-t_read	*ft_read_listnew(char *str);
-t_read	*ft_read_listlast(t_read *list);
-void	ft_read_listadd_back(t_read **list, t_read *new);
-void	print_read_lst(t_read *list);
+void		ft_read_listclear(t_read **list);
+t_read		*ft_read_listnew(char *str);
+t_read		*ft_read_listlast(t_read *list);
+void		ft_read_listadd_back(t_read **list, t_read *new);
+void		print_read_lst(t_read *list);
 
 /*------- LIST REIDRECT -------*/
 void		ft_redir_listclear(t_redirect **list);

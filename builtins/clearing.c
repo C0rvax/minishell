@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 12:23:05 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:28:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	clear_built(t_exec *exec, t_child *child, int status_code)
 
 	i = 0;
 	ft_cmd_lstclear(&exec->cmd);
-//	close_fd(exec->fd);
+	close_all_fds(exec);
 	while (exec->fd[i])
 	{
 		free(exec->fd[i]);
@@ -44,7 +44,7 @@ int	clear_built(t_exec *exec, t_child *child, int status_code)
 int	final_exit(t_exec *exec, int status_code)
 {
 	ft_cmd_lstclear(&exec->cmd);
-//	close_fd(exec->fd);
+	close_all_fds(exec);
 	free(exec->fd);
 	free(exec->pid);
 	ft_freetab(exec->mini_env);

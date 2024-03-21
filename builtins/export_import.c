@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 12:12:30 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:11:33 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,37 +99,6 @@ void	exec_unset(t_exec *exec)
 	while (exec->cmd->argv[i])
 	{
 		if (str_in_arr(cpy, exec->cmd->argv[i]))
-			count++;
-	}
-}
-
-void	exec_export_c(t_exec *exec, t_child *child)
-{
-	char	**new;
-	char	**cpy;
-
-	if (exec->total_cmd != 1)
-		clear_built(exec, child, 0);
-	cpy = exec->mini_env;
-	new = ft_joinarr(child->current_cmd->argv, cpy);
-	ft_freetab(cpy);
-	if (!new)
-		clear_built(exec, child, 0);
-	exec->mini_env = new;
-}
-
-void	exec_unset_c(t_exec *exec, t_child *child)
-{
-	char	**cpy;
-	int		i;
-	int		count;
-
-	i = 1;
-	count = 0;
-	cpy = exec->mini_env;
-	while (child->current_cmd->argv[i])
-	{
-		if (str_in_arr(cpy, child->current_cmd->argv[i]))
 			count++;
 	}
 }

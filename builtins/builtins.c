@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 12:20:11 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:13:42 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ int	exec_builtin(t_exec *exec, t_child *child)
 
 	i = is_a_builtin(child->current_cmd);
 	if (i == 0)
-		exec_echo(exec, child);
+		exec_echo_c(exec, child);
 	else if (i == 1)
-		exec_cd(exec, child);
+		exec_cd_c(exec, child);
 	else if (i == 2)
-		exec_pwd(exec, child);
+		exec_pwd_c(exec, child);
 	else if (i == 3)
-		exec_export_c(exec, child);
+		clear_built(exec, child, 0);
 	else if (i == 4)
-		exec_unset_c(exec, child);
+		clear_built(exec, child, 0);
 	else if (i == 5)
-		exec_env(exec, child);
+		exec_env_c(exec, child);
 	else if (i == 6)
-		exec_exit(exec, child);
+		exec_exit_c(exec, child);
 	return (0);
 }
 
@@ -60,15 +60,17 @@ int	exec_builtin_parent(t_exec *exec)
 
 	i = is_a_builtin(exec->cmd);
 	if (i == 0)
-		exec_echo(exec, NULL);
+		exec_echo(exec);
 	else if (i == 1)
-		exec_cd(exec, NULL);
+		exec_cd(exec);
 	else if (i == 2)
-		exec_pwd(exec, NULL);
+		exec_pwd(exec);
 	else if (i == 3)
 		exec_export(exec);
 	else if (i == 4)
 		exec_unset(exec);
+	else if (i == 5)
+		exec_env(exec);
 	else if (i == 6)
 		exec_exit_parent(exec);
 	return (0);

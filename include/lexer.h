@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 18:11:37 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:15:57 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_lst	*ft_listnew(char *str, t_token token);
 void	ft_listclear(t_lst **list);
 void	ft_listadd_back(t_lst **list, t_lst *new);
 void	print_lst(t_lst *lexer);
-
 
 /*------- UTILS -------*/
 int		is_token(char c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/20 17:39:31 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:28:25 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,10 @@ void close_all_fds(t_exec *exec)
 	l = 0;
 	while (l < exec->total_cmd - 1)
 	{
-		close(exec->fd[l][0]);
-		close(exec->fd[l][1]);
+		if (exec->fd[l][0] >= 0)
+			close(exec->fd[l][0]);
+		if (exec->fd[l][1] >= 0)
+			close(exec->fd[l][1]);
 		l++;
 	}
 }

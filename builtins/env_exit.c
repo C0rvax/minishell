@@ -6,13 +6,13 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 11:58:00 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:56:59 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-void	exec_env(t_exec *exec, t_child *child)
+void	exec_env_c(t_exec *exec, t_child *child)
 {
 	int	i;
 
@@ -31,7 +31,26 @@ void	exec_env(t_exec *exec, t_child *child)
 		clear_built(exec, child, msg_built(ENV, 1));
 }
 
-void	exec_exit(t_exec *exec, t_child *child)
+void	exec_env(t_exec *exec)
+{
+	int	i;
+
+	i = 0;
+	if (!exec->cmd->argv[1])
+	{
+		while (exec->mini_env[i])
+		{
+			ft_printf("%s\n", exec->mini_env[i]);
+			i++;
+		}
+		clean_exit_parent(exec, 0);
+	}
+	// on peut ignorer ou erreur si argv[1]
+	else
+		clean_exit_parent(exec, msg_built(ENV, 0));
+}
+
+void	exec_exit_c(t_exec *exec, t_child *child)
 {
 	ft_printf("exit\n");
 	clear_built(exec, child, 0);
