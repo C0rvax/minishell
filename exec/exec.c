@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/20 17:59:31 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:00:09 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@
 #include "file_checks.h"
 #include <sys/wait.h> 
 #include "builtin.h"
+
+int	exec_justone(t_exec *exec)
+{
+	if (exec->cmd->type == BUILTPAR)
+		exec_builtin_parent(exec);
+	exec->pid[0] = fork();
+	if (exec->pid[0] < 0)
+		return (ft_putstr_fd(strerror(errno), 2), 2);
+	if (exec->pid[0] == 0)
+		exec_uno(exec->cmd, exec->mini_env);
+	waitpid(exec->pid[0], NULL, 0);
+	clean_exit_parent(exec, 0);
+	return (0);
+}
 
 int	exec(t_cmd *cmd, char **mini_env)
 {
@@ -27,16 +41,7 @@ int	exec(t_cmd *cmd, char **mini_env)
 	if (exec.total_cmd == 1)
 	{
 		if (exec.cmd->type != KILLED)
-		{
-			is_exit(&exec); // doit-on le sortir de la condition KILLED ?
-			exec.pid[0] = fork();
-			if (exec.pid[0] < 0)
-				return (ft_putstr_fd(strerror(errno), 2), 2);
-			if (exec.pid[0] == 0)
-				exec_uno(cmd, mini_env);
-			waitpid(exec.pid[0], NULL, 0);
-			clean_exit_parent(&exec, 0);
-		}
+			exec_justone(&exec);
 		else if (exec.cmd->type == KILLED)
 			clean_exit_parent(&exec, 0);
 	}

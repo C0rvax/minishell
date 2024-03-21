@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/20 19:51:37 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:00:06 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_a_builtin(t_cmd *cmd)
 	return (ft_freetab(builtarr), -1);
 }
 
-int	exec_builtin(t_exec *exec, t_child *child)
+int	exec_builtin_child(t_exec *exec, t_child *child)
 {
 	int	i;
 
@@ -44,9 +44,9 @@ int	exec_builtin(t_exec *exec, t_child *child)
 	else if (i == 2)
 		exec_pwd(exec, child);
 	else if (i == 3)
-		exec_export(exec, child);
+		exec_export_c(exec, child);
 	else if (i == 4)
-		exec_unset(exec, child);
+		exec_unset_c(exec, child);
 	else if (i == 5)
 		exec_env(exec, child);
 	else if (i == 6)
@@ -54,16 +54,16 @@ int	exec_builtin(t_exec *exec, t_child *child)
 	return (0);
 }
 
-int	is_exit(t_exec *exec)
+int	exec_builtin_parent(t_exec *exec)
 {
-	char	*str;
+	int	i;
 
-	str = "exit";
-	if (!strncmp(str, exec->cmd->argv[0], ft_strlen(exec->cmd->argv[0])))
-	{
-		ft_printf("exit\n");
-		final_exit(exec, 0);
-		return (1);
-	}
+	i = is_a_builtin(exec->cmd);
+	if (i == 3)
+		exec_export(exec);
+	else if (i == 4)
+		exec_unset(exec);
+	else if (i == 6)
+		exec_exit_parent(exec);
 	return (0);
 }
