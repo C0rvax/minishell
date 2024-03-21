@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/20 17:15:19 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:36:21 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 			{
 				if (total_cmd != 1)
 					cmd->type = BUILTCHILD;
-				if (total_cmd == 1 && (i == 6 || i == 4 || i == 3))
+				if (total_cmd == 1)
 					cmd->type = BUILTPAR;
 				ft_printf("BUILTIN");
 				return (0);
