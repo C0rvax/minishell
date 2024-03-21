@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:37:13 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 19:59:05 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:30:49 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	exec_cd(t_exec *exec, t_child *child)
 	char	*built;
 
 	malloc = 0;
-	built = child->current_cmd->argv[1];
+	if (child)
+		built = child->current_cmd->argv[1];
+	else
+		built = exec->cmd->argv[1];
 	if (!built)
 	{
 		built = ft_getenv(exec->mini_env, "HOME");

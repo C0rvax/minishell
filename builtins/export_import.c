@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 19:40:10 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:12:30 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,38 @@ int	str_in_arr(char **tab, char *str)
 	return (0);
 }
 
-void	exec_export(t_exec *exec, t_child *child)
+void	exec_export(t_exec *exec)
+{
+	char	**new;
+	char	**cpy;
+
+	if (exec->total_cmd != 1)
+		exit (1);
+	cpy = exec->mini_env;
+	new = ft_joinarr(exec->cmd->argv, cpy);
+	ft_freetab(cpy);
+	if (!new)
+		exit (1);
+	exec->mini_env = new;
+}
+
+void	exec_unset(t_exec *exec)
+{
+	char	**cpy;
+	int		i;
+	int		count;
+
+	i = 1;
+	count = 0;
+	cpy = exec->mini_env;
+	while (exec->cmd->argv[i])
+	{
+		if (str_in_arr(cpy, exec->cmd->argv[i]))
+			count++;
+	}
+}
+
+void	exec_export_c(t_exec *exec, t_child *child)
 {
 	char	**new;
 	char	**cpy;
@@ -87,7 +118,7 @@ void	exec_export(t_exec *exec, t_child *child)
 	exec->mini_env = new;
 }
 
-void	exec_unset(t_exec *exec, t_child *child)
+void	exec_unset_c(t_exec *exec, t_child *child)
 {
 	char	**cpy;
 	int		i;
