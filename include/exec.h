@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/20 16:50:10 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:06:21 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_child
 
 // exec.c
 
-int	exec(t_cmd *cmd, char **mini_env);
+int	exec(t_cmd *cmd, t_persistent *pers);
 int initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env);
 int	exec_uno(t_cmd *cmd, char **mini_env);
 

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 11:00:09 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:06:23 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,38 @@
 int	exec_justone(t_exec *exec)
 {
 	if (exec->cmd->type == BUILTPAR)
+	{
 		exec_builtin_parent(exec);
-	exec->pid[0] = fork();
-	if (exec->pid[0] < 0)
-		return (ft_putstr_fd(strerror(errno), 2), 2);
-	if (exec->pid[0] == 0)
-		exec_uno(exec->cmd, exec->mini_env);
-	waitpid(exec->pid[0], NULL, 0);
-	clean_exit_parent(exec, 0);
+		return (0);
+	}
+	else
+	{
+		exec->pid[0] = fork();
+		if (exec->pid[0] < 0)
+			return (ft_putstr_fd(strerror(errno), 2), 2);
+		if (exec->pid[0] == 0)
+			exec_uno(exec->cmd, exec->mini_env);
+		waitpid(exec->pid[0], NULL, 0);
+		clean_exit_parent(exec, 0);
+	}
 	return (0);
 }
 
-int	exec(t_cmd *cmd, char **mini_env)
+int	exec(t_cmd *cmd, t_persistent *pers)
 {
 	t_exec exec;
 
-	if (initialize_exec(&exec, cmd, mini_env) != 0)
+	//gerer pers->status_code
+	if (initialize_exec(&exec, cmd, pers->mini_env) != 0)
 		return (1); // gerer
 	ft_printf("total_cmd =%d\n", exec.total_cmd);
 	if (exec.total_cmd == 1)
 	{
 		if (exec.cmd->type != KILLED)
-			exec_justone(&exec);
+		{
+			if (exec_justone(&exec))
+				return (1);
+		}
 		else if (exec.cmd->type == KILLED)
 			clean_exit_parent(&exec, 0);
 	}

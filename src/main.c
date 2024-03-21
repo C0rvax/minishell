@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 22:12:48 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:06:20 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,11 @@ int	main(int ac, char **av, char **env)
 		if (read && read[0] != '\0')
 		{
 			cmd = parse_read(read, persistent.mini_env);
-			if (cmd)
-			{
-				if (error_checks(cmd, persistent.mini_env) != 0)
-					return (ft_putstr_fd("\nSTOP\n", 2), 1);
-				exec(cmd, persistent.mini_env);
-			}
+			if (cmd && !error_checks(cmd, persistent.mini_env))
+					persistent.status_code = exec(cmd, &persistent);
 		}
 	}
 	ft_freetab(persistent.mini_env);
 	rl_clear_history();
-	return (0);
+	return (persistent.status_code);
 }
