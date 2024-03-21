@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 18:55:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 11:08:04 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:23:18 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	**create_arg_array(t_lst *lexer)
 	int		i;
 
 	buf = lexer;
-	i = 0;
 	argv = malloc(sizeof(char *) * (count_argv(buf) + 1));
 	if (!argv)
 		return (msg_lex(MALLOC, 0, ""), NULL);

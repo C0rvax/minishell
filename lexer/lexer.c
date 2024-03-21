@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:25 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/14 16:01:46 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:06:48 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	create_node_pipe(t_lst *list, int i, int *j)
 	return (0);
 }
 
-static int	create_node_out(t_lst *list, char *read, int i, int *j)
+static int	create_node_out(t_lst **list, char *read, int i, int *j)
 {
 	t_lst	*new;
 
@@ -46,11 +46,11 @@ static int	create_node_out(t_lst *list, char *read, int i, int *j)
 	}
 	if (!new)
 		return (msg_lex(MALLOC, '\0', ""), 1);
-	ft_listadd_back(&list, new);
+	ft_listadd_back(list, new);
 	return (0);
 }
 
-static int	create_node_in(t_lst *list, char *read, int i, int *j)
+static int	create_node_in(t_lst **list, char *read, int i, int *j)
 {
 	t_lst	*new;
 
@@ -71,7 +71,7 @@ static int	create_node_in(t_lst *list, char *read, int i, int *j)
 	}
 	if (!new)
 		return (msg_lex(MALLOC, '\0', ""), 1);
-	ft_listadd_back(&list, new);
+	ft_listadd_back(list, new);
 	return (0);
 }
 
@@ -91,9 +91,9 @@ static int	create_list_node(t_lst **list, char *read, int i, int *j)
 	if (read[i] == '|')
 		status_code = create_node_pipe(*list, i, j);
 	if (read[i] == '>')
-		status_code = create_node_out(*list, read, i, j);
+		status_code = create_node_out(list, read, i, j);
 	if (read[i] == '<')
-		status_code = create_node_in(*list, read, i, j);
+		status_code = create_node_in(list, read, i, j);
 	if (read[i] == ' ')
 		*j = i + 1;
 	return (status_code);
