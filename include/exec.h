@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 16:13:36 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:16:58 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ int			exec_uno(t_exec *exec);
 int			manage_fds(t_cmd *cmd);
 
 // exec2.c
-int		create_pipes(t_exec *exec, int total_cmd);
-int		ft_fork(t_exec *exec);
-int		initialize_child(t_child *child, t_exec *exec);
-int		redirect_pipes(t_exec *exec, t_child *child);
-void	close_higher_fds(t_exec *exec);
-int		manage_fd_firstchild(t_exec *exec, t_child *child);
-int		manage_fd_middlechild(t_exec *exec, t_child *child);
-int		manage_fd_lastchild(t_exec *exec, t_child *child);
-void	close_all_fds(t_exec *exec);
-int		manage_fd_firstchild(t_exec *exec, t_child *child);
-int		manage_fd_middlechild(t_exec *exec, t_child *child);
-int		manage_fd_lastchild(t_exec *exec, t_child *child);
+int			create_pipes(t_exec *exec, int total_cmd);
+int			ft_fork(t_exec *exec);
+int			initialize_child(t_child *child, t_exec *exec);
+int			redirect_pipes(t_exec *exec, t_child *child);
+void		close_higher_fds(t_exec *exec);
+int			manage_fd_firstchild(t_exec *exec, t_child *child);
+int			manage_fd_middlechild(t_exec *exec, t_child *child);
+int			manage_fd_lastchild(t_exec *exec, t_child *child);
+void		close_all_fds(t_exec *exec);
+int			manage_fd_firstchild(t_exec *exec, t_child *child);
+int			manage_fd_middlechild(t_exec *exec, t_child *child);
+int			manage_fd_lastchild(t_exec *exec, t_child *child);
 
 //  clean.c
 void		clean_exit_parent(t_exec *exec, int err);
