@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 16:10:56 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:13:36 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int		ft_fork(t_exec *exec);
 int		initialize_child(t_child *child, t_exec *exec);
 int		redirect_pipes(t_exec *exec, t_child *child);
 void	close_higher_fds(t_exec *exec);
-int manage_fd_firstchild(t_exec *exec, t_child *child);
-int manage_fd_middlechild(t_exec *exec, t_child *child);
-int manage_fd_lastchild(t_exec *exec, t_child *child);
-void close_all_fds(t_exec *exec);
+int		manage_fd_firstchild(t_exec *exec, t_child *child);
+int		manage_fd_middlechild(t_exec *exec, t_child *child);
+int		manage_fd_lastchild(t_exec *exec, t_child *child);
+void	close_all_fds(t_exec *exec);
 int		manage_fd_firstchild(t_exec *exec, t_child *child);
 int		manage_fd_middlechild(t_exec *exec, t_child *child);
 int		manage_fd_lastchild(t_exec *exec, t_child *child);
