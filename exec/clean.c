@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/20 17:56:16 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:42:44 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ void	clean_exit_parent(t_exec *exec, int err) // clean exit exec ?
 	if (exec->fd != NULL)
 		free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid != NULL)
+	{
 		free(exec->pid);
+		exec->pid = NULL;
+	}
 	if (access(".tmpheredoc", F_OK) == 0)
 	{
 		if (unlink(".tmpheredoc") != 0)
-		{
 			ft_putstr_fd(strerror(errno), 2);
-		}
 	}
 	ft_cmd_lstclear(&exec->cmd);
 }
-
 
 void	clean_exit_child(t_exec *exec, int err) // clean exit exec ?
 {
@@ -124,5 +124,22 @@ int	free_tab_int(int **fd, int nb)
 		i++;
 	}
 	free(fd);
+	fd = NULL;
 	return (0);
+}
+
+
+void close_all_fds(t_exec *exec)
+{
+	int	l;
+
+	l = 0;
+	while (l < exec->total_cmd - 1)
+	{
+		if (exec->fd[l][0] >= 0)
+			close(exec->fd[l][0]);
+		if (exec->fd[l][1] >= 0)
+		close(exec->fd[l][1]);
+		l++;
+	}
 }

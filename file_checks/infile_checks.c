@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/20 17:05:59 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:14:31 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 		return (1);
 	total_cmd = ft_cmd_lstsize(cmd);
 	// si total_cmd = 0, quid sur exec ?
-	ft_printf("total cmd = %d\n", total_cmd);
+	// ft_printf("argv:%s", cmd->argv[0]);
 	if (total_cmd != 0)
 	{
 		if (check_infiles(cmd, total_cmd) != 0)
@@ -34,7 +34,7 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 		if (check_outfiles(cmd, total_cmd) != 0)
 			return (1); // seulement si pb de fd
 		if (check_cmd(cmd, total_cmd, mini_env) != 0)
-			return (1); // slmt pb de malloc aussi
+			return (1); // slmt pb de malloc aussi / ou si pas de argv
 	}
 	return (0);
 }
