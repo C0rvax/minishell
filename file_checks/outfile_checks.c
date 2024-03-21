@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:37:33 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 12:25:50 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:32:08 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_outfiles(t_cmd *cmd, int total_cmd)
 	error = 0;
 	while (cmd_nb < total_cmd && cmd != NULL)
 	{
-		if (cmd->out)
+		if (cmd->out && cmd->type != KILLED)
 		{
 			error = check_out(cmd->out);
 			if (error == 1)
@@ -36,8 +36,6 @@ int	check_outfiles(t_cmd *cmd, int total_cmd)
 				cmd->out = get_valid_out(cmd->out);
 				if (!cmd->out)
 					return (1); // relevant de sortir de la fonction?
-				ft_printf("cmbnb = %d\n", cmd_nb);
-				ft_printf("out = %s\n", cmd->out->path);
 			}
 			else // cas ou fd a pete
 				return (1);

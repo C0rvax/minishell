@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:30:30 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:55:35 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 	{
 		if (create_pipes(&exec, exec.total_cmd) != 0)
 			return (1);
-		if (ft_fork(&exec) != 0)
-			return (1); // SI ENFANT KILLED 
+		if (ft_fork(&exec)!= 0)
+			return (1); // SI ENFANT KILLED tjr 0 retourne
 		clean_end(&exec);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 15:14:31 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:32:14 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 		return (1);
 	total_cmd = ft_cmd_lstsize(cmd);
 	// si total_cmd = 0, quid sur exec ?
-	// ft_printf("argv:%s", cmd->argv[0]);
+	// if (cmd->in)
+	// 		ft_printf("in=%s\n", cmd->in->path);
+	// ft_printf("LAAA");
+	// if (cmd->out)
+	// 	ft_printf("out=%s\n", cmd->out->path);
+
 	if (total_cmd != 0)
 	{
 		if (check_infiles(cmd, total_cmd) != 0)
@@ -60,8 +65,6 @@ int	check_infiles(t_cmd *cmd, int total_cmd)
 				cmd->in = get_valid_in(cmd->in);
 				if (!cmd->in)
 					return (1); // relevant de sortir de la fonction?
-				ft_printf("cmbnb = %d\n", cmd_nb);
-				ft_printf("int = %s\n", cmd->in->path);
 			}
 			else
 				return (1);
