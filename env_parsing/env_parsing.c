@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:08:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/19 17:28:57 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:54:15 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 // 	return (tab);
 // }
 
-char	**parse_env_array(char **env) // necessaire ?
+void	parse_env_array(t_persistent *pers, char **env) // necessaire ?
 {
 	char	**tab;
 	int		i;
@@ -70,7 +70,7 @@ char	**parse_env_array(char **env) // necessaire ?
 		tab[i] = ft_strdup(env[i]);
 		i++;
 	}
-	return (tab);
+	pers->mini_env = tab;
 }
 
 // int	main(int ac, char **av, char **env)

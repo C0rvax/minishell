@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/22 02:26:18 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:37:00 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (ac > 1)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
-	persistent.mini_env = parse_env_array(env);
+	parse_env_array(&persistent, env);
 	ft_make_hist();
 	while (1)
 	{

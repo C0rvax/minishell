@@ -6,13 +6,13 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/22 14:01:26 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:55:31 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	ft_lenarr(char **arr, int mode)
+static int	ft_lenarr(char **arr, int mode)
 {
 	int	i;
 	int	res;
@@ -36,7 +36,7 @@ int	ft_lenarr(char **arr, int mode)
 	return (res);
 }
 
-char	**ft_joinarr(char **exp, char **env)
+static char	**ft_joinarr(char **exp, char **env)
 {
 	int		i;
 	int		j;
@@ -58,16 +58,15 @@ char	**ft_joinarr(char **exp, char **env)
 		if (ft_strchr(exp[j], '=') != NULL)
 		{
 			new[i++] = ft_strdup(exp[j]);
-			if (!new[i])
+			if (!new[i - 1])
 				return (ft_freetab(new), NULL);
 		}
 	}
 	new[i] = NULL;
 	return (new);
 }
-//proteger les dup !
 
-int	str_in_arr(char **tab, char *str)
+static int	str_in_arr(char **tab, char *str)
 {
 	int	i;
 
@@ -89,21 +88,12 @@ void	exec_export(t_exec *exec, t_persistent *pers)
 
 	if (exec->total_cmd != 1)
 		exit (1);
-	cpy = pers->mini_env;
-	ft_printf("===========================================================\n");
-	ft_printf("===========================================================\n");
-	ft_putar(pers->mini_env);
-	ft_printf("===========================================================\n");
-	ft_printf("===========================================================\n");
+	cpy = exec->mini_env;
 	new = ft_joinarr(exec->cmd->argv, cpy);
 	ft_freetab(cpy);
 	if (!new)
 		clean_exit_parent (exec, msg_error("minishell:", strerror(errno), 1));
-//	exec->mini_env = new;
 	pers->mini_env = new;
-	ft_printf("avant crash\n");
-	ft_putar(pers->mini_env);
-	ft_printf("apres crash\n");
 	clean_exit_parent(exec, 0);
 }
 
