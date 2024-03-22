@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:37:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:20:52 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:04:50 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,4 @@ void	clean_exit_here_doc(char *lim, int fd)
 			ft_putstr_fd(strerror(errno), 2);
 		}
 	}
-}
-
-void	kill_child(t_cmd *cmd)
-{
-	cmd->type = KILLED;
-	// if (cmd->argv != NULL)
-	// {
-	// 	free_tab(cmd->argv);
-	// 	cmd->argv = NULL;
-	// }
-	// if (cmd->in != NULL)
-	// 	ft_redir_listclear(&cmd->in);
-	// if (cmd->out != NULL)
-	// 	ft_redir_listclear(&cmd->in);
-	// if (cmd->path_cmd != NULL)
-	// {
-	// 	free(cmd->path_cmd);
-	// 	cmd->path_cmd = NULL;
-	// }
 }

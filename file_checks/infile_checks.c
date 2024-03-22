@@ -6,11 +6,11 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:32:14 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:04:15 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "file_checks.h" 
+#include "file_checks.h"
 #include "minishell.h"
 #include <unistd.h>
 
@@ -25,27 +25,25 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 	if (!cmd)
 		return (1);
 	total_cmd = ft_cmd_lstsize(cmd);
-	// si total_cmd = 0, quid sur exec ?
-	// if (cmd->in)
-	// 		ft_printf("in=%s\n", cmd->in->path);
-	// ft_printf("LAAA");
-	// if (cmd->out)
-	// 	ft_printf("out=%s\n", cmd->out->path);
-
 	if (total_cmd != 0)
 	{
-		if (check_infiles(cmd, total_cmd) != 0)
-			return (1); //slmt si malloc pete mettre fin au prog
-		if (check_outfiles(cmd, total_cmd) != 0)
-			return (1); // seulement si pb de fd
-		if (check_cmd(cmd, total_cmd, mini_env) != 0)
-			return (1); // slmt pb de malloc aussi / ou si pas de argv
+		if ((check_infiles(cmd, total_cmd) != 0) || (check_outfiles(cmd,
+					total_cmd) != 0) || (check_cmd(cmd, total_cmd,
+					mini_env) != 0))
+		{
+			if (access(".tmpheredoc", F_OK) == 0)
+				unlink(".tmpheredoc");
+			ft_cmd_lstclear(&cmd);
+			return (1);
+		}
 	}
 	return (0);
 }
 
 // checks through cmd list the infiles.
-// in case of error in some infiles, kills the child but continues through cmd
+// in case of error in some infiles, kills the child
+// if no error is encountered, only keeps the last infile for exec.
+// return (1) in case of error (malloc or fd error - errno already displayed)
 
 int	check_infiles(t_cmd *cmd, int total_cmd)
 {
@@ -59,12 +57,12 @@ int	check_infiles(t_cmd *cmd, int total_cmd)
 		{
 			error = check_in(cmd->in);
 			if (error == 1)
-				kill_child(cmd);
+				cmd->type = KILLED;
 			else if (error == 0)
 			{
 				cmd->in = get_valid_in(cmd->in);
 				if (!cmd->in)
-					return (1); // relevant de sortir de la fonction?
+					return (1);
 			}
 			else
 				return (1);
@@ -76,8 +74,8 @@ int	check_infiles(t_cmd *cmd, int total_cmd)
 }
 
 // checks through in list. first looks at the heredoc and save the input
-// then prints the error message, even if the infile with error 
-// is before here_doc
+// then prints the error message, even if the infile with error is before
+// here_doc
 
 int	check_in(t_redirect *in)
 {
@@ -88,14 +86,14 @@ int	check_in(t_redirect *in)
 	{
 		if (in->mode == DOUBLE)
 			if (get_here_doc(in->path) != 0)
-				return (2); // 2 si malloc ou fd pete -> strerror
+				return (2);
 		in = in->next;
 	}
 	while (buf)
 	{
 		if (buf->mode == SIMPLE)
 			if (check_infile_errors(buf->path) != 0)
-				return (1); // 1 si erreur de fichier
+				return (1);
 		buf = buf->next;
 	}
 	return (0);
@@ -120,7 +118,7 @@ int	check_infile_errors(char *path)
 	return (0);
 }
 
-// if all infiles are valid, only keeps the last one and free other in nodes
+// if all infiles are valid, only keeps the last one and free other infile nodes
 
 t_redirect	*get_valid_in(t_redirect *in)
 {
@@ -140,6 +138,6 @@ t_redirect	*get_valid_in(t_redirect *in)
 			in = in->next;
 		}
 	}
-	ft_in_lstclear(first_in); // verifier que tout bien clean
+	ft_in_lstclear(first_in);
 	return (valid_in);
 }

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:37:33 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:32:08 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:04:21 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include <unistd.h>
 
 // checks through cmd list the outfiles.
-// in case of error in some outfiles, kills the child but continues through cmd
+// in case of error in some outfiles, kills the child.
+// if all outfiles are OK, it only keeps the last one.
+// return 1 in case of mistake in fd opening (strerror already displayed)
 
 int	check_outfiles(t_cmd *cmd, int total_cmd)
 {
@@ -30,14 +32,14 @@ int	check_outfiles(t_cmd *cmd, int total_cmd)
 		{
 			error = check_out(cmd->out);
 			if (error == 1)
-				kill_child(cmd);
+				cmd->type = KILLED;
 			else if (error == 0)
 			{
 				cmd->out = get_valid_out(cmd->out);
 				if (!cmd->out)
-					return (1); // relevant de sortir de la fonction?
+					return (1);
 			}
-			else // cas ou fd a pete
+			else
 				return (1);
 		}
 		cmd_nb++;
@@ -46,15 +48,15 @@ int	check_outfiles(t_cmd *cmd, int total_cmd)
 	return (0);
 }
 
-//checks if outfile exists and if permission
-// if does not exist, creates it
+//checks if outfile exists and the relevant permissions
+// if outfile does not exist, creates it
 
 int	check_out(t_redirect *out)
 {
 	while (out)
 	{
 		if (!out->path)
-			return (1); // @Corvax: verifier que message dérreur prevu au pars
+			return (1); // @Corvax: verifier que message dérreur prevu au parsing
 		if (access(out->path, F_OK) == 0 && access(out->path, W_OK) != 0)
 		{
 			print_str_fd("permission denied: ", out->path, "\n", 2);
@@ -91,7 +93,7 @@ int	create_outfile(t_redirect *out)
 	return (0);
 }
 
-// if no error is encountered, keeps only the last outfile
+// if no error is encountered, keeps only the last outfile for exec
 
 t_redirect	*get_valid_out(t_redirect *out)
 {

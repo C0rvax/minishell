@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:07:33 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:01:53 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,11 @@ void	clean_exit_child(t_exec *exec, int err) // clean exit exec ?
 			ft_putstr_fd(strerror(errno), 2);
 		}
 	}
-	// if (exec->mini_env != NULL)
-	// 	ft_freetab(exec->mini_env);
+	if (exec->mini_env != NULL)
+		ft_freetab(exec->mini_env);
 	ft_cmd_lstclear(&exec->cmd);
 }
 
-// void	clean_exit_child(t_exec *exec, int err)
-// {
-// 	if (err == 1)
-// 		ft_putstr_fd(strerror(errno), 2);
-// 	if (exec->mini_env != NULL)
-// 		ft_freetab(exec->mini_env);
-// 	if (exec->pid != NULL)
-// 		free(exec->pid);
-// 	ft_cmd_lstclear(&exec->cmd);
-// }
 
 int	clean_exit_fds(t_exec *exec, t_child *child)
 {

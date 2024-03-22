@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 12:06:20 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:17:04 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		prompt = get_prompt(persistent.mini_env);
-		read = readline(prompt); // si ctrl-c free le prompt !!!
+		read = readline(prompt); // si ctrl-c free le prompt !!! @Corvax, j'ai une leak au exit liee a cette liste
+		// + provoque un sigint pr cmd cat<infile | cat > outfile si pas de permission sur outfile
 		free(prompt);
 		if (read && read[0] != '\0')
 		{

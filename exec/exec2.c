@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:55:15 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:31:46 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_fork(t_exec *exec)
 				clean_exit_child(exec, 0);
 				exit (1);
 			}
-			if (redirect_pipes(exec, &child) != 0) // tester le cas ou fd ou dup merde, csq pour les autres branches
+			else if (redirect_pipes(exec, &child) != 0) // tester le cas ou fd ou dup merde, csq pour les autres branches
 			{
 				close_all_fds(exec);
 				clean_exit_child(exec, 0);
