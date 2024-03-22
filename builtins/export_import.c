@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 17:30:09 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:01:26 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ int	ft_lenarr(char **arr, int mode)
 	if (mode == 1)
 	{
 		while(arr[i])
-		{
-			res++;
 			i++;
-		}
-		return (res);
+		return (i);
 	}
 	while (arr[i])
 	{
@@ -45,25 +42,30 @@ char	**ft_joinarr(char **exp, char **env)
 	int		j;
 	char	**new;
 
-	i = ft_lenarr(exp, 0);
-	j = ft_lenarr(env, 1);
-	if (!i)
-		return (NULL);
-	new = malloc(sizeof(char *) * (i + j + 1));
+	new = malloc(sizeof(char *) * (ft_lenarr(exp, 0) + ft_lenarr(env, 1) + 1));
 	if (!new)
 		return (NULL);
 	i = -1;
 	while (env && env[++i])
+	{
 		new[i] = ft_strdup(env[i]);
+		if (!new[i])
+			return (ft_freetab(new), NULL);
+	}
 	j = -1;
 	while (exp && exp[++j])
 	{
 		if (ft_strchr(exp[j], '=') != NULL)
+		{
 			new[i++] = ft_strdup(exp[j]);
+			if (!new[i])
+				return (ft_freetab(new), NULL);
+		}
 	}
 	new[i] = NULL;
 	return (new);
 }
+//proteger les dup !
 
 int	str_in_arr(char **tab, char *str)
 {
@@ -74,25 +76,34 @@ int	str_in_arr(char **tab, char *str)
 		return (0);
 	while (tab[i])
 	{
-		if (ft_strncmp(tab[i], str, ft_strlen(str)))
+		if (ft_strncmp(tab[i], str, ft_strlen(tab[i])))
 			return (1);
 	}
 	return (0);
 }
 
-void	exec_export(t_exec *exec)
+void	exec_export(t_exec *exec, t_persistent *pers)
 {
 	char	**new;
 	char	**cpy;
 
 	if (exec->total_cmd != 1)
 		exit (1);
-	cpy = exec->mini_env;
+	cpy = pers->mini_env;
+	ft_printf("===========================================================\n");
+	ft_printf("===========================================================\n");
+	ft_putar(pers->mini_env);
+	ft_printf("===========================================================\n");
+	ft_printf("===========================================================\n");
 	new = ft_joinarr(exec->cmd->argv, cpy);
 	ft_freetab(cpy);
 	if (!new)
-		exit (1);
-	exec->mini_env = new;
+		clean_exit_parent (exec, msg_error("minishell:", strerror(errno), 1));
+//	exec->mini_env = new;
+	pers->mini_env = new;
+	ft_printf("avant crash\n");
+	ft_putar(pers->mini_env);
+	ft_printf("apres crash\n");
 	clean_exit_parent(exec, 0);
 }
 

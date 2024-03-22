@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:07:33 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:38:22 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,18 @@ int	clean_end(t_exec *exec)
 	return (0);
 }
 
-// to end parent, free all malloc vars and delete the temporary heredoc file
-
-void	clean_exit_parent(t_exec *exec, int err) // clean exit exec ?
+int	msg_error(char *s1, char *s2, int status)
 {
-	if (err == 1)
-		ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd(s1, 2);
+	ft_putstr_fd(s2, 2);
+	return (status);
+}
+
+// to end parent, free all malloc vars and delete the temporary heredoc file
+int	clean_exit_parent(t_exec *exec, int err) // clean exit exec ?
+{
+//	if (err == 1)
+//		ft_putstr_fd(strerror(errno), 2);
 	if (exec->fd != NULL)
 		free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid != NULL)
@@ -43,6 +49,7 @@ void	clean_exit_parent(t_exec *exec, int err) // clean exit exec ?
 			ft_putstr_fd(strerror(errno), 2);
 	}
 	ft_cmd_lstclear(&exec->cmd);
+	return (err);
 }
 
 void	clean_exit_child(t_exec *exec, int err) // clean exit exec ?

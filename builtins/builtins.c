@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:55:23 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:51:38 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	exec_builtin(t_exec *exec, t_child *child)
 	return (0);
 }
 
-int	exec_builtin_parent(t_exec *exec)
+int	exec_builtin_parent(t_exec *exec, t_persistent *pers)
 {
 	int	i;
 
@@ -66,7 +66,7 @@ int	exec_builtin_parent(t_exec *exec)
 	else if (i == 2)
 		exec_pwd(exec);
 	else if (i == 3)
-		exec_export(exec);
+		exec_export(exec, pers);
 	else if (i == 4)
 		exec_unset(exec);
 	else if (i == 5)

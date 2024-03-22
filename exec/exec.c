@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:55:35 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:50:53 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 		if (exec.cmd->type == KILLED)
 			return (clean_exit_parent(&exec, 0), 0);
 		else if (exec.cmd->type == BUILTPAR)
-			return (exec_builtin_parent(&exec));
+			return (exec_builtin_parent(&exec, pers));
 		else
 			return (exec_uno(&exec) != 0); // si pb de fork, si argv NULL, si fd ou dup foire et si execve foire.
 // ok avec status code ?? / si pas d'erreur retombe en bas et renvoi 0 donc return (fct?)
@@ -93,7 +93,7 @@ int	exec_uno(t_exec *exec)
 	if (exec->cmd->argv == NULL) // pas verifie ds error ? @Corvax, revoir le parsing car prend le infile ou outfile en argv
 		return (1);
 	if (exec->cmd->type == BUILTPAR)
-		return (exec_builtin_parent(exec));
+		return (exec_builtin_parent(exec, NULL));
 	else
 	{
 		exec->pid[0] = fork();
