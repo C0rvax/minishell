@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/22 15:00:39 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:50:57 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ int		final_exit(t_exec *exec, int status_code);
 int		is_a_builtin(t_cmd *cmd);
 int		exec_builtin(t_exec *exec, t_child *child);
 int		exec_builtin_parent(t_exec *exec, t_persistent *pers);
+
+/*------- UTILS -------*/
+int		ft_lenarr(char **arr, int mode);
 
 /*------- EXEC -------*/
 void	exec_export_c(t_exec *exec, t_child *child);
