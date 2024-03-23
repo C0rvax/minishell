@@ -6,13 +6,13 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:05:06 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 14:08:34 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:57:08 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	check_flag_echo(char *str)
+static int	check_flag_echo(char *str)
 {
 	int	i;
 
@@ -33,14 +33,18 @@ void	exec_echo_c(t_exec *exec, t_child *child)
 	char	**buf;
 
 	buf = child->current_cmd->argv;
-	i = 1;
 	if (!buf[1])
 		ft_printf("\n");
 	else if (buf[1] && !check_flag_echo(buf[1]))
 	{
-		i = 0;
-		while (buf[++i])
+		i = 1;
+		while (buf[i] && !check_flag_echo(buf[i]))
+			i++;
+		while (buf[i])
+		{
 			ft_printf("%s", buf[i]);
+			i++;
+		}
 	}
 	else if (buf[1] && check_flag_echo(buf[1]))
 	{
@@ -58,14 +62,18 @@ void	exec_echo(t_exec *exec)
 	char	**buf;
 
 	buf = exec->cmd->argv;
-	i = 1;
 	if (!buf[1])
 		ft_printf("\n");
 	else if (buf[1] && !check_flag_echo(buf[1]))
 	{
-		i = 0;
-		while (buf[++i])
+		i = 1;
+		while (buf[i] && !check_flag_echo(buf[i]))
+			i++;
+		while (buf[i])
+		{
 			ft_printf("%s", buf[i]);
+			i++;
+		}
 	}
 	else if (buf[1] && check_flag_echo(buf[1]))
 	{

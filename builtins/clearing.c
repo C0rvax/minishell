@@ -6,18 +6,59 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 13:39:15 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:26:22 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	msg_built(t_built msg, int status_code)
+static void	msg_built2(t_built msg, char *str)
 {
-	if (msg == BMALLOC)
-		ft_putstr_fd("minishell: unexpected error: allocation failure\n", 2);
+	ft_putstr_fd("minishell: ", 2);
 	if (msg == PWD)
-		ft_putstr_fd("minishell: pwd: options are not handled\n", 2);
+	{
+		ft_putstr_fd("pwd: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	if (msg == CD)
+	{
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	if (msg == HOME)
+	{
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd("HOME not set\n", 2);
+	}
+}
+
+int	msg_built(t_built msg, char *str, int status_code)
+{
+	msg_built2(msg, str);
+	if (msg == BMALLOC)
+	{
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": Cannot allocate memory\n", 2);
+	}
+	if (msg == ARGS)
+	{
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": Too many argument\n", 2);
+	}
+	if (msg == EXIT)
+	{
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+	}
+	if (msg == ENV)
+	{
+		ft_putstr_fd("env: '", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("': No such file or directory\n", 2);
+	}
 	return (status_code);
 }
 
@@ -43,6 +84,7 @@ int	clear_built(t_exec *exec, t_child *child, int status_code)
 
 int	final_exit(t_exec *exec, int status_code)
 {
+	rl_clear_history();
 	ft_cmd_lstclear(&exec->cmd);
 	close_all_fds(exec);
 	free(exec->fd);

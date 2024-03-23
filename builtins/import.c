@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_import.c                                    :+:      :+:    :+:   */
+/*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 12:47:34 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:38:02 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,20 @@ static char	**ft_joinarr(char **exp, char **env)
 	return (new);
 }
 
-void	exec_export(t_exec *exec, t_persistent *pers)
+int	exec_export(t_exec *exec, t_persistent *pers)
 {
 	char	**new;
+	char	**argv;
 	char	**cpy;
 
 	if (exec->total_cmd != 1)
-		exit (1);
+		return (clean_exit_parent(exec, 0));
+	argv = exec->cmd->argv;
 	cpy = exec->mini_env;
-	new = ft_joinarr(exec->cmd->argv, cpy);
-	ft_freetab(cpy);
+	new = ft_joinarr(argv, cpy);
 	if (!new)
-		clean_exit_parent(exec, msg_error("minishell:", strerror(errno), 1));
+		return (clean_exit_parent(exec, msg_built(BMALLOC, argv[1], 1)));
+	ft_freetab(cpy);
 	pers->mini_env = new;
-	clean_exit_parent(exec, 0);
+	return (clean_exit_parent(exec, 0));
 }

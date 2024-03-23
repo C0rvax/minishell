@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 12:50:57 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:41:06 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@
 typedef enum e_built
 {
 	BMALLOC,
-	ECHO,
+	HOME,
 	CD,
 	PWD,
-	EXPORT,
-	UNSET,
 	ENV,
-	EXIT
+	EXIT,
+	ARGS
 }	t_built;
 
 /*------- CLEARING -------*/
 int		clear_built(t_exec *exec, t_child *child, int status_code);
-int		msg_built(t_built msg, int status_code);
+int		msg_built(t_built msg, char *str, int status_code);
 int		final_exit(t_exec *exec, int status_code);
 
 /*------- MAIN -------*/
@@ -52,11 +51,11 @@ void	exec_env_c(t_exec *exec, t_child *child);
 void	exec_exit_c(t_exec *exec, t_child *child);
 
 /*------- EXEC PARENT -------*/
-void	exec_export(t_exec *exec, t_persistent *pers);
-void	exec_unset(t_exec *exec, t_persistent *pers);
+int		exec_export(t_exec *exec, t_persistent *pers);
+int		exec_unset(t_exec *exec, t_persistent *pers);
+int		exec_cd(t_exec *exec);
+int		exec_pwd(t_exec *exec);
+int		exec_env(t_exec *exec);
 void	exec_echo(t_exec *exec);
-void	exec_cd(t_exec *exec);
-void	exec_pwd(t_exec *exec);
-void	exec_env(t_exec *exec);
 void	exec_exit_parent(t_exec *exec);
 #endif
