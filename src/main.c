@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/22 14:37:00 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:40:37 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_make_hist(void)
 	add_history("guillemet ' pas fermé");
 	add_history("<<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 	add_history("cat -e -n -s <<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
+	add_history("export ga=4444 ro=6666 ge=88888");
 }
 
 int	main(int ac, char **av, char **env)

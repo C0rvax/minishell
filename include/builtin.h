@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/22 13:33:17 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:00:39 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	exec_exit_c(t_exec *exec, t_child *child);
 
 /*------- EXEC PARENT -------*/
 void	exec_export(t_exec *exec, t_persistent *pers);
-void	exec_unset(t_exec *exec);
+void	exec_unset(t_exec *exec, t_persistent *pers);
 void	exec_echo(t_exec *exec);
 void	exec_cd(t_exec *exec);
 void	exec_pwd(t_exec *exec);
