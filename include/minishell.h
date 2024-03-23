@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 14:15:34 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:42:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct s_persistent
 /*------- UTILS -------*/
 char		*ft_getenv(char **env, char *str);
 char		*get_prompt(char **env);
+int			msg_error(char *s1, char *s2, int status);
 
 /*------- LIST CMD -------*/
 void		print_cmd_lst(t_cmd *cmd);

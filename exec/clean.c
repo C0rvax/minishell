@@ -24,13 +24,6 @@ int	clean_end(t_exec *exec)
 	return (0);
 }
 
-int	msg_error(char *s1, char *s2, int status)
-{
-	ft_putstr_fd(s1, 2);
-	ft_putstr_fd(s2, 2);
-	return (status);
-}
-
 // to end parent, free all malloc vars and delete the temporary heredoc file
 int	clean_exit_parent(t_exec *exec, int err) // clean exit exec ?
 {

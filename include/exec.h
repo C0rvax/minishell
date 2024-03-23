@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/22 13:36:51 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:42:35 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ int			clean_exit_fds(t_exec *exec, t_child *child);
 int			free_tab_int(int **fd, int nb);
 void		clean_exit_child(t_exec *exec, int err);
 void		close_all_fds(t_exec *exec);
-int			msg_error(char *s1, char *s2, int status);
 
 #endif

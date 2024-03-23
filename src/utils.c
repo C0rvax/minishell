@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:57:43 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 19:59:08 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:42:39 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,11 @@ char	*ft_getenv(char **env, char *str)
 		return (NULL);
 	value[0] = '\0';
 	return (value);
+}
+
+int	msg_error(char *s1, char *s2, int status)
+{
+	ft_putstr_fd(s1, 2);
+	ft_putstr_fd(s2, 2);
+	return (status);
 }
