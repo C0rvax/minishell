@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/22 15:40:37 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:23:56 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	main(int ac, char **av, char **env)
 	ft_make_hist();
 	while (1)
 	{
-		ft_printf("minienv = \n");
-		ft_putar(persistent.mini_env);
 		prompt = get_prompt(persistent.mini_env);
 		read = readline(prompt); // si ctrl-c free le prompt !!!
 		free(prompt);
@@ -55,7 +53,7 @@ int	main(int ac, char **av, char **env)
 		{
 			cmd = parse_read(read, persistent.mini_env);
 			if (cmd && !error_checks(cmd, persistent.mini_env))
-					persistent.status_code = exec(cmd, &persistent);
+				persistent.status_code = exec(cmd, &persistent);
 		}
 	}
 	ft_freetab(persistent.mini_env);

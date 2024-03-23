@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 13:47:39 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/23 14:22:28 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	exec_env_c(t_exec *exec, t_child *child)
 	}
 	else
 		clear_built(exec, child, msg_error("env: ",
-			child->current_cmd->argv[1], 1));
+				child->current_cmd->argv[1], 1));
 }
 
 void	exec_env(t_exec *exec)
@@ -47,7 +47,7 @@ void	exec_env(t_exec *exec)
 	}
 	else
 		clean_exit_parent(exec, msg_error("env: ",
-			exec->cmd->argv[1], 1));
+				exec->cmd->argv[1], 1));
 }
 
 void	exec_exit_c(t_exec *exec, t_child *child)
