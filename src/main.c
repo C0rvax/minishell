@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 14:23:56 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:05:56 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,40 @@ void	ft_make_hist(void)
 	add_history("export ga=4444 ro=6666 ge=88888");
 }
 
+// si ctrl-c free le prompt !!!
+static char	*get_read(char **env)
+{
+	char	*prompt;
+	char	*read;
+
+	prompt = get_prompt(env);
+	if (!prompt)
+		read = readline("minishell$ ");
+	else
+	{
+		read = readline(prompt);
+		free(prompt);
+	}
+	return (read);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char			*read;
 	t_cmd			*cmd;
 	t_persistent	persistent;
-	char			*prompt;
 
-	read = NULL;
 	ft_bzero(&persistent, sizeof(t_persistent));
 	(void)av;
 	if (ac > 1)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
 	parse_env_array(&persistent, env);
+	if (!persistent.mini_env)
+		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
 	ft_make_hist();
 	while (1)
 	{
-		prompt = get_prompt(persistent.mini_env);
-		read = readline(prompt); // si ctrl-c free le prompt !!!
-		free(prompt);
+		read = get_read(persistent.mini_env);
 		if (read && read[0] != '\0')
 		{
 			cmd = parse_read(read, persistent.mini_env);

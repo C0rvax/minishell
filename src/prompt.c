@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:08:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 22:13:39 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:03:31 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ static char	*get_sess(char **env)
 	j = 0;
 	sess = ft_getenv(env, "SESSION_MANAGER");
 	if (!sess)
+	{
+		ft_putstr_fd(strerror(errno), 2);
 		return (NULL);
+	}
 	while (sess[i] && sess[i] != '/')
 		i++;
 	while (sess[i + j] && sess[i + j] != '.')
@@ -61,6 +64,56 @@ static char	*get_sess(char **env)
 	return (free(sess), session);
 }
 
+static char	*get_path(char **env)
+{
+	char	*path_raw;
+	char	*path;
+	char	*pwd;
+	char	*home;
+	size_t	i;
+
+	home = ft_getenv(env, "HOME");
+	if (!home)
+		return (NULL);
+	pwd = ft_getenv(env, "PWD");
+	if (!pwd)
+		return (free(home), NULL);
+	i = ft_strlen(home);
+	path_raw = ft_substr(pwd, i, ft_strlen(pwd) - i);
+	if (!path_raw)
+		return (free(pwd), free(home), NULL);
+	path = malloc(sizeof(char) * (ft_strlen(path_raw) + 2));
+	if (!path)
+		return (free(pwd), free(home), free(path_raw), NULL);
+	i = 0;
+	path[0] = '~';
+	while (++i < ft_strlen(path_raw))
+		path[i] = path_raw[i - 1];
+	path[i] = '\0';
+	return (free(pwd), free(home), free(path_raw), path);
+}
+
+char	*get_prompt(char **env)
+{
+	char	*user;
+	char	*session;
+	char	*path;
+	char	*prompt;
+
+	user = ft_getenv(env, "USER");
+	if (!user)
+		return (NULL);
+	session = get_sess(env);
+	if (!session)
+		return (free(user), NULL);
+	path = get_path(env);
+	if (!user || !session || !path)
+		prompt = ft_strdup("minishell$ ");
+	else
+		prompt = mix_all(user, session, path);
+	return (free(user), free(path), free(session), prompt);
+}
+/*
 static char	*get_path(char **env)
 {
 	char	*path_raw;
@@ -80,30 +133,9 @@ static char	*get_path(char **env)
 		return (free(pwd), free(home), free(path_raw), NULL);
 	i = 0;
 	path[0] = '~';
-	while (i < ft_strlen(path_raw))
-	{
-		path[i + 1] = path_raw[i];
-		i++;
-	}
+	while (++i < ft_strlen(path_raw))
+		path[i] = path_raw[i - 1];
 	path[i + 1] = '\0';
 	return (free(pwd), free(home), free(path_raw), path);
 }
-
-char	*get_prompt(char **env)
-{
-	char	*user;
-	char	*session;
-	char	*path;
-	char	*prompt;
-
-	user = ft_getenv(env, "USER");
-	session = get_sess(env);
-	path = get_path(env);
-	if (!user || !session || !path)
-		prompt = ft_strdup("minishell$ ");
-	else
-		prompt = mix_all(user, session, path);
-	if (!prompt)
-		return (free(user), free(path), free(session), NULL);
-	return (free(user), free(path), free(session), prompt);
-}
+*/
