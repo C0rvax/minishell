@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 18:33:50 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:37:35 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	str_isdigit(char *str)
 		return (1);
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	while(str[i])
+	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
@@ -62,10 +62,10 @@ int	exec_env(t_exec *exec)
 			ft_printf("%s\n", exec->mini_env[i]);
 			i++;
 		}
-		return (clean_exit_parent(exec, 0));
+		return (clear_one(exec, 0));
 	}
 	else
-		return (clean_exit_parent(exec, msg_built(ENV, exec->cmd->argv[1], 1)));
+		return (clear_one(exec, msg_built(ENV, exec->cmd->argv[1], 1)));
 }
 
 void	exec_exit_c(t_exec *exec, t_child *child)

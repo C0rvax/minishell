@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/22 13:38:22 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:23:57 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ int	clean_end(t_exec *exec)
 }
 
 // to end parent, free all malloc vars and delete the temporary heredoc file
+// close fd ????
 int	clean_exit_parent(t_exec *exec, int err) // clean exit exec ?
 {
 //	if (err == 1)
-//		ft_putstr_fd(strerror(errno), 2);
+//		ft_putstr_fd(strerror(errno), 2); // mettre message au moment de l'erreur
 	if (exec->fd != NULL)
 		free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid != NULL)
@@ -60,8 +61,8 @@ void	clean_exit_child(t_exec *exec, int err) // clean exit exec ?
 			ft_putstr_fd(strerror(errno), 2);
 		}
 	}
-	// if (exec->mini_env != NULL)
-	// 	ft_freetab(exec->mini_env);
+	if (exec->mini_env != NULL)
+	 	ft_freetab(exec->mini_env);
 	ft_cmd_lstclear(&exec->cmd);
 }
 
@@ -128,7 +129,7 @@ int	free_tab_int(int **fd, int nb)
 	return (0);
 }
 
-
+// close pas fdin et fdout ????
 void close_all_fds(t_exec *exec)
 {
 	int	l;
@@ -141,5 +142,10 @@ void close_all_fds(t_exec *exec)
 		if (exec->fd[l][1] >= 0)
 		close(exec->fd[l][1]);
 		l++;
+	}
+	if (access(".tmpheredoc", F_OK) == 0)
+	{
+		if (unlink(".tmpheredoc") != 0)
+			ft_putstr_fd(strerror(errno), 2);
 	}
 }

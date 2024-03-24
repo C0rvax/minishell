@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 18:41:06 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:28:13 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef enum e_built
 
 /*------- CLEARING -------*/
 int		clear_built(t_exec *exec, t_child *child, int status_code);
+int		clear_one(t_exec *exec, int status_code);
 int		msg_built(t_built msg, char *str, int status_code);
 int		final_exit(t_exec *exec, int status_code);
 

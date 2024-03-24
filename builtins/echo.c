@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:05:06 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 14:57:08 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:30:36 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,39 @@ static int	check_flag_echo(char *str)
 	return (0);
 }
 
+static void	print_echo(char **buf, int i)
+{
+	int	j;
+
+	j = 0;
+	while (buf[i])
+	{
+		if (j > 0)
+			ft_printf(" ");
+		ft_printf("%s", buf[i]);
+		i++;
+		j++;
+	}
+}
+
 void	exec_echo_c(t_exec *exec, t_child *child)
 {
 	int		i;
 	char	**buf;
 
 	buf = child->current_cmd->argv;
+	i = 1;
 	if (!buf[1])
 		ft_printf("\n");
 	else if (buf[1] && !check_flag_echo(buf[1]))
 	{
-		i = 1;
 		while (buf[i] && !check_flag_echo(buf[i]))
 			i++;
-		while (buf[i])
-		{
-			ft_printf("%s", buf[i]);
-			i++;
-		}
+		print_echo(buf, i);
 	}
 	else if (buf[1] && check_flag_echo(buf[1]))
 	{
-		i = 0;
-		while (buf[++i])
-			ft_printf("%s", buf[i]);
+		print_echo(buf, i);
 		ft_printf("\n");
 	}
 	clear_built(exec, child, 0);
@@ -62,25 +71,19 @@ void	exec_echo(t_exec *exec)
 	char	**buf;
 
 	buf = exec->cmd->argv;
+	i = 1;
 	if (!buf[1])
 		ft_printf("\n");
 	else if (buf[1] && !check_flag_echo(buf[1]))
 	{
-		i = 1;
 		while (buf[i] && !check_flag_echo(buf[i]))
 			i++;
-		while (buf[i])
-		{
-			ft_printf("%s", buf[i]);
-			i++;
-		}
+		print_echo(buf, i);
 	}
 	else if (buf[1] && check_flag_echo(buf[1]))
 	{
-		i = 0;
-		while (buf[++i])
-			ft_printf("%s", buf[i]);
+		print_echo(buf, i);
 		ft_printf("\n");
 	}
-	clean_exit_parent(exec, 0);
+	clear_one(exec, 0);
 }

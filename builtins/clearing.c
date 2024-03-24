@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 18:26:22 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:23:55 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,73 @@ int	clear_built(t_exec *exec, t_child *child, int status_code)
 
 	i = 0;
 	ft_cmd_lstclear(&exec->cmd);
+	exec->cmd = NULL;
 	close_all_fds(exec);
-	while (exec->fd[i])
+	if (exec->fd)
 	{
-		free(exec->fd[i]);
-		i++;
+		while (exec->fd[i])
+		{
+			free(exec->fd[i]);
+			i++;
+		}
+		free(exec->fd);
+		exec->fd = NULL;
 	}
-	free(exec->fd);
-	free(exec->pid);
+	if (exec->pid)
+		free(exec->pid);
+	exec->pid = NULL;
 	ft_freetab(exec->mini_env);
-	if (child)
-		free(child);
+	exec->mini_env = NULL;
 	exit (status_code);
+}
+
+int	clear_one(t_exec *exec, int status_code)
+{
+	int	i;
+
+	i = 0;
+	ft_cmd_lstclear(&exec->cmd);
+	exec->cmd = NULL;
+	close_all_fds(exec);
+	if (exec->fd)
+	{
+		while (exec->fd[i])
+		{
+			free(exec->fd[i]);
+			i++;
+		}
+		free(exec->fd);
+		exec->fd = NULL;
+	}
+	if (exec->pid)
+		free(exec->pid);
+	exec->pid = NULL;
+	return (status_code);
 }
 
 int	final_exit(t_exec *exec, int status_code)
 {
+	int	i;
+
+	i = 0;
 	rl_clear_history();
 	ft_cmd_lstclear(&exec->cmd);
+	exec->cmd = NULL;
 	close_all_fds(exec);
-	free(exec->fd);
-	free(exec->pid);
+	if (exec->fd)
+	{
+		while (exec->fd[i])
+		{
+			free(exec->fd[i]);
+			i++;
+		}
+		free(exec->fd);
+		exec->fd = NULL;
+	}
+	if (exec->pid)
+		free(exec->pid);
+	exec->pid = NULL;
 	ft_freetab(exec->mini_env);
+	exec->mini_env = NULL;
 	exit (status_code);
 }

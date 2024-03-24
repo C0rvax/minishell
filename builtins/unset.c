@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 12:44:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 18:41:08 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:37:13 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	copy_unset(char ***new, char **env, char **argv)
 	{
 		u = is_unset(env[i + count], argv);
 		if (u < 0)
-			return(1);
+			return (1);
 		if (u == 0)
 		{
 			new[0][i] = ft_strdup(env[i + count]);
@@ -111,16 +111,16 @@ int	exec_unset(t_exec *exec, t_persistent *pers)
 	argv = exec->cmd->argv;
 	count = count_in_env(cpy, argv);
 	if (count < 0)
-		return (clean_exit_parent(exec, msg_built(BMALLOC, argv[1], 1)));
+		return (clear_one(exec, msg_built(BMALLOC, argv[1], 1)));
 	new = malloc(sizeof(char *) * (ft_lenarr(cpy, 1) - count + 1));
 	if (!new)
-		return (clean_exit_parent(exec, msg_built(BMALLOC, argv[1], 1)));
+		return (clear_one(exec, msg_built(BMALLOC, argv[1], 1)));
 	if (copy_unset(&new, cpy, argv))
 	{
 		ft_freetab(new);
-		return (clean_exit_parent(exec, msg_built(BMALLOC, argv[1], 1)));
+		return (clear_one(exec, msg_built(BMALLOC, argv[1], 1)));
 	}
 	ft_freetab(cpy);
 	pers->mini_env = new;
-	return (clean_exit_parent(exec, 0));
+	return (clear_one(exec, 0));
 }

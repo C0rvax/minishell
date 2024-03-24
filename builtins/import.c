@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 18:38:02 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:30:43 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ int	exec_export(t_exec *exec, t_persistent *pers)
 	char	**cpy;
 
 	if (exec->total_cmd != 1)
-		return (clean_exit_parent(exec, 0));
+		return (clear_one(exec, 0));
 	argv = exec->cmd->argv;
 	cpy = exec->mini_env;
 	new = ft_joinarr(argv, cpy);
 	if (!new)
-		return (clean_exit_parent(exec, msg_built(BMALLOC, argv[1], 1)));
+		return (clear_one(exec, msg_built(BMALLOC, argv[1], 1)));
 	ft_freetab(cpy);
 	pers->mini_env = new;
-	return (clean_exit_parent(exec, 0));
+	return (clear_one(exec, 0));
 }
