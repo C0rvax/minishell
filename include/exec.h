@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/23 13:42:35 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:43:18 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_child
 }			t_child;
 
 // exec.c
-
 int			exec(t_cmd *cmd, t_persistent *pers);
 int			initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env);
 int			exec_uno(t_exec *exec);

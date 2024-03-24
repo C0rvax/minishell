@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infile_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:32:14 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:52:28 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	check_infiles(t_cmd *cmd, int total_cmd)
 		{
 			error = check_in(cmd->in);
 			if (error == 1)
-				kill_child(cmd);
+				cmd->type = KILLED;
+//				kill_child(cmd);
 			else if (error == 0)
 			{
 				cmd->in = get_valid_in(cmd->in);
@@ -84,6 +85,29 @@ int	check_in(t_redirect *in)
 	t_redirect	*buf;
 
 	buf = in;
+	while (buf)
+	{
+		if (buf->mode == DOUBLE)
+			if (get_here_doc(buf->path) != 0)
+				return (2); // 2 si malloc ou fd pete -> strerror
+		buf = buf->next;
+	}
+	buf = in;
+	while (buf)
+	{
+		if (buf->mode == SIMPLE)
+			if (check_infile_errors(buf->path) != 0)
+				return (1); // 1 si erreur de fichier
+		buf = buf->next;
+	}
+	return (0);
+}
+/*
+int	check_in(t_redirect *in)
+{
+	t_redirect	*buf;
+
+	buf = in;
 	while (in)
 	{
 		if (in->mode == DOUBLE)
@@ -100,7 +124,7 @@ int	check_in(t_redirect *in)
 	}
 	return (0);
 }
-
+*/
 // checks the existence and permissions in the infile if simple <
 
 int	check_infile_errors(char *path)
@@ -109,13 +133,13 @@ int	check_infile_errors(char *path)
 		return (3);
 	if (access(path, F_OK) != 0)
 	{
-		print_str_fd("no such file or directory: ", path, "\n", 2);
+		print_str_fd("minishell: ", path, ": No such file or directory\n", 2);
 		return (1);
 	}
 	if (access(path, F_OK) == 0 && access(path, R_OK) != 0)
 	{
-		print_str_fd("permission denied: ", path, "\n", 2);
-		return (2);
+		print_str_fd("minishell: ", path, ": Permission denied\n", 2);
+		return (1);
 	}
 	return (0);
 }
@@ -130,7 +154,7 @@ t_redirect	*get_valid_in(t_redirect *in)
 	first_in = in;
 	valid_in = ft_in_lstlast(in);
 	if (valid_in->mode == DOUBLE)
-		valid_in->path = ft_strdup(".tmpheredoc");
+		valid_in->path = ft_strdup(".tmpheredoc"); // Protege le malloc!!
 	if (valid_in->mode == SIMPLE)
 	{
 		while (in)

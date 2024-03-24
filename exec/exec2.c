@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:55:15 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:46:51 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_fork(t_exec *exec)
 			return (close_all_fds(exec), clean_exit_parent(exec, 1), 2);
 		if (exec->pid[exec->cmdno] == 0)
 		{
-			t_child child;
+			t_child child; // @Cam déclaration de variable en plein milieu ??
 			initialize_child(&child, exec);
 			if (child.current_cmd->type == KILLED)
 			{

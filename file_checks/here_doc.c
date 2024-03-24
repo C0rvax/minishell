@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:37:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:20:52 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/24 12:45:56 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,30 @@ int	get_here_doc(char *path)
 	}
 	return (free(line), free(lim), close(fd), 0);
 }
+/*
+int	get_here_doc(char *path)
+{
+	char	*line;
+	int		fd;
 
+	line = NULL;
+	fd = open(".tmpheredoc", O_RDWR | O_TRUNC | O_CREAT, 0777);
+	if (fd == -1)
+		return (clean_exit_here_doc(fd), 1);
+	line = get_next_line(0);
+	if (line == NULL)
+		return (clean_exit_here_doc(fd), 1);
+	while (ft_strncmp(line, path, ft_strlen(line)) != 0)
+	{
+		ft_putstr_fd(line, fd);
+		free(line);
+		line = get_next_line(0);
+		if (line == NULL)
+			return (clean_exit_here_doc(fd), 1);
+	}
+	return (free(line), close(fd), 0);
+}
+*/
 // in case of error in get_here_doc
 
 void	clean_exit_here_doc(char *lim, int fd)

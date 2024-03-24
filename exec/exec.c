@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/22 13:50:53 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 11:05:43 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,17 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 	k = -1;
 	ft_bzero(exec, sizeof(t_exec));
 	exec->total_cmd = ft_cmd_lstsize(cmd);
-	exec->fd = malloc(sizeof(int *) * exec->total_cmd - 1);
-	if (!exec->fd)
-		return (clean_exit_parent(exec, 1), 1);
-	while (++k < exec->total_cmd - 1)
+	if (exec->total_cmd > 1)
 	{
-		exec->fd[k] = malloc(sizeof(int) * 2);
-		if (!exec->fd[k])
-			return (clean_exit_parent(exec, 1), 1);
+		exec->fd = malloc(sizeof(int *) * exec->total_cmd - 1); // @Cam tu fais des malloc de 0 quand cmd = 1
+		if (!exec->fd)
+			return (clean_exit_parent(exec, 1));
+		while (++k < exec->total_cmd - 1)
+		{
+			exec->fd[k] = malloc(sizeof(int) * 2);
+			if (!exec->fd[k])
+				return (clean_exit_parent(exec, 1)); // @Cam du coup faut free le tableau de fd si ca pete a la fin
+		}
 	}
 	exec->pid = malloc(sizeof(int) * exec->total_cmd);
 	if (!exec->pid)

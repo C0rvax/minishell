@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:37:13 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 10:35:13 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 11:08:48 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	exec_pwd_c(t_exec *exec, t_child *child)
 	if (!pwd)
 		clear_built(exec, child, msg_built(PWD, strerror(errno), 1));
 	ft_printf("%s\n", pwd);
+	free(pwd);
 	clear_built(exec, child, 0);
 }
 
@@ -46,6 +47,7 @@ int	exec_pwd(t_exec *exec)
 	if (!pwd)
 		return (clear_one(exec, msg_built(PWD, strerror(errno), 1)));
 	ft_printf("%s\n", pwd);
+	free(pwd);
 	return (clear_one(exec, 0));
 }
 
