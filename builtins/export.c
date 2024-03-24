@@ -1,74 +1,98 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   import.c                                           :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 10:30:43 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:43:34 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	ft_lenarr(char **arr, int mode)
+static int	is_inenv(char *str, char **env)
+{
+	int		i;
+	int		j;
+	char	*ptr;
+
+	i = 0;
+	if (!env | !str)
+		return (0);
+	while (env[i])
+	{
+		ptr = ft_strchr(env[i], '=');
+		if (ptr)
+		{
+			j = ft_strlen(env[i]) - ft_strlen(ptr);
+			if (!ft_strncmp(env[i], str, j + 1))
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	ft_lenarr(char **argv, char **env)
 {
 	int	i;
 	int	res;
 
 	i = 0;
 	res = 0;
-	if (!arr)
-		return (0);
-	if (mode == 1)
+	while (env && env[res])
+		res++;
+	while (argv && argv[i])
 	{
-		while (arr[i])
-			i++;
-		return (i);
-	}
-	while (arr[i])
-	{
-		if (arr[i] && ft_strchr(arr[i], '=') != NULL)
+		if (argv[i] && ft_strchr(argv[i], '=') && !is_inenv(argv[i], env))
 			res++;
 		i++;
 	}
 	return (res);
 }
 
-static int	dup_arr(char ***new, char **env)
+static int	dup_arr(char ***new, char **env, char **argv)
 {
 	int	i;
+	int	count;
 
 	i = 0;
-	while (env && env[i])
+	count = 0;
+	while (env && env[i + count])
 	{
-		new[0][i] = ft_strdup(env[i]);
-		if (!new[0][i])
-			return (ft_freetab(*new), -1);
-		i++;
+		if (is_inenv(env[i + count], argv))
+			count++;
+		else
+		{
+			new[0][i] = ft_strdup(env[i + count]);
+			if (!new[0][i])
+				return (ft_freetab(*new), -1);
+			i++;
+		}
 	}
 	return (i);
 }
 
-static char	**ft_joinarr(char **exp, char **env)
+static char	**ft_joinarr(char **argv, char **env)
 {
 	int		i;
 	int		j;
 	char	**new;
 
-	new = malloc(sizeof(char *) * (ft_lenarr(exp, 0) + ft_lenarr(env, 1) + 1));
+	new = malloc(sizeof(char *) * (ft_lenarr(argv, env) + 1));
 	if (!new)
 		return (NULL);
-	i = dup_arr(&new, env);
+	i = dup_arr(&new, env, argv);
 	if (i < 0)
 		return (ft_freetab(new), NULL);
 	j = 0;
-	while (exp && exp[j])
+	while (argv && argv[j])
 	{
-		if (ft_strchr(exp[j], '=') != NULL)
+		if (ft_strchr(argv[j], '=') != NULL)
 		{
-			new[i++] = ft_strdup(exp[j]);
+			new[i++] = ft_strdup(argv[j]);
 			if (!new[i - 1])
 				return (ft_freetab(new), NULL);
 		}

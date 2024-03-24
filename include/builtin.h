@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 10:28:13 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:45:49 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int		exec_builtin(t_exec *exec, t_child *child);
 int		exec_builtin_parent(t_exec *exec, t_persistent *pers);
 
 /*------- UTILS -------*/
-int		ft_lenarr(char **arr, int mode);
+//int		ft_lenarr(char **arr, int mode);
+int		ft_lenarr(char **arr, char **env);
 
 /*------- EXEC -------*/
 void	exec_export_c(t_exec *exec, t_child *child);

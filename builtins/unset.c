@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 12:44:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 10:37:13 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/24 14:48:54 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	exec_unset(t_exec *exec, t_persistent *pers)
 	count = count_in_env(cpy, argv);
 	if (count < 0)
 		return (clear_one(exec, msg_built(BMALLOC, argv[1], 1)));
-	new = malloc(sizeof(char *) * (ft_lenarr(cpy, 1) - count + 1));
+	new = malloc(sizeof(char *) * (ft_lenarr(cpy, NULL) - count + 1));
 	if (!new)
 		return (clear_one(exec, msg_built(BMALLOC, argv[1], 1)));
 	if (copy_unset(&new, cpy, argv))
