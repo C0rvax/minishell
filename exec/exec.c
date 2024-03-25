@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 13:43:22 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:46:12 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 	exec->total_cmd = ft_cmd_lstsize(cmd);
 	if (exec->total_cmd > 1)
 	{
-		exec->fd = malloc(sizeof(int *) * exec->total_cmd - 1); // @Cam tu fais des malloc de 0 quand cmd = 1
+		exec->fd = malloc(sizeof(int *) * exec->total_cmd - 1);
 		if (!exec->fd)
 			return (clean_exit_parent(exec, 1));
 		while (++k < exec->total_cmd - 1)
 		{
 			exec->fd[k] = malloc(sizeof(int) * 2);
 			if (!exec->fd[k])
-				return (clean_exit_parent(exec, 1)); // @Cam du coup faut free le tableau de fd si ca pete a la fin
+				return (clean_exit_parent(exec, 1));
 		}
 	}
 	exec->pid = malloc(sizeof(int) * exec->total_cmd);
@@ -93,7 +93,7 @@ int	initialize_child(t_child *child, t_exec *exec)
 
 int	exec_uno(t_exec *exec)
 {
-	if (exec->cmd->argv == NULL) // pas verifie ds error ? @Corvax, revoir le parsing car prend le infile ou outfile en argv
+	if (!exec->cmd->argv || !exec->cmd->argv[0]) //? @Corvax, revoir le parsing car prend le infile ou outfile en argv
 		return (1);
 	else
 	{
