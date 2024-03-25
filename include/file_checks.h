@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_checks.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 14:20:39 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:04:24 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_redirect	*get_valid_out(t_redirect *out);
 // here_doc.c
 int			get_here_doc(char *path);
 void		clean_exit_here_doc(char *lim, int fd);
-void		kill_child(t_cmd *cmd);
 
 // cmd_checks.c
 int			check_cmd(t_cmd *cmd, int total_cmd, char **env);

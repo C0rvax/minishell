@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 13:24:36 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:19:15 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,10 @@ void	clean_exit_child(t_exec *exec, int err) // clean exit exec ?
 		}
 	}
 	if (exec->mini_env != NULL)
-	 	ft_freetab(exec->mini_env);
+		ft_freetab(exec->mini_env);
 	ft_cmd_lstclear(&exec->cmd);
 }
 
-// void	clean_exit_child(t_exec *exec, int err)
-// {
-// 	if (err == 1)
-// 		ft_putstr_fd(strerror(errno), 2);
-// 	if (exec->mini_env != NULL)
-// 		ft_freetab(exec->mini_env);
-// 	if (exec->pid != NULL)
-// 		free(exec->pid);
-// 	ft_cmd_lstclear(&exec->cmd);
-// }
 
 int	clean_exit_fds(t_exec *exec, t_child *child)
 {

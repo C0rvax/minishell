@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 16:05:56 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:24:22 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,6 @@ void	ft_make_hist(void)
 	add_history("guillemet ' pas fermé");
 	add_history("<<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 	add_history("cat -e -n -s <<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
-	add_history("export ga=4444 ro=6666 ge=88888");
-}
-
-// si ctrl-c free le prompt !!!
-static char	*get_read(char **env)
-{
-	char	*prompt;
-	char	*read;
-
-	prompt = get_prompt(env);
-	if (!prompt)
-		read = readline("minishell$ ");
-	else
-	{
-		read = readline(prompt);
-		free(prompt);
-	}
-	return (read);
 }
 
 int	main(int ac, char **av, char **env)
@@ -52,7 +34,12 @@ int	main(int ac, char **av, char **env)
 	char			*read;
 	t_cmd			*cmd;
 	t_persistent	persistent;
+	char			*prompt;
 
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	
+	read = NULL;
 	ft_bzero(&persistent, sizeof(t_persistent));
 	(void)av;
 	if (ac > 1)

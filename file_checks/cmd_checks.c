@@ -6,57 +6,78 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/21 17:31:52 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:13:25 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "file_checks.h"
-#include "minishell.h"
 #include "builtin.h"
+#include "file_checks.h"
 #include "lexer.h"
+#include "minishell.h"
 
-// si malloc pete -> on free la commande et 
-// on renvoie le prompt / distinguer de cas ou pas de commande 
+// possible plusieurs cmd ???
+
+// checks through cmd list the cmd path.
+// if no argv[0], kills the child.
+// checks if is a builtin and mark them as such
+// returns 1 in case of malloc issue
+
+int check_builtins(t_cmd *cmd, int total_cmd)
+{
+	int		i;
+
+	i = -1;
+	i = is_a_builtin(cmd);
+	if (i != -1)
+	{
+		if (total_cmd == 1)
+		{
+			cmd->type = BUILTPAR;
+			return (1);
+		}
+		else if (total_cmd > 1)
+		{
+			cmd->type = BUILTCHILD;
+			return (1);
+		}
+	}
+	return (0);
+}
 
 int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 {
 	char	*ptr;
 	char	**paths;
 	int		cmd_nb;
-	int i = -1;
+	
 	cmd_nb = 0;
+	ptr = NULL;
 	while (cmd_nb < total_cmd && cmd != NULL)
 	{
 		if (!cmd->argv || cmd->argv[0] == NULL)
-			return (1); // free?
-		else if (cmd->type != KILLED)
+			cmd->type = KILLED;
+		if (cmd->type != KILLED)
 		{
-			ptr = NULL;
-			i = is_a_builtin(cmd);
-			if (i != -1)
-			{
-				if (total_cmd == 1)
-					cmd->type = BUILTPAR;
-				else if (total_cmd > 1)
-					cmd->type = BUILTCHILD;
+			if (check_builtins(cmd, total_cmd) != 0)
 				return (0);
-			}
 			ptr = get_env(env, ptr, cmd->argv[0], cmd);
 			if (ptr == NULL)
 				if (cmd->path_cmd == NULL)
-					kill_child(cmd);
+					cmd->type = KILLED;
 			paths = get_all_paths(ptr);
 			if (paths == NULL)
 				return (1);
 			cmd->path_cmd = check_paths(paths, cmd->argv[0], cmd);
 			if (cmd->path_cmd == NULL && cmd->type != KILLED)
-				return (1); // enfant pas tue donc slmt si pb malloc
+				return (1);
 		}
 		cmd_nb++;
 		cmd = cmd->next;
 	}
 	return (0);
 }
+
+// gets the env PATH variable
 
 char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
 {
@@ -77,7 +98,8 @@ char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
 			cmd->path_cmd = ft_strdup(command);
 			return (NULL);
 		}
-		print_str_fd(command, "No such file or directory", "\n", 2); // ok avec ce message? comme ds bash si PATH supprime
+		print_str_fd(command, "No such file or directory", "\n", 2);
+		// ok avec ce message? comme ds bash si PATH supprime
 		return (NULL);
 	}
 	return (ptr);
@@ -120,16 +142,20 @@ char	*check_paths(char **paths, char *command, t_cmd *cmd)
 	while (paths[i])
 	{
 		valid = is_valid_path(paths[i], &ptr, command);
-		if (valid == 1) // = malloc
+		if (valid == 1)
 			return (free_tab(paths), NULL);
-		else if (valid == 0) // = valid path
+		else if (valid == 0)
 			return (free_tab(paths), ptr);
 		i++;
 	}
 	print_str_fd("command not found: ", command, "\n", 2);
-	kill_child(cmd); //meme retour si pb ou si command not found
+	cmd->type = KILLED;
 	return (free_tab(paths), NULL);
 }
+
+// tests each paths
+// returns 1 if malloc issue, with errno displayed
+// returns 2 if no valid path found
 
 int	is_valid_path(char *path, char **ptr, char *command)
 {
