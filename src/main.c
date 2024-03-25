@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 14:24:22 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:34:04 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 #include "file_checks.h"
 #include "env_parsing.h"
 #include "exec.h"
+
+void	handle_sigint(int sig)
+{
+	ft_printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	(void)sig;
+}
 
 void	ft_make_hist(void)
 {
@@ -27,6 +36,22 @@ void	ft_make_hist(void)
 	add_history("guillemet ' pas fermé");
 	add_history("<<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 	add_history("cat -e -n -s <<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
+}
+
+static char	*get_read(char **env)
+{
+	char	*prompt;
+	char	*read;
+
+	prompt = get_prompt(env);
+	if (!prompt)
+		read = readline("minishell$ ");
+	else
+		{
+		read = readline(prompt);
+		free(prompt);
+	}
+	return (read);
 }
 
 int	main(int ac, char **av, char **env)
