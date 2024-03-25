@@ -6,22 +6,36 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 14:39:53 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:13:21 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <sys/wait.h> 
 
-int	clean_end(t_exec *exec)
+int	clean_end(t_exec *exec, t_persistent *pers)
 {
 	int	j;
+	int	status;
+	int	status_code;
 
-	j = exec->total_cmd;
-	while (--j >= 0)
-		waitpid(exec->pid[j], NULL, 0);
+	status_code = 0;
+	j = 0;
+	while (j < exec->total_cmd)
+	{
+		waitpid(exec->pid[j], &status, 0);
+		if (WIFEXITED(status))
+		{
+			if (exec->cmd->code_err == 127)
+				pers->status_code = 127;
+			else
+				pers->status_code = WEXITSTATUS(status);
+		}	
+		j++;
+		exec->cmd = exec->cmd->next;
+	}
 	clean_exit_parent(exec, 0);
-	return (0);
+	return (pers->status_code);
 }
 
 // to end parent, free all malloc vars and delete the temporary heredoc file

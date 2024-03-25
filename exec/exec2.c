@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 14:19:23 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:14:04 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ int	ft_fork(t_exec *exec)
 			{
 				close_all_fds(exec);
 				clean_exit_child(exec, 0);
+				if (child.current_cmd->code_err == 127)
+					exit (127);
 				exit (1);
 			}
+			// ft_printf("code child=%d\n", pers->status_code);
 			else if (redirect_pipes(exec, &child) != 0) // tester le cas ou fd ou dup merde, csq pour les autres branches
 			{
 				close_all_fds(exec);
@@ -182,12 +185,10 @@ int manage_fd_lastchild(t_exec *exec, t_child *child)
 			child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_APPEND);
 		if (child->fdout < 0)
 			return (clean_exit_fds(exec, child), 1); // revoir si fds relevant et clean child
+		if (dup2(child->fdout, STDOUT_FILENO) == -1)
+			return (clean_exit_fds(exec, child), 1);
+		close (child->fdout);
 	}
-	else
-		child->fdout = STDOUT_FILENO;
-	if (dup2(child->fdout, STDOUT_FILENO) == -1)
-		return (clean_exit_fds(exec, child), 1);
-	close (child->fdout);
 	return (0);
 }
 

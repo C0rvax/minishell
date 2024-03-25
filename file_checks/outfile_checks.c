@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:37:33 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/22 16:04:21 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:38:10 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 // if all outfiles are OK, it only keeps the last one.
 // return 1 in case of mistake in fd opening (strerror already displayed)
 
-int	check_outfiles(t_cmd *cmd, int total_cmd)
+int	check_outfiles(t_cmd *cmd, int total_cmd, t_persistent *pers)
 {
 	int	cmd_nb;
 	int	error;
@@ -32,7 +32,7 @@ int	check_outfiles(t_cmd *cmd, int total_cmd)
 		{
 			error = check_out(cmd->out);
 			if (error == 1)
-				cmd->type = KILLED;
+				kill_child(cmd, pers, 1);
 			else if (error == 0)
 			{
 				cmd->out = get_valid_out(cmd->out);
@@ -59,7 +59,7 @@ int	check_out(t_redirect *out)
 			return (1); // @Corvax: verifier que message dérreur prevu au parsing
 		if (access(out->path, F_OK) == 0 && access(out->path, W_OK) != 0)
 		{
-			print_str_fd("permission denied: ", out->path, "\n", 2);
+			print_str_fd("minishell: ", out->path, ": Permission denied\n", 2);
 			return (1);
 		}
 		else if (access(out->path, F_OK) != 0)

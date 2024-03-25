@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/24 10:43:18 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:23:27 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ int			manage_fd_lastchild(t_exec *exec, t_child *child);
 
 //  clean.c
 int			clean_exit_parent(t_exec *exec, int err);
-int			clean_end(t_exec *exec);
+// int			clean_end(t_exec *exec);
+int	clean_end(t_exec *exec, t_persistent *pers);
+
 int			clean_exit_fds(t_exec *exec, t_child *child);
 int			free_tab_int(int **fd, int nb);
 void		clean_exit_child(t_exec *exec, int err);

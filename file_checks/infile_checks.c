@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 14:33:23 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:00:09 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // checks all files in all cmd, then all outfiles in all cmd
 // and finally all options and cmd
 
-int	error_checks(t_cmd *cmd, char **mini_env)
+int	error_checks(t_cmd *cmd, char **mini_env, t_persistent	*pers)
 {
 	int	total_cmd;
 
@@ -27,15 +27,16 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 	total_cmd = ft_cmd_lstsize(cmd);
 	if (total_cmd != 0)
 	{
-		if ((check_infiles(cmd, total_cmd) != 0) || (check_outfiles(cmd,
-					total_cmd) != 0) || (check_cmd(cmd, total_cmd,
-					mini_env) != 0))
+		if ((check_infiles(cmd, total_cmd, pers) != 0)
+			|| (check_outfiles(cmd, total_cmd, pers) != 0)
+			|| (check_cmd(cmd, total_cmd, mini_env, pers) != 0))
 		{
 			if (access(".tmpheredoc", F_OK) == 0)
 				unlink(".tmpheredoc");
 			ft_cmd_lstclear(&cmd);
+			pers->status_code = 1;
 			return (1);
-		}
+		}	
 	}
 	return (0);
 }
@@ -45,7 +46,7 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 // if no error is encountered, only keeps the last infile for exec.
 // return (1) in case of error (malloc or fd error - errno already displayed)
 
-int	check_infiles(t_cmd *cmd, int total_cmd)
+int	check_infiles(t_cmd *cmd, int total_cmd, t_persistent *pers)
 {
 	int	cmd_nb;
 	int	error;
@@ -57,7 +58,7 @@ int	check_infiles(t_cmd *cmd, int total_cmd)
 		{
 			error = check_in(cmd->in);
 			if (error == 1)
-				cmd->type = KILLED;
+				kill_child(cmd, pers, 1);
 			else if (error == 0)
 			{
 				cmd->in = get_valid_in(cmd->in);
@@ -84,10 +85,10 @@ int	check_in(t_redirect *in)
 	buf = in;
 	while (buf)
 	{
-		if (in->mode == DOUBLE)
-			if (get_here_doc(in->path) != 0)
+		if (buf->mode == DOUBLE)
+			if (get_here_doc(buf->path) != 0)
 				return (2);
-		in = in->next;
+		buf = buf->next;
 	}
 	buf = in;
 	while (buf)

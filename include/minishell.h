@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 14:18:36 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:51:29 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef enum e_type
 {
 	COMMAND,
 	KILLED,
+	// KILLEDCMD,
 	BUILTPAR,
 	BUILTCHILD
 }		t_type;
@@ -56,6 +57,7 @@ typedef struct s_cmd
 	t_redirect		*in;
 	t_redirect		*out;
 	t_type			type;
+	int				code_err;
 	struct s_cmd	*next;
 }		t_cmd;
 

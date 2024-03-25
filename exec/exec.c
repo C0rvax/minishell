@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 14:46:12 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:55:56 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,16 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 {
 	t_exec	exec;
 
-	//gerer pers->status_code
 	if (initialize_exec(&exec, cmd, pers->mini_env) != 0)
-		return (1); // ok avec status_code - seulment des mallocs foireux
+		return (1);
 	if (exec.total_cmd == 1)
 	{
-		if (exec.cmd->type == KILLED)
-			return (clean_exit_parent(&exec, 0), 0);
+		if (exec.cmd->type == KILLED) 
+			return (clean_exit_parent(&exec, 0), pers->status_code); // gerer le cas du child kild + status code
 		else if (exec.cmd->type == BUILTPAR)
-			return (exec_builtin_parent(&exec, pers));
+			return (exec_builtin_parent(&exec, pers)); // le return correspond au status
 		else
-			return (exec_uno(&exec) != 0); // si pb de fork, si argv NULL, si fd ou dup foire et si execve foire.
-// ok avec status code ?? / si pas d'erreur retombe en bas et renvoi 0 donc return (fct?)
+			return (exec_uno(&exec)); //si argv NULL - ok avec status code ??
 	}
 	else if (exec.total_cmd > 1)
 	{
@@ -40,10 +38,10 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 			return (1);
 		if (ft_fork(&exec)!= 0)
 			return (1); // SI ENFANT KILLED tjr 0 retourne
-		clean_end(&exec);
+		pers->status_code = clean_end(&exec, pers);
 	}
-	return (0);
-}
+	return (pers->status_code);
+}	
 
  int	initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env)
 {
@@ -93,13 +91,17 @@ int	initialize_child(t_child *child, t_exec *exec)
 
 int	exec_uno(t_exec *exec)
 {
+	int status;
+	int status_code;
+
+	status_code = 0;
 	if (!exec->cmd->argv || !exec->cmd->argv[0]) //? @Corvax, revoir le parsing car prend le infile ou outfile en argv
 		return (1);
 	else
 	{
 		exec->pid[0] = fork();
 		if (exec->pid[0] < 0)
-			return (ft_putstr_fd(strerror(errno), 2), 2);
+			return (ft_putstr_fd(strerror(errno), 2), 1);
 		if (exec->pid[0] == 0)
 		{
 			if (manage_fds(exec->cmd) != 0)
@@ -107,7 +109,9 @@ int	exec_uno(t_exec *exec)
 			if (execve(exec->cmd->path_cmd, exec->cmd->argv, exec->mini_env) == -1)
 				return (ft_putstr_fd(strerror(errno), 2), 1); // revoir le message ?
 		}
-		waitpid(exec->pid[0], NULL, 0);
+		waitpid(exec->pid[0], &status, 0); // revoir
+		if (WIFEXITED(status))
+			status_code = WEXITSTATUS(status);
 		clean_exit_parent(exec, 0);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/22 16:04:24 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:43:04 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 // }		t_super_cmd;
 
 // infile_checks.c
-int			error_checks(t_cmd *cmd, char **mini_env);
-int			check_infiles(t_cmd *cmd, int total_cmd);
+int			error_checks(t_cmd *cmd, char **mini_env, t_persistent *pers);
+int			check_infiles(t_cmd *cmd, int total_cmd, t_persistent *pers);
 int			check_in(t_redirect *in);
 int			check_infile_errors(char *path); // ok avec ordre ?
 t_redirect	*get_valid_in(t_redirect *in);
 
 // outfile_checks.c
-int			check_outfiles(t_cmd *cmd, int total_cmd);
+int	check_outfiles(t_cmd *cmd, int total_cmd, t_persistent *pers);
 int			check_out(t_redirect *out);
 int			create_outfile(t_redirect *out);
 t_redirect	*get_valid_out(t_redirect *out);
@@ -37,12 +37,13 @@ t_redirect	*get_valid_out(t_redirect *out);
 // here_doc.c
 int			get_here_doc(char *path);
 void		clean_exit_here_doc(char *lim, int fd);
+void kill_child(t_cmd *cmd, t_persistent *pers, int code);
 
 // cmd_checks.c
-int			check_cmd(t_cmd *cmd, int total_cmd, char **env);
+int			check_cmd(t_cmd *cmd, int total_cmd, char **env, t_persistent *pers);
 char		*get_env(char **env, char *ptr, char *command, t_cmd *cmd);
 char		**get_all_paths(char *ptr);
-char		*check_paths(char **paths, char *command, t_cmd *cmd);
+char	*check_paths(char **paths, char *command, t_cmd *cmd, t_persistent *pers);
 int			is_valid_path(char *path, char **ptr, char *command);
 
 // utils_in_lists.c

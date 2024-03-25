@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/22 16:13:25 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:55:31 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ int check_builtins(t_cmd *cmd, int total_cmd)
 	return (0);
 }
 
-int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
+void kill_child(t_cmd *cmd, t_persistent *pers, int code)
+{
+	cmd->type = KILLED;
+	cmd->code_err = code;
+	pers->status_code = code;
+}
+
+int	check_cmd(t_cmd *cmd, int total_cmd, char **env, t_persistent *pers)
 {
 	char	*ptr;
 	char	**paths;
@@ -55,7 +62,7 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 	while (cmd_nb < total_cmd && cmd != NULL)
 	{
 		if (!cmd->argv || cmd->argv[0] == NULL)
-			cmd->type = KILLED;
+			kill_child(cmd, pers, 1); // 127 ??
 		if (cmd->type != KILLED)
 		{
 			if (check_builtins(cmd, total_cmd) != 0)
@@ -63,11 +70,11 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 			ptr = get_env(env, ptr, cmd->argv[0], cmd);
 			if (ptr == NULL)
 				if (cmd->path_cmd == NULL)
-					cmd->type = KILLED;
+					kill_child(cmd, pers, 127);
 			paths = get_all_paths(ptr);
 			if (paths == NULL)
 				return (1);
-			cmd->path_cmd = check_paths(paths, cmd->argv[0], cmd);
+			cmd->path_cmd = check_paths(paths, cmd->argv[0], cmd, pers);
 			if (cmd->path_cmd == NULL && cmd->type != KILLED)
 				return (1);
 		}
@@ -123,7 +130,7 @@ char	**get_all_paths(char *ptr)
 
 // checks all possible paths to keep only the valid path
 
-char	*check_paths(char **paths, char *command, t_cmd *cmd)
+char	*check_paths(char **paths, char *command, t_cmd *cmd, t_persistent *pers)
 {
 	int		i;
 	int		valid;
@@ -149,7 +156,7 @@ char	*check_paths(char **paths, char *command, t_cmd *cmd)
 		i++;
 	}
 	print_str_fd("command not found: ", command, "\n", 2);
-	cmd->type = KILLED;
+	kill_child(cmd, pers, 127);
 	return (free_tab(paths), NULL);
 }
 

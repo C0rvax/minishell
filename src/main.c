@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 14:41:37 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 19:14:22 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int ac, char **av, char **env)
 		if (read && read[0] != '\0')
 		{
 			cmd = parse_read(read, persistent.mini_env);
-			if (cmd && !error_checks(cmd, persistent.mini_env))
+			if (cmd && !error_checks(cmd, persistent.mini_env, &persistent))
 				persistent.status_code = exec(cmd, &persistent);
 		}
 	}
