@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 14:34:04 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:41:37 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	main(int ac, char **av, char **env)
 	char			*read;
 	t_cmd			*cmd;
 	t_persistent	persistent;
-	char			*prompt;
 
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
