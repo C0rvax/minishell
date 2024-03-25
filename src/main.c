@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 14:41:37 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:45:56 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ void	ft_make_hist(void)
 	add_history("cat -e -n -s <<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 }
 
+static void	init_sig(void)
+{
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 static char	*get_read(char **env)
 {
 	char	*prompt;
@@ -54,16 +60,33 @@ static char	*get_read(char **env)
 	return (read);
 }
 
+static void	main_loop(t_persistent *pers)
+{
+	char	*read;
+	t_cmd	*cmd;
+
+	read = NULL;
+	read = get_read(pers->mini_env);
+	if (!read)
+	{
+		ft_printf("exit\n");
+		rl_clear_history();
+		ft_freetab(pers->mini_env);
+		exit (0);
+	}
+	if (read[0] != '\0')
+	{
+		cmd = parse_read(read, pers->mini_env);
+		if (cmd && !error_checks(cmd, pers->mini_env))
+			pers->status_code = exec(cmd, pers);
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
-	char			*read;
-	t_cmd			*cmd;
 	t_persistent	persistent;
 
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	
-	read = NULL;
+	init_sig();	
 	ft_bzero(&persistent, sizeof(t_persistent));
 	(void)av;
 	if (ac > 1)
@@ -73,15 +96,7 @@ int	main(int ac, char **av, char **env)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
 	ft_make_hist();
 	while (1)
-	{
-		read = get_read(persistent.mini_env);
-		if (read && read[0] != '\0')
-		{
-			cmd = parse_read(read, persistent.mini_env);
-			if (cmd && !error_checks(cmd, persistent.mini_env))
-				persistent.status_code = exec(cmd, &persistent);
-		}
-	}
+		main_loop(&persistent);
 	ft_freetab(persistent.mini_env);
 	rl_clear_history();
 	return (persistent.status_code);

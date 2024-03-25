@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 14:15:57 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:53:23 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef enum e_msg
 	SPECIAL,
 	TOKEN,
 	QUOTE,
-	MALLOC
+	MALLOC,
+	KILL
 }			t_msg;
 
 typedef struct s_parse

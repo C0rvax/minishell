@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infile_checks.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 14:33:23 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:53:38 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ int	check_in(t_redirect *in)
 	buf = in;
 	while (buf)
 	{
-		if (in->mode == DOUBLE)
-			if (get_here_doc(in->path) != 0)
+		if (buf->mode == DOUBLE)
+			if (get_here_doc(buf->path) != 0)
 				return (2);
-		in = in->next;
+		buf = buf->next;
 	}
 	buf = in;
 	while (buf)

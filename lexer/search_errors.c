@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:04:58 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 17:08:56 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:03:09 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	msg_lex(t_msg msg, char c, char *str)
 		ft_putstr_fd("minishell: close all quote or double quote", 2);
 	if (msg == MALLOC)
 		ft_putstr_fd("minishell: unexpected error: allocation failure", 2);
-	if (c != '\0' || str)
+	if (msg == KILL)
+		ft_putstr_fd("minishell: syntax error: unexpected end of file\nexit",
+			2);
+	if (c != '\0' || str[0])
 	{
 		ft_putchar_fd('\'', 2);
 		ft_putchar_fd(c, 2);
@@ -59,6 +62,8 @@ int	append_new_read(char **read)
 	char	*read2;
 
 	read2 = readline("> ");
+	if (!read2)
+		return (1);
 	cpy = read[0];
 	*read = ft_strjoin(cpy, read2);
 	free(cpy);
@@ -87,7 +92,7 @@ int	check_read(char **read)
 		if (read[0][i] == '|' && read[0][i + 1] == '\0')
 		{
 			if (append_new_read(read))
-				return (1);
+				return (msg_lex(KILL, 0, ""), 2);
 		}
 		i++;
 	}
