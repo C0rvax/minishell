@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:05:06 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 17:21:17 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:23:08 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,5 @@ int	exec_echo(t_exec *exec)
 	}
 	if (fd != 1)
 		close(fd);
-	clear_one(exec, 0);
-	return (0);
+	return (clear_one(exec, 0));
 }

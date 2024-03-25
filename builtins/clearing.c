@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 17:43:38 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:35:15 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,7 @@ int	final_exit(t_exec *exec, int status_code)
 	ft_cmd_lstclear(&exec->cmd);
 	exec->cmd = NULL;
 	close_all_fds(exec);
-	if (exec->fd)
-	{
-		while (exec->fd[i])
-		{
-			free(exec->fd[i]);
-			i++;
-		}
-		free(exec->fd);
-		exec->fd = NULL;
-	}
+	free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid)
 		free(exec->pid);
 	exec->pid = NULL;

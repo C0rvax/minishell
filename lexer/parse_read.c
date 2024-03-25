@@ -6,12 +6,19 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 16:01:44 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:24:58 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
+
+static void	exit_parse(char **env)
+{
+	ft_freetab(env);
+	rl_clear_history();
+	exit (0);
+}
 
 t_cmd	*parse_read(char *read, char **env)
 {
@@ -23,11 +30,7 @@ t_cmd	*parse_read(char *read, char **env)
 		return (NULL);
 	red = check_read(&read);
 	if (red == 2)
-	{
-		ft_freetab(env);
-		rl_clear_history();
-		exit (0);
-	}
+		exit_parse(env);
 	if (red == 1)
 		return (NULL);
 	if (create_token_list(&parse.lexer, read))

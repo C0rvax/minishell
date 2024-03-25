@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 17:34:46 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 18:20:40 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 			return (clean_exit_parent(exec, 1));
 		while (++k < exec->total_cmd - 1)
 		{
-			ft_printf("va la \n");
 			exec->fd[k] = malloc(sizeof(int) * 2);
 			if (!exec->fd[k])
 				return (clean_exit_parent(exec, 1));
