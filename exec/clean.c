@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/24 10:23:57 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:24:36 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	clean_end(t_exec *exec)
 // close fd ????
 int	clean_exit_parent(t_exec *exec, int err) // clean exit exec ?
 {
-//	if (err == 1)
-//		ft_putstr_fd(strerror(errno), 2); // mettre message au moment de l'erreur
+	if (err == 1)
+		ft_putstr_fd(strerror(errno), 2); // mettre message au moment de l'erreur
 	if (exec->fd != NULL)
 		free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid != NULL)

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/24 11:05:43 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:43:22 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ int	exec_uno(t_exec *exec)
 {
 	if (exec->cmd->argv == NULL) // pas verifie ds error ? @Corvax, revoir le parsing car prend le infile ou outfile en argv
 		return (1);
-	if (exec->cmd->type == BUILTPAR)
-		return (exec_builtin_parent(exec, NULL));
 	else
 	{
 		exec->pid[0] = fork();
