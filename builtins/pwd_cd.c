@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:37:13 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 11:08:48 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:09:46 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,19 @@ void	exec_pwd_c(t_exec *exec, t_child *child)
 int	exec_pwd(t_exec *exec)
 {
 	char	*pwd;
+	int		fd;
 
+	fd = redirect_out(exec);
+	if (fd < 0)
+		return (clear_one(exec, msg_built(FD, exec->cmd->argv[1], 1)));
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (clear_one(exec, msg_built(PWD, strerror(errno), 1)));
-	ft_printf("%s\n", pwd);
+	ft_putstr_fd(pwd, fd);
+	ft_putstr_fd("\n", fd);
 	free(pwd);
+	if (fd != 1)
+		close(fd);
 	return (clear_one(exec, 0));
 }
 

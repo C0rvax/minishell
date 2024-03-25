@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 14:45:49 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:14:40 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ typedef enum e_built
 	PWD,
 	ENV,
 	EXIT,
-	ARGS
-}	t_built;
+	ARGS,
+	FD
+}		t_built;
 
 /*------- CLEARING -------*/
 int		clear_built(t_exec *exec, t_child *child, int status_code);
@@ -42,6 +43,7 @@ int		exec_builtin_parent(t_exec *exec, t_persistent *pers);
 /*------- UTILS -------*/
 //int		ft_lenarr(char **arr, int mode);
 int		ft_lenarr(char **arr, char **env);
+int		redirect_out(t_exec *exec);
 
 /*------- EXEC -------*/
 void	exec_export_c(t_exec *exec, t_child *child);
@@ -58,6 +60,6 @@ int		exec_unset(t_exec *exec, t_persistent *pers);
 int		exec_cd(t_exec *exec);
 int		exec_pwd(t_exec *exec);
 int		exec_env(t_exec *exec);
-void	exec_echo(t_exec *exec);
+int		exec_echo(t_exec *exec);
 void	exec_exit_parent(t_exec *exec);
 #endif

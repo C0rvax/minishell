@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 10:37:35 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:07:19 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,22 @@ void	exec_env_c(t_exec *exec, t_child *child)
 int	exec_env(t_exec *exec)
 {
 	int	i;
+	int	fd;
 
 	i = 0;
+	fd = redirect_out(exec);
+	if (fd < 0)
+		return (clear_one(exec, msg_built(FD, exec->cmd->argv[1], 1)));
 	if (!exec->cmd->argv[1])
 	{
 		while (exec->mini_env[i])
 		{
-			ft_printf("%s\n", exec->mini_env[i]);
+			ft_putstr_fd(exec->mini_env[i], fd);
+			ft_putstr_fd("\n", fd);
 			i++;
 		}
+		if (fd != 1)
+			close(fd);
 		return (clear_one(exec, 0));
 	}
 	else

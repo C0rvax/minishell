@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 12:40:07 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:46:34 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	exec_builtin(t_exec *exec, t_child *child)
 {
 	int	i;
 
+	close(child->fdin);
 	i = is_a_builtin(child->current_cmd);
 	if (i == 0)
 		exec_echo_c(exec, child);
@@ -54,6 +55,19 @@ int	exec_builtin(t_exec *exec, t_child *child)
 	return (0);
 }
 
+int	redirect_out(t_exec *exec)
+{
+	int	fd;
+
+	if (exec->cmd->out && exec->cmd->out->mode == SIMPLE)
+		fd = open(exec->cmd->out->path, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	else if (exec->cmd->out && exec->cmd->out->mode == DOUBLE)
+		fd = open(exec->cmd->out->path, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else
+		fd = 1;
+	return (fd);
+}
+
 int	exec_builtin_parent(t_exec *exec, t_persistent *pers)
 {
 	int	i;
@@ -62,7 +76,7 @@ int	exec_builtin_parent(t_exec *exec, t_persistent *pers)
 	status_code = 0;
 	i = is_a_builtin(exec->cmd);
 	if (i == 0)
-		exec_echo(exec);
+		status_code = exec_echo(exec);
 	else if (i == 1)
 		status_code = exec_cd(exec);
 	else if (i == 2)
