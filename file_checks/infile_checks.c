@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 14:22:40 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:33:23 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	check_in(t_redirect *in)
 	{
 		if (in->mode == DOUBLE)
 			if (get_here_doc(in->path) != 0)
-				return (2); // 2 si malloc ou fd pete -> strerror
+				return (2);
 		in = in->next;
 	}
 	buf = in;
@@ -94,7 +94,7 @@ int	check_in(t_redirect *in)
 	{
 		if (buf->mode == SIMPLE)
 			if (check_infile_errors(buf->path) != 0)
-				return (1); // 1 si erreur de fichier
+				return (1);
 		buf = buf->next;
 	}
 	return (0);
@@ -129,7 +129,7 @@ t_redirect	*get_valid_in(t_redirect *in)
 	first_in = in;
 	valid_in = ft_in_lstlast(in);
 	if (valid_in->mode == DOUBLE)
-		valid_in->path = ft_strdup(".tmpheredoc"); // Protege le malloc!!
+		valid_in->path = ft_strdup(".tmpheredoc");
 	if (valid_in->mode == SIMPLE)
 	{
 		while (in)
