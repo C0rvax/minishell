@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/22 13:17:04 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:15:53 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ void	ft_make_hist(void)
 	add_history("<<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 	add_history("cat -e -n -s <<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 }
+void handle_sigint(int sig)
+{
+	ft_printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	(void)sig;
+}
 
 int	main(int ac, char **av, char **env)
 {
@@ -36,6 +44,9 @@ int	main(int ac, char **av, char **env)
 	t_persistent	persistent;
 	char			*prompt;
 
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	
 	read = NULL;
 	ft_bzero(&persistent, sizeof(t_persistent));
 	(void)av;
@@ -48,6 +59,8 @@ int	main(int ac, char **av, char **env)
 		prompt = get_prompt(persistent.mini_env);
 		read = readline(prompt); // si ctrl-c free le prompt !!! @Corvax, j'ai une leak au exit liee a cette liste
 		// + provoque un sigint pr cmd cat<infile | cat > outfile si pas de permission sur outfile
+		// if (read == 0)
+		// 	exit;
 		free(prompt);
 		if (read && read[0] != '\0')
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 14:15:34 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:16:14 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <stdlib.h>
+#include <signal.h>
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
