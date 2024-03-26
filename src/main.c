@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 17:21:10 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/26 23:15:17 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	main_loop(t_persistent *pers)
 	if (read[0] != '\0')
 	{
 		cmd = parse_read(read, pers);
-		if (cmd && !error_checks(cmd, pers->mini_env))
+		if (cmd && !error_checks(cmd, pers->mini_env, pers))
 			pers->status_code = exec(cmd, pers);
 	}
 }
@@ -88,7 +88,7 @@ int	main(int ac, char **av, char **env)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
 	parse_env_array(&persistent, env);
 	if (!persistent.mini_env)
-		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
+		return (ft_putstr_fd("minishell: Cannot allocate memory\n", 2), 1);
 	ft_make_hist();
 	while (1)
 		main_loop(&persistent);

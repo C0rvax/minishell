@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 16:51:03 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/26 23:22:55 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ int	clean_end(t_exec *exec, t_persistent *pers)
 {
 	int		j;
 	int		status;
-	int		status_code;
 	t_cmd	*buf;
 
-	status_code = 0;
 	j = 0;
 	buf = exec->cmd;
 	while (j < exec->total_cmd)
