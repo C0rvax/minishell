@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 18:35:15 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:10:38 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,6 @@ int	msg_built(t_built msg, char *str, int status_code)
 
 int	clear_built(t_exec *exec, t_child *child, int status_code)
 {
-	int	i;
-
-	i = 0;
 	(void)child;
 	ft_cmd_lstclear(&exec->cmd);
 	exec->cmd = NULL;
@@ -82,9 +79,6 @@ int	clear_built(t_exec *exec, t_child *child, int status_code)
 
 int	clear_one(t_exec *exec, int status_code)
 {
-	int	i;
-
-	i = 0;
 	ft_cmd_lstclear(&exec->cmd);
 	exec->cmd = NULL;
 	close_all_fds(exec);
@@ -97,9 +91,6 @@ int	clear_one(t_exec *exec, int status_code)
 
 int	final_exit(t_exec *exec, int status_code)
 {
-	int	i;
-
-	i = 0;
 	rl_clear_history();
 	ft_cmd_lstclear(&exec->cmd);
 	exec->cmd = NULL;
