@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 14:21:16 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:58:00 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ void	ft_make_hist(void)
 	add_history("cat -e -n -s <<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
 }
 
-static void	init_sig(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-}
-
 static char	*get_read(char **env)
 {
 	char	*prompt;
@@ -53,7 +47,7 @@ static char	*get_read(char **env)
 	if (!prompt)
 		read = readline("minishell$ ");
 	else
-		{
+	{
 		read = readline(prompt);
 		free(prompt);
 	}
@@ -86,7 +80,8 @@ int	main(int ac, char **av, char **env)
 {
 	t_persistent	persistent;
 
-	init_sig();	
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	ft_bzero(&persistent, sizeof(t_persistent));
 	(void)av;
 	if (ac > 1)
