@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:37:13 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 17:09:46 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:41:25 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exec_cd_c(t_exec *exec, t_child *child)
 
 	malloc = 0;
 	if (child->current_cmd->argv[1] && child->current_cmd->argv[2])
-		clear_built(exec, child, msg_built(ARGS, "cd", 2));
+		clear_built(exec, child, msg_built(ARGS, "cd", 1));
 	built = child->current_cmd->argv[1];
 	if (!built)
 	{
@@ -91,7 +91,7 @@ int	exec_cd(t_exec *exec)
 
 	malloc = 0;
 	if (exec->cmd->argv[1] && exec->cmd->argv[2])
-		return (clear_one(exec, msg_built(ARGS, "cd", 2)));
+		return (clear_one(exec, msg_built(ARGS, "cd", 1)));
 	built = exec->cmd->argv[1];
 	if (!built)
 	{

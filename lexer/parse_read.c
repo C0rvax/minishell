@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 18:24:58 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:19:15 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	exit_parse(char **env)
 	exit (0);
 }
 
-t_cmd	*parse_read(char *read, char **env)
+t_cmd	*parse_read(char *read, t_persistent *pers)
 {
 	t_parse	parse;
 	int		red;
@@ -30,12 +30,12 @@ t_cmd	*parse_read(char *read, char **env)
 		return (NULL);
 	red = check_read(&read);
 	if (red == 2)
-		exit_parse(env);
+		exit_parse(pers->mini_env);
 	if (red == 1)
 		return (NULL);
 	if (create_token_list(&parse.lexer, read))
 		return (ft_listclear(&parse.lexer), NULL);
-	if (replace_argument(&parse.lexer, env))
+	if (replace_argument(&parse.lexer, pers))
 		return (ft_listclear(&parse.lexer), NULL);
 	delete_quotes(&parse.lexer);
 	if (search_errors(parse.lexer))

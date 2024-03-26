@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 15:45:56 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:21:16 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	main_loop(t_persistent *pers)
 	}
 	if (read[0] != '\0')
 	{
-		cmd = parse_read(read, pers->mini_env);
+		cmd = parse_read(read, pers);
 		if (cmd && !error_checks(cmd, pers->mini_env))
 			pers->status_code = exec(cmd, pers);
 	}

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:04:58 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 16:03:09 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:44:40 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	msg_lex(t_msg msg, char c, char *str)
 	if (msg == QUOTE)
 		ft_putstr_fd("minishell: close all quote or double quote", 2);
 	if (msg == MALLOC)
-		ft_putstr_fd("minishell: unexpected error: allocation failure", 2);
+		ft_putstr_fd("minishell: Cannot allocate memory", 2);
 	if (msg == KILL)
 		ft_putstr_fd("minishell: syntax error: unexpected end of file\nexit",
 			2);

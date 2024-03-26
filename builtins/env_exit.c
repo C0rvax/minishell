@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 17:07:19 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:40:46 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	exec_env_c(t_exec *exec, t_child *child)
 		clear_built(exec, child, 0);
 	}
 	else
-		clear_built(exec, child, msg_built(ENV, argv[1], 1));
+		clear_built(exec, child, msg_built(ENV, argv[1], 127));
 }
 
 int	exec_env(t_exec *exec)
@@ -72,7 +72,7 @@ int	exec_env(t_exec *exec)
 		return (clear_one(exec, 0));
 	}
 	else
-		return (clear_one(exec, msg_built(ENV, exec->cmd->argv[1], 1)));
+		return (clear_one(exec, msg_built(ENV, exec->cmd->argv[1], 127)));
 }
 
 void	exec_exit_c(t_exec *exec, t_child *child)
