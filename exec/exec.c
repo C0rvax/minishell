@@ -3,74 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 18:20:40 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:19:56 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "env_parsing.h"
 #include "exec.h"
-#include "file_checks.h"
-#include <sys/wait.h> 
+
 #include "builtin.h"
-
-int	exec(t_cmd *cmd, t_persistent *pers)
-{
-	t_exec	exec;
-
-	//gerer pers->status_code
-	if (initialize_exec(&exec, cmd, pers->mini_env) != 0)
-		return (1); // ok avec status_code - seulment des mallocs foireux
-	if (exec.total_cmd == 1)
-	{
-		if (exec.cmd->type == KILLED)
-			return (clean_exit_parent(&exec, 0), 0);
-		else if (exec.cmd->type == BUILTPAR)
-			return (exec_builtin_parent(&exec, pers));
-		else
-			return (exec_uno(&exec) != 0); // si pb de fork, si argv NULL, si fd ou dup foire et si execve foire.
-// ok avec status code ?? / si pas d'erreur retombe en bas et renvoi 0 donc return (fct?)
-	}
-	else if (exec.total_cmd > 1)
-	{
-		if (create_pipes(&exec, exec.total_cmd) != 0)
-			return (1);
-		if (ft_fork(&exec)!= 0)
-			return (1); // SI ENFANT KILLED tjr 0 retourne
-		clean_end(&exec);
-	}
-	return (0);
-}
-
- int	initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env)
-{
-	int	k;
-
-	k = -1;
-	ft_bzero(exec, sizeof(t_exec));
-	exec->total_cmd = ft_cmd_lstsize(cmd);
-	if (exec->total_cmd > 1)
-	{
-		exec->fd = malloc(sizeof(int *) * exec->total_cmd - 1);
-		if (!exec->fd)
-			return (clean_exit_parent(exec, 1));
-		while (++k < exec->total_cmd - 1)
-		{
-			exec->fd[k] = malloc(sizeof(int) * 2);
-			if (!exec->fd[k])
-				return (clean_exit_parent(exec, 1));
-		}
-	}
-	exec->pid = malloc(sizeof(int) * exec->total_cmd);
-	if (!exec->pid)
-		return (clean_exit_parent(exec, 1), 1);
-	exec->cmd = cmd; // free cmd et mini_env la plus haut dans la chaine ?
-	exec->mini_env = mini_env;
-	return (0);
-}
+#include "env_parsing.h"
+#include "file_checks.h"
+#include "minishell.h"
 
 int	initialize_child(t_child *child, t_exec *exec)
 {
@@ -91,32 +36,10 @@ int	initialize_child(t_child *child, t_exec *exec)
 	return (0);
 }
 
-int	exec_uno(t_exec *exec)
-{
-	if (!exec->cmd->argv || !exec->cmd->argv[0]) //? @Corvax, revoir le parsing car prend le infile ou outfile en argv
-		return (1);
-	else
-	{
-		exec->pid[0] = fork();
-		if (exec->pid[0] < 0)
-			return (ft_putstr_fd(strerror(errno), 2), 2);
-		if (exec->pid[0] == 0)
-		{
-			if (manage_fds(exec->cmd) != 0)
-				return (1);
-			if (execve(exec->cmd->path_cmd, exec->cmd->argv, exec->mini_env) == -1)
-				return (ft_putstr_fd(strerror(errno), 2), 1); // revoir le message ?
-		}
-		waitpid(exec->pid[0], NULL, 0);
-		clean_exit_parent(exec, 0);
-	}
-	return (0);
-}
-
 int	manage_fds(t_cmd *cmd)
 {
-	int fdin;
-	int fdout;
+	int	fdin;
+	int	fdout;
 
 	fdin = 0;
 	fdout = 0;
@@ -139,4 +62,84 @@ int	manage_fds(t_cmd *cmd)
 		close(fdout);
 	}
 	return (0);
+}
+
+int	exec_uno(t_exec *exec)
+{
+	int		status;
+	int		status_code;
+	char	*path_cmd;
+
+	path_cmd = exec->cmd->path_cmd;
+	status_code = 0;
+	if (!exec->cmd->argv || !exec->cmd->argv[0]) //? @Corvax, revoir le parsing car prend le infile ou outfile en argv
+		return (1);
+	exec->pid[0] = fork();
+	if (exec->pid[0] < 0)
+		return (ft_putstr_fd(strerror(errno), 2), 1);
+	if (exec->pid[0] == 0)
+	{
+		if (manage_fds(exec->cmd) != 0)
+			return (1);
+		if (execve(path_cmd, exec->cmd->argv, exec->mini_env) == -1)
+			return (1);
+	}
+	waitpid(exec->pid[0], &status, 0);
+	if (WIFEXITED(status))
+		status_code = WEXITSTATUS(status);
+	clean_exit_parent(exec, 0);
+	return (status_code);
+}
+
+int	initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env)
+{
+	int	k;
+
+	k = -1;
+	ft_bzero(exec, sizeof(t_exec));
+	exec->total_cmd = ft_cmd_lstsize(cmd);
+	if (exec->total_cmd > 1)
+	{
+		exec->fd = malloc(sizeof(int *) * exec->total_cmd - 1);
+		if (!exec->fd)
+			return (clean_exit_parent(exec, 1));
+		while (++k < exec->total_cmd - 1)
+		{
+			exec->fd[k] = malloc(sizeof(int) * 2);
+			if (!exec->fd[k])
+				return (clean_exit_parent(exec, 1));
+		}
+	}
+	exec->pid = malloc(sizeof(int) * exec->total_cmd);
+	if (!exec->pid)
+		return (clean_exit_parent(exec, 1), 1);
+	exec->cmd = cmd;
+	exec->mini_env = mini_env;
+	return (0);
+}
+
+int	exec(t_cmd *cmd, t_persistent *pers)
+{
+	t_exec	exec;
+
+	if (initialize_exec(&exec, cmd, pers->mini_env) != 0)
+		return (1);
+	if (exec.total_cmd == 1)
+	{
+		if (exec.cmd->type == KILLED)
+			return (clean_exit_parent(&exec, 0), pers->status_code);
+		else if (exec.cmd->type == BUILTPAR)
+			return (exec_builtin_parent(&exec, pers));
+		else
+			return (exec_uno(&exec));
+	}
+	else if (exec.total_cmd > 1)
+	{
+		if (create_pipes(&exec, exec.total_cmd) != 0)
+			return (1);
+		if (ft_fork(&exec) != 0)
+			return (1);
+		pers->status_code = clean_end(&exec, pers);
+	}
+	return (pers->status_code);
 }

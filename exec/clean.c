@@ -6,27 +6,42 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 14:39:53 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/26 16:51:03 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include <sys/wait.h> 
 
-int	clean_end(t_exec *exec)
+int	clean_end(t_exec *exec, t_persistent *pers)
 {
-	int	j;
+	int		j;
+	int		status;
+	int		status_code;
+	t_cmd	*buf;
 
-	j = exec->total_cmd;
-	while (--j >= 0)
-		waitpid(exec->pid[j], NULL, 0);
+	status_code = 0;
+	j = 0;
+	buf = exec->cmd;
+	while (j < exec->total_cmd)
+	{
+		waitpid(exec->pid[j], &status, 0);
+		if (WIFEXITED(status))
+		{
+			if (buf->code_err == 127)
+				pers->status_code = 127;
+			else
+				pers->status_code = WEXITSTATUS(status);
+		}
+		j++;
+		buf = buf->next;
+	}
 	clean_exit_parent(exec, 0);
-	return (0);
+	return (pers->status_code);
 }
 
 // to end parent, free all malloc vars and delete the temporary heredoc file
 
-int	clean_exit_parent(t_exec *exec, int err) 
+int	clean_exit_parent(t_exec *exec, int err)
 {
 	if (err == 1)
 		ft_putstr_fd(strerror(errno), 2);
@@ -43,10 +58,10 @@ int	clean_exit_parent(t_exec *exec, int err)
 			ft_putstr_fd(strerror(errno), 2);
 	}
 	ft_cmd_lstclear(&exec->cmd);
-	return (err); // @status code
+	return (err);
 }
 
-void	clean_exit_child(t_exec *exec, int err)
+void	clean_exit_child(t_exec *exec, t_child *child, int err)
 {
 	if (err == 1)
 		ft_putstr_fd(strerror(errno), 2);
@@ -63,64 +78,29 @@ void	clean_exit_child(t_exec *exec, int err)
 	}
 	if (exec->mini_env != NULL)
 		ft_freetab(exec->mini_env);
+	if (child->current_cmd->code_err == 127)
+	{
+		ft_cmd_lstclear(&exec->cmd);
+		exit(127);
+	}
 	ft_cmd_lstclear(&exec->cmd);
+	exit(1);
 }
-
 
 int	clean_exit_fds(t_exec *exec, t_child *child)
 {
 	ft_putstr_fd(strerror(errno), 2);
-	if (child->cmdno == 0)
-	{
-		if (child->fdout != 0)
-			close(child->fdout);
-		else
-			close(exec->fd[0][1]);
-		if (child->fdin != 0)
-			close(child->fdin);
-	}
-	else if (child->cmdno == exec->total_cmd - 1)
-	{
-		if (child->fdin != 0)
-			close(child->fdin);
-		else
-			close(exec->fd[child->cmdno - 1][0]);
-		if (child->fdout != 0)
-			close(child->fdout);
-	}
-	else
-	{
-		if (child->fdin != 0)
-			close(child->fdin);
-		else
-			close(exec->fd[child->cmdno - 1][0]);
-		if (child->fdout != 0)
-			close(child->fdout);
-		else
-			close(exec->fd[child->cmdno][1]);
-	}
-	// clean_exit_parent(exec, 0);
-	clean_exit_child(exec, 0);
-	exit(0); // vraiment ?? 
-}
-
-int	free_tab_int(int **fd, int nb)
-{
-	int	i;
-
-	i = 0;
-	while (i < nb && fd[i] != NULL)
-	{
-		free(fd[i]);
-		i++;
-	}
-	free(fd);
-	fd = NULL;
-	return (0);
+	if (child->fdout > 0)
+		close(child->fdout);
+	if (child->fdin > 0)
+		close(child->fdin);
+	clean_exit_child(exec, child, 0);
+	exit(1);
 }
 
 // close pas fdin et fdout ????
-void close_all_fds(t_exec *exec)
+
+void	close_all_fds(t_exec *exec)
 {
 	int	l;
 
@@ -130,7 +110,7 @@ void close_all_fds(t_exec *exec)
 		if (exec->fd[l][0] >= 0)
 			close(exec->fd[l][0]);
 		if (exec->fd[l][1] >= 0)
-		close(exec->fd[l][1]);
+			close(exec->fd[l][1]);
 		l++;
 	}
 	if (access(".tmpheredoc", F_OK) == 0)

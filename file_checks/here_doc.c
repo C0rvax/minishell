@@ -6,13 +6,28 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:37:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 14:19:32 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/26 11:28:14 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file_checks.h"
 
-// prevoir de unlink le fichier temp
+// in case of error in get_here_doc
+
+void	clean_exit_here_doc(char *lim, int fd)
+{
+	ft_putstr_fd(strerror(errno), 2);
+	if (lim != NULL)
+		free(lim);
+	close(fd);
+	if (access(".tmpheredoc", F_OK) == 0)
+	{
+		if (unlink(".tmpheredoc") != 0)
+		{
+			ft_putstr_fd(strerror(errno), 2);
+		}
+	}
+}
 
 int	get_here_doc(char *path)
 {
@@ -65,19 +80,3 @@ int	get_here_doc(char *path)
 	return (free(line), close(fd), 0);
 }
 */
-// in case of error in get_here_doc
-
-void	clean_exit_here_doc(char *lim, int fd)
-{
-	ft_putstr_fd(strerror(errno), 2);
-	if (lim != NULL)
-		free(lim);
-	close(fd);
-	if (access(".tmpheredoc", F_OK) == 0)
-	{
-		if (unlink(".tmpheredoc") != 0)
-		{
-			ft_putstr_fd(strerror(errno), 2);
-		}
-	}
-}

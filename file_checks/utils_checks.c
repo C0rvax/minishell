@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_in_lists.c                                   :+:      :+:    :+:   */
+/*   utils_checks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:14:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/22 16:05:25 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/26 11:19:31 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file_checks.h"
+
+void	kill_child(t_cmd *cmd, t_persistent *pers, int code)
+{
+	cmd->type = KILLED;
+	cmd->code_err = code;
+	pers->status_code = code;
+}
 
 void	print_str_fd(char *s1, char *s2, char *s3, int fd)
 {
@@ -19,11 +26,13 @@ void	print_str_fd(char *s1, char *s2, char *s3, int fd)
 	ft_putstr_fd(s3, fd);
 }
 
-int	ft_cmd_lstsize(t_cmd *lst) // necessaire de proteger ?
+int	ft_cmd_lstsize(t_cmd *lst)
 {
 	int	size;
 
 	size = 0;
+	if (!lst)
+		return (size);
 	while (lst)
 	{
 		lst = lst->next;
