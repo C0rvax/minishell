@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 17:43:04 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/26 11:37:14 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,35 @@
 
 # include "minishell.h"
 
-// typedef struct s_super_cmd
-// {
-// 	t_cmd	*head_cmd;
-// 	int		total_cmd;
-// }		t_super_cmd;
+// checker.c
+int			error_checks(t_cmd *cmd, char **mini_env, t_persistent *pers);
 
 // infile_checks.c
-int			error_checks(t_cmd *cmd, char **mini_env, t_persistent *pers);
-int			check_infiles(t_cmd *cmd, int total_cmd, t_persistent *pers);
 int			check_in(t_redirect *in);
-int			check_infile_errors(char *path); // ok avec ordre ?
 t_redirect	*get_valid_in(t_redirect *in);
 
 // outfile_checks.c
-int	check_outfiles(t_cmd *cmd, int total_cmd, t_persistent *pers);
 int			check_out(t_redirect *out);
-int			create_outfile(t_redirect *out);
 t_redirect	*get_valid_out(t_redirect *out);
 
 // here_doc.c
 int			get_here_doc(char *path);
-void		clean_exit_here_doc(char *lim, int fd);
-void kill_child(t_cmd *cmd, t_persistent *pers, int code);
 
 // cmd_checks.c
-int			check_cmd(t_cmd *cmd, int total_cmd, char **env, t_persistent *pers);
-char		*get_env(char **env, char *ptr, char *command, t_cmd *cmd);
+int	check_builtins(t_cmd *cmd, int total_cmd);
+int			get_cmd_path(t_cmd *cmd, char **env, t_persistent *pers);
+
+// cmd_checks2.c
 char		**get_all_paths(char *ptr);
-char	*check_paths(char **paths, char *command, t_cmd *cmd, t_persistent *pers);
+char		*check_paths(char **paths, char *command, t_cmd *cmd,
+				t_persistent *pers);
 int			is_valid_path(char *path, char **ptr, char *command);
 
-// utils_in_lists.c
+// utils_checks.c
+void		kill_child(t_cmd *cmd, t_persistent *pers, int code);
 void		print_str_fd(char *s1, char *s2, char *s3, int fd);
 int			ft_cmd_lstsize(t_cmd *lst);
 t_redirect	*ft_in_lstlast(t_redirect *lst);
 void		ft_in_lstclear(t_redirect *lst);
-int			free_tab(char **tab);
 
 #endif

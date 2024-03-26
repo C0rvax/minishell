@@ -13,11 +13,11 @@ BUILTINS	= $(addprefix ./builtins/, builtins.c clearing.c echo.c			\
 
 ENV_PARSING	= $(addprefix ./env_parsing/, env_parsing.c utils.c)
 
-EXEC		= $(addprefix ./exec/, exec.c exec2.c clean.c)
+EXEC		= $(addprefix ./exec/, exec.c exec_multiple_cmd.c manage_fds.c clean.c utils_exec.c)
 # SIGNALS	=
 
-ERRORS		= $(addprefix ./file_checks/, infile_checks.c outfile_checks.c	\
-			  cmd_checks.c here_doc.c utils_in_lists.c)
+ERRORS		= $(addprefix ./file_checks/, checker.c infile_checks.c outfile_checks.c	\
+			  cmd_checks.c cmd_checks2.c here_doc.c utils_checks.c)
 
 MAIN		= $(addprefix ./src/, main.c list_cmd.c list_redirect.c			\
 			  list_read.c prompt.c utils.c)

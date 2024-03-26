@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 19:14:22 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/26 11:00:27 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	main(int ac, char **av, char **env)
 			cmd = parse_read(read, persistent.mini_env);
 			if (cmd && !error_checks(cmd, persistent.mini_env, &persistent))
 				persistent.status_code = exec(cmd, &persistent);
+		ft_printf("code=%d\n", persistent.status_code);
 		}
 	}
 	ft_freetab(persistent.mini_env);
