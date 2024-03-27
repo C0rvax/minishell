@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 17:21:10 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:23:15 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	main_loop(t_persistent *pers)
 	if (read[0] != '\0')
 	{
 		cmd = parse_read(read, pers);
-		if (cmd && !error_checks(cmd, pers->mini_env))
+		if (cmd && !error_checks(cmd, pers->mini_env, pers))
 			pers->status_code = exec(cmd, pers);
 	}
 }

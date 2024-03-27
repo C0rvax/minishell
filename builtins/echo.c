@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:05:06 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/25 18:23:08 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/27 11:30:04 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	exec_echo_c(t_exec *exec, t_child *child)
 		ft_printf("\n");
 	}
 	clear_built(exec, child, 0);
+	exit(1);
 }
 
 int	exec_echo(t_exec *exec)
