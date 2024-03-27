@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/27 17:04:32 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:14:00 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	exec_builtin_parent(t_exec *exec, t_persistent *pers)
 	if (i == 0)
 		status_code = exec_echo(exec);
 	else if (i == 1)
-		status_code = exec_cd(exec);
+		status_code = exec_cd(exec, pers);
 	else if (i == 2)
 		status_code = exec_pwd(exec);
 	else if (i == 3)

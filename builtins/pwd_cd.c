@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:37:13 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 14:41:25 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:13:18 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,29 @@ int	exec_pwd(t_exec *exec)
 	return (clear_one(exec, 0));
 }
 
+static int	update_env(t_exec *exec, t_persistent *pers)
+{
+	char	**new;
+	char	**cpy;
+	char	*argv[2];
+	char	*pwd;
+
+	cpy = exec->mini_env;
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (1);
+	argv[0] = ft_strjoin("PATH=", pwd);
+	if (!argv[0])
+		return (free(pwd), 1);
+	argv[1] = NULL;
+	new = ft_joinarr(argv, cpy);
+	if (!new)
+		return (1);
+	ft_freetab(cpy);
+	pers->mini_env = new;
+	return (0);
+}
+
 void	exec_cd_c(t_exec *exec, t_child *child)
 {
 	int		malloc;
@@ -84,7 +107,7 @@ void	exec_cd_c(t_exec *exec, t_child *child)
 	clear_built(exec, child, 0);
 }
 
-int	exec_cd(t_exec *exec)
+int	exec_cd(t_exec *exec, t_persistent *pers)
 {
 	int		malloc;
 	char	*built;
@@ -107,5 +130,7 @@ int	exec_cd(t_exec *exec)
 	chdir(built);
 	if (malloc)
 		free(built);
+	if (update_env(exec, pers))
+		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
 	return (clear_one(exec, 0));
 }

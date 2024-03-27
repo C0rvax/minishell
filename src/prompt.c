@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:08:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 16:03:31 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:40:10 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static char	*get_path(char **env)
 	if (!home)
 		return (NULL);
 	pwd = ft_getenv(env, "PWD");
+//	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (free(home), NULL);
 	i = ft_strlen(home);

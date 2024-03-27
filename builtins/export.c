@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 14:43:34 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:13:46 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	dup_arr(char ***new, char **env, char **argv)
 	return (i);
 }
 
-static char	**ft_joinarr(char **argv, char **env)
+char	**ft_joinarr(char **argv, char **env)
 {
 	int		i;
 	int		j;
