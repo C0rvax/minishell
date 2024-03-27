@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 11:39:06 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/27 11:34:37 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*check_paths(char **paths, char *command, t_cmd *cmd,
 			return (ft_freetab(paths), ptr);
 		i++;
 	}
-	print_str_fd("command not found: ", command, "\n", 2);
+	print_str_fd(command, ": command not found", "\n", 2);
 	return (kill_child(cmd, pers, 127), ft_freetab(paths), NULL);
 }
 

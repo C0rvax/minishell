@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 11:34:31 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/27 11:40:41 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
 			cmd->path_cmd = ft_strdup(command);
 			return (NULL);
 		}
-		print_str_fd(command, "No such file or directory", "\n", 2);
+		print_str_fd("minishell: ", command, ": No such file or directory\n", 2);
 		return (NULL);
 	}
 	return (ptr);

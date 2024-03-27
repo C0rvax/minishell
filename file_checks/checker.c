@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 11:37:43 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/27 11:29:07 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,9 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env, t_persistent *pers)
 			kill_child(cmd, pers, 0);
 		if (cmd->type != KILLED)
 		{
-			if (check_builtins(cmd, total_cmd) != 0)
-				return (0);
-			if (get_cmd_path(cmd, env, pers) != 0)
-				return (1);
+			if (check_builtins(cmd, total_cmd) == 0)
+				if (get_cmd_path(cmd, env, pers) != 0)
+					return (1);
 		}
 		cmd_nb++;
 		cmd = cmd->next;
