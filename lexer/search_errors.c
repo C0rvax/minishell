@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:04:58 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 14:44:40 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:19:55 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	search_parser_err(t_lst *list)
 void	msg_lex(t_msg msg, char c, char *str)
 {
 	if (msg == SPECIAL)
-		ft_putstr_fd("minishell: our program do not handle special char ", 2);
+		ft_putstr_fd("minishell: our program does not handle special char ", 2);
 	if (msg == TOKEN)
 		ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
 	if (msg == QUOTE)

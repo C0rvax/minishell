@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/25 17:46:34 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/27 17:02:41 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	exec_builtin(t_exec *exec, t_child *child)
 {
 	int	i;
 
-	close(child->fdin);
 	i = is_a_builtin(child->current_cmd);
 	if (i == 0)
 		exec_echo_c(exec, child);
