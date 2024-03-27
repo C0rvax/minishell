@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 12:44:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/24 14:48:54 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/27 12:22:24 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ static int	is_in_env(char **tab, char *str)
 		return (-1);
 	while (tab[i])
 	{
-		if (ft_strncmp(tab[i], var, ft_strlen(var)))
+		if (!ft_strncmp(tab[i], var, ft_strlen(var)))
 			return (free(var), 1);
+		i++;
 	}
 	return (free(var), 0);
 }
@@ -34,6 +35,7 @@ static int	is_in_env(char **tab, char *str)
 static int	count_in_env(char **env, char **argv)
 {
 	int		i;
+	int		in;
 	int		count;
 
 	i = 1;
@@ -42,9 +44,10 @@ static int	count_in_env(char **env, char **argv)
 	{
 		while (argv[i])
 		{
-			if (is_in_env(env, argv[i]) < 0)
+			in = is_in_env(env, argv[i]);
+			if (in < 0)
 				return (-1);
-			if (is_in_env(env, argv[i]))
+			if (in == 1)
 				count++;
 			i++;
 		}
