@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:25 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 16:06:48 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:19:09 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	create_token_list(t_lst **lexer, char *read)
 	while (read && read[i])
 	{
 		pass_quote(read, &i);
-		if (read[i] && is_token(read[i]))
+		if (read[i] && (is_token(read[i]) || read[i] == ' '))
 			status_code = create_list_node(lexer, read, i, &j);
 		if (status_code)
 			return (status_code);

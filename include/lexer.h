@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 14:20:56 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/28 20:37:33 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef enum e_msg
 	SPECIAL,
 	TOKEN,
 	QUOTE,
+	DQUOTE,
 	MALLOC,
 	KILL
 }			t_msg;
@@ -63,9 +64,8 @@ void	pass_simple_quote(char *str, int *i);
 int		is_special(char c);
 
 /*------- ERRORS -------*/
-int		search_errors(t_lst *list);
+int		search_errors(char *read);
 void	msg_lex(t_msg msg, char c, char *str);
-int		check_read(char **read);
 
 /*------- LEXER -------*/
 int		create_token_list(t_lst **lexer, char *read);

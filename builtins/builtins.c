@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/27 18:14:00 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:49:48 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	exec_builtin(t_exec *exec, t_child *child)
 	if (i == 0)
 		exec_echo_c(exec, child);
 	else if (i == 1)
-		exec_cd_c(exec, child);
+		clear_built(exec, child, 0);
 	else if (i == 2)
 		exec_pwd_c(exec, child);
 	else if (i == 3)

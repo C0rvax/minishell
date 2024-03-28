@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 14:36:36 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:49:07 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ static int	find_and_replace(t_lst *lst, int index, char **env)
 	j = index + 1;
 	if (lst->str[j] == '\0')
 		return (0);
-	while (lst->str[j] != '\0' && lst->str[j] != 34 && lst->str[j] != 39
-		&& lst->str[j] != ' ' && lst->str[j] != '$')
+	while (!ft_isalnum(lst->str[j]) && lst->str[j] != '_')
 		j++;
 	arg = ft_substr(lst->str, index + 1, j - index - 1);
 	if (!arg)
