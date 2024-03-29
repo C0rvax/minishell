@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 11:37:14 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:21:33 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "minishell.h"
 
 // checker.c
-int			error_checks(t_cmd *cmd, char **mini_env, t_persistent *pers);
+int			error_checks(t_cmd *cmd, char **mini_env);
 
 // infile_checks.c
 int			check_in(t_redirect *in);
@@ -31,16 +31,15 @@ int			get_here_doc(char *path);
 
 // cmd_checks.c
 int	check_builtins(t_cmd *cmd, int total_cmd);
-int			get_cmd_path(t_cmd *cmd, char **env, t_persistent *pers);
+int			get_cmd_path(t_cmd *cmd, char **env);
 
 // cmd_checks2.c
 char		**get_all_paths(char *ptr);
-char		*check_paths(char **paths, char *command, t_cmd *cmd,
-				t_persistent *pers);
+char		*check_paths(char **paths, char *command, t_cmd *cmd);
 int			is_valid_path(char *path, char **ptr, char *command);
 
 // utils_checks.c
-void		kill_child(t_cmd *cmd, t_persistent *pers, int code);
+void		kill_child(t_cmd *cmd, int code);
 void		print_str_fd(char *s1, char *s2, char *s3, int fd);
 int			ft_cmd_lstsize(t_cmd *lst);
 t_redirect	*ft_in_lstlast(t_redirect *lst);

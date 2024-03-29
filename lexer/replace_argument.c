@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   replace_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 14:36:36 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:16:03 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "minishell.h"
+
+extern int status_code;
+
 
 static char	*check_in_env(char *arg, char **env)
 {
@@ -91,13 +95,14 @@ static int	find_and_replace(t_lst *lst, int index, char **env)
 	return (0);
 }
 
-static int	replace_status(t_lst *lst, int index, t_persistent *pers)
+static int	replace_status(t_lst *lst, int index)
 {
 	char	*arg;
 	char	*value;
 
 	arg = "?";
-	value = ft_itoa(pers->status_code);
+	value = ft_itoa(status_code);
+
 	if (!value)
 		return (msg_lex(MALLOC, 0, ""), 1);
 	if (replace_in_list(lst, arg, value, index))
@@ -120,7 +125,7 @@ int	replace_argument(t_lst **lexer, t_persistent *pers)
 		{
 			pass_simple_quote(buf->str, &i);
 			if (buf->str[i] == '$' && buf->str[i + 1] == '?'
-				&& replace_status(buf, i, pers))
+				&& replace_status(buf, i/*, pers*/))
 				return (1);
 			if (buf->str[i] == '$' && find_and_replace(buf, i, pers->mini_env))
 				return (1);

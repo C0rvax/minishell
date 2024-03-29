@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/27 11:34:37 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:03:34 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int	is_valid_path(char *path, char **ptr, char *command)
 
 // checks all possible paths to keep only the valid path
 
-char	*check_paths(char **paths, char *command, t_cmd *cmd,
-		t_persistent *pers)
+char	*check_paths(char **paths, char *command, t_cmd *cmd)
 {
 	int		i;
 	int		valid;
@@ -70,7 +69,7 @@ char	*check_paths(char **paths, char *command, t_cmd *cmd,
 		i++;
 	}
 	print_str_fd(command, ": command not found", "\n", 2);
-	return (kill_child(cmd, pers, 127), ft_freetab(paths), NULL);
+	return (kill_child(cmd, 127), ft_freetab(paths), NULL);
 }
 
 // gets all the possible paths, splitting them

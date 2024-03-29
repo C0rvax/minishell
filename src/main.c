@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/27 16:30:42 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:18:58 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,7 @@
 #include "env_parsing.h"
 #include "exec.h"
 
-void	handle_sigint(int sig)
-{
-	ft_printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	(void)sig;
-}
+int status_code;
 
 void	ft_make_hist(void)
 {
@@ -60,6 +53,7 @@ static void	main_loop(t_persistent *pers)
 	t_cmd	*cmd;
 
 	read = NULL;
+	signals(1);
 	read = get_read(pers->mini_env);
 	if (!read)
 	{
@@ -71,8 +65,10 @@ static void	main_loop(t_persistent *pers)
 	if (read[0] != '\0')
 	{
 		cmd = parse_read(read, pers);
-		if (cmd && !error_checks(cmd, pers->mini_env, pers))
-			pers->status_code = exec(cmd, pers);
+		if (!cmd)
+			status_code = 1;
+		if (cmd && !error_checks(cmd, pers->mini_env))
+			status_code = exec(cmd, pers);
 	}
 }
 
@@ -80,8 +76,6 @@ int	main(int ac, char **av, char **env)
 {
 	t_persistent	persistent;
 
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
 	ft_bzero(&persistent, sizeof(t_persistent));
 	(void)av;
 	if (ac > 1)
@@ -94,5 +88,5 @@ int	main(int ac, char **av, char **env)
 		main_loop(&persistent);
 	ft_freetab(persistent.mini_env);
 	rl_clear_history();
-	return (persistent.status_code);
+	return (status_code);
 }

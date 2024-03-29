@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:25 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/21 16:06:48 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:15:29 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "lexer.h"
+
+extern int status_code;
 
 static int	create_node_pipe(t_lst *list, int i, int *j)
 {
@@ -78,9 +81,9 @@ static int	create_node_in(t_lst **list, char *read, int i, int *j)
 static int	create_list_node(t_lst **list, char *read, int i, int *j)
 {
 	t_lst	*new;
-	int		status_code;
+	int		x;
 
-	status_code = 0;
+	x = 0;
 	if (i > *j)
 	{
 		new = ft_listnew(ft_substr(read, *j, i - *j), CMD);
@@ -89,34 +92,34 @@ static int	create_list_node(t_lst **list, char *read, int i, int *j)
 		ft_listadd_back(list, new);
 	}
 	if (read[i] == '|')
-		status_code = create_node_pipe(*list, i, j);
+		x = create_node_pipe(*list, i, j);
 	if (read[i] == '>')
-		status_code = create_node_out(list, read, i, j);
+		x = create_node_out(list, read, i, j);
 	if (read[i] == '<')
-		status_code = create_node_in(list, read, i, j);
+		x = create_node_in(list, read, i, j);
 	if (read[i] == ' ')
 		*j = i + 1;
-	return (status_code);
+	return (x);
 }
 
 int	create_token_list(t_lst **lexer, char *read)
 {
 	int	i;
 	int	j;
-	int	status_code;
+	int	x;
 
 	i = 0;
 	j = 0;
-	status_code = 0;
+	x = 0;
 	while (read && read[i])
 	{
 		pass_quote(read, &i);
 		if (read[i] && is_token(read[i]))
-			status_code = create_list_node(lexer, read, i, &j);
-		if (status_code)
-			return (status_code);
+			x = create_list_node(lexer, read, i, &j);
+		if (x)	
+			return (x);
 		i++;
 	}
-	status_code = create_list_node(lexer, read, i, &j);
-	return (status_code);
+	x = create_list_node(lexer, read, i, &j);
+	return (x);
 }
