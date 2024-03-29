@@ -6,17 +6,19 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:14:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 11:19:31 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:49:42 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file_checks.h"
 
-void	kill_child(t_cmd *cmd, t_persistent *pers, int code)
+extern int status_code;
+
+void	kill_child(t_cmd *cmd, int code)
 {
 	cmd->type = KILLED;
 	cmd->code_err = code;
-	pers->status_code = code;
+	status_code = code;
 }
 
 void	print_str_fd(char *s1, char *s2, char *s3, int fd)

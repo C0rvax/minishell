@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/28 19:44:06 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:23:38 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
+
+extern int status_code;
 
 static void	exit_parse(char **env, char *read)
 {

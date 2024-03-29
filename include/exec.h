@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 17:13:36 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:05:42 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			manage_fd_middlechild(t_exec *exec, t_child *child);
 int			manage_fd_lastchild(t_exec *exec, t_child *child);
 
 //  clean.c
-int			clean_end(t_exec *exec, t_persistent *pers);
+int			clean_end(t_exec *exec);
 int			clean_exit_parent(t_exec *exec, int err);
 void		clean_exit_child(t_exec *exec, t_child *child, int err);
 int			clean_exit_fds(t_exec *exec, t_child *child);

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 17:19:56 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:20:17 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include "env_parsing.h"
 #include "file_checks.h"
 #include "minishell.h"
+
+extern int status_code;
+
 
 int	initialize_child(t_child *child, t_exec *exec)
 {
@@ -67,14 +70,13 @@ int	manage_fds(t_cmd *cmd)
 int	exec_uno(t_exec *exec)
 {
 	int		status;
-	int		status_code;
 	char	*path_cmd;
 
 	path_cmd = exec->cmd->path_cmd;
-	status_code = 0;
 	if (!exec->cmd->argv || !exec->cmd->argv[0]) //? @Corvax, revoir le parsing car prend le infile ou outfile en argv
 		return (1);
 	exec->pid[0] = fork();
+	signals(2);
 	if (exec->pid[0] < 0)
 		return (ft_putstr_fd(strerror(errno), 2), 1);
 	if (exec->pid[0] == 0)
@@ -127,7 +129,8 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 	if (exec.total_cmd == 1)
 	{
 		if (exec.cmd->type == KILLED)
-			return (clean_exit_parent(&exec, 0), pers->status_code);
+			return (clean_exit_parent(&exec, 0), status_code);
+			// return (clean_exit_parent(&exec, 0), pers->status_code);
 		else if (exec.cmd->type == BUILTPAR)
 			return (exec_builtin_parent(&exec, pers));
 		else
@@ -139,7 +142,10 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 			return (1);
 		if (ft_fork(&exec) != 0)
 			return (1);
-		pers->status_code = clean_end(&exec, pers);
+		status_code = clean_end(&exec);
+		// pers->status_code = clean_end(&exec, pers);
+
 	}
-	return (pers->status_code);
+	return (status_code);
+	// return (pers->status_code);
 }

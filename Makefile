@@ -13,16 +13,16 @@ BUILTINS	= $(addprefix ./builtins/, builtins.c clearing.c echo.c			\
 
 ENV_PARSING	= $(addprefix ./env_parsing/, env_parsing.c utils.c)
 
-EXEC		= $(addprefix ./exec/, exec.c exec_multiple_cmd.c manage_fds.c clean.c utils_exec.c)
-# SIGNALS	=
+EXEC		= $(addprefix ./exec/, exec.c exec_multiple_cmd.c manage_fds.c	\
+				clean.c utils_exec.c)
 
-ERRORS		= $(addprefix ./file_checks/, checker.c infile_checks.c outfile_checks.c	\
-			  cmd_checks.c cmd_checks2.c here_doc.c utils_checks.c)
+ERRORS		= $(addprefix ./file_checks/, checker.c infile_checks.c 		\
+			  outfile_checks.c cmd_checks.c cmd_checks2.c here_doc.c		\
+			  utils_checks.c)
 
 MAIN		= $(addprefix ./src/, main.c list_cmd.c list_redirect.c			\
-			  list_read.c prompt.c utils.c)
+			  list_read.c prompt.c utils.c signals.c)
 
-# SRC			= $(LEX) $(MAIN)	
 SRC			= $(LEX) $(MAIN) $(ERRORS) $(ENV_PARSING) $(EXEC) $(BUILTINS)
 
 #------------ FLAGS + INCLUDE -------------#

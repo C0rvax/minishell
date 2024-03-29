@@ -6,11 +6,12 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 18:06:04 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:10:44 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
 
 static void	msg_built2(t_built msg, char *str)
 {
@@ -34,7 +35,7 @@ static void	msg_built2(t_built msg, char *str)
 	}
 }
 
-int	msg_built(t_built msg, char *str, int status_code)
+int	msg_built(t_built msg, char *str, int code)
 {
 	msg_built2(msg, str);
 	if (msg == BMALLOC)
@@ -59,10 +60,10 @@ int	msg_built(t_built msg, char *str, int status_code)
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd("': No such file or directory\n", 2);
 	}
-	return (status_code);
+	return (code);
 }
 
-int	clear_built(t_exec *exec, t_child *child, int status_code)
+int	clear_built(t_exec *exec, t_child *child, int code)
 {
 	(void)child;
 	ft_cmd_lstclear(&exec->cmd);
@@ -74,10 +75,10 @@ int	clear_built(t_exec *exec, t_child *child, int status_code)
 	exec->pid = NULL;
 	ft_freetab(exec->mini_env);
 	exec->mini_env = NULL;
-	exit (status_code);
+	exit (code);
 }
 
-int	clear_one(t_exec *exec, int status_code)
+int	clear_one(t_exec *exec, int code)
 {
 	ft_cmd_lstclear(&exec->cmd);
 	exec->cmd = NULL;
@@ -86,10 +87,10 @@ int	clear_one(t_exec *exec, int status_code)
 	if (exec->pid)
 		free(exec->pid);
 	exec->pid = NULL;
-	return (status_code);
+	return (code);
 }
 
-int	final_exit(t_exec *exec, int status_code)
+int	final_exit(t_exec *exec, int code)
 {
 	rl_clear_history();
 	ft_cmd_lstclear(&exec->cmd);
@@ -101,5 +102,5 @@ int	final_exit(t_exec *exec, int status_code)
 	exec->pid = NULL;
 	ft_freetab(exec->mini_env);
 	exec->mini_env = NULL;
-	exit (status_code);
+	exit (code);
 }

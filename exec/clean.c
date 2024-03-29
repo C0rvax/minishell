@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 23:22:55 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:10:29 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	clean_end(t_exec *exec, t_persistent *pers)
+extern int status_code;
+
+int	clean_end(t_exec *exec)
 {
 	int		j;
 	int		status;
@@ -26,15 +28,19 @@ int	clean_end(t_exec *exec, t_persistent *pers)
 		if (WIFEXITED(status))
 		{
 			if (buf->code_err == 127)
-				pers->status_code = 127;
+				status_code = 127;
+				// pers->status_code = 127;
 			else
-				pers->status_code = WEXITSTATUS(status);
+				status_code = WEXITSTATUS(status);
+				// pers->status_code = WEXITSTATUS(status);
 		}
 		j++;
 		buf = buf->next;
 	}
 	clean_exit_parent(exec, 0);
-	return (pers->status_code);
+	// return (pers->status_code);
+	return (status_code);
+
 }
 
 // to end parent, free all malloc vars and delete the temporary heredoc file

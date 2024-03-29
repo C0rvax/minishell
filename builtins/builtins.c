@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/28 16:49:48 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:21:38 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+extern int status_code;
 
 int	is_a_builtin(t_cmd *cmd)
 {
@@ -70,9 +72,7 @@ int	redirect_out(t_exec *exec)
 int	exec_builtin_parent(t_exec *exec, t_persistent *pers)
 {
 	int	i;
-	int	status_code;
 
-	status_code = 0;
 	i = is_a_builtin(exec->cmd);
 	if (i == 0)
 		status_code = exec_echo(exec);

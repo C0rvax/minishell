@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 17:20:43 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 16:49:52 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
+
+// #include "lexer.h"
+// #include "file_checks.h"
+// #include "env_parsing.h"
+// #include "exec.h"
 
 /*------- ENUM -------*/
 typedef enum e_mode
@@ -70,8 +75,11 @@ typedef struct s_read
 typedef struct s_persistent
 {
 	char	**mini_env;
-	int		status_code;
 }		t_persistent;
+
+
+// extern int status_code;
+
 
 /*------- UTILS -------*/
 char		*ft_getenv(char **env, char *str);
@@ -98,5 +106,8 @@ t_redirect	*ft_redir_listnew(char *str, t_mode mode);
 t_redirect	*ft_redir_listlast(t_redirect *list);
 void		ft_redir_listadd_back(t_redirect **list, t_redirect *new);
 void		print_redir_lst(t_redirect *list);
+
+/*------- SIGNALS -------*/
+void signals(int sig);
 
 #endif
