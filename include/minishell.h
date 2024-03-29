@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/29 16:49:52 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:31:23 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef enum e_type
 {
 	COMMAND,
 	KILLED,
-	// KILLEDCMD,
 	BUILTPAR,
 	BUILTCHILD
 }		t_type;
@@ -77,10 +76,6 @@ typedef struct s_persistent
 	char	**mini_env;
 }		t_persistent;
 
-
-// extern int status_code;
-
-
 /*------- UTILS -------*/
 char		*ft_getenv(char **env, char *str);
 char		*get_prompt(char **env);
@@ -108,6 +103,6 @@ void		ft_redir_listadd_back(t_redirect **list, t_redirect *new);
 void		print_redir_lst(t_redirect *list);
 
 /*------- SIGNALS -------*/
-void signals(int sig);
+void		signals(int sig);
 
 #endif

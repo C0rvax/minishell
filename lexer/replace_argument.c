@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   replace_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/29 17:23:48 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:36:34 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
 
-extern int status_code;
-
+extern int	status_code;
 
 static char	*check_in_env(char *arg, char **env)
 {
@@ -101,7 +100,6 @@ static int	replace_status(t_lst *lst, int index)
 
 	arg = "?";
 	value = ft_itoa(status_code);
-
 	if (!value)
 		return (msg_lex(MALLOC, 0, ""), 1);
 	if (replace_in_list(lst, arg, value, index))
