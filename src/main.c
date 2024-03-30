@@ -6,16 +6,15 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/30 15:51:20 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:02:24 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#define G_STATUS
 #include "minishell.h"
 #include "lexer.h"
 #include "file_checks.h"
 #include "exec.h"
-
-int				g_status = 0;
 
 void	ft_make_hist(void)
 {
@@ -78,7 +77,6 @@ int	main(int ac, char **av, char **env)
 {
 	t_persistent	persistent;
 
-	g_status = 0;
 	ft_bzero(&persistent, sizeof(t_persistent));
 	(void)av;
 	if (ac > 1)
