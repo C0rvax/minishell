@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/29 17:17:15 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:37:18 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file_checks.h"
 #include "minishell.h"
-
-extern int status_code;
 
 // checks through cmd list the infiles.
 // in case of error in some infiles, kills the child
@@ -129,7 +127,7 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 			if (access(".tmpheredoc", F_OK) == 0)
 				unlink(".tmpheredoc");
 			ft_cmd_lstclear(&cmd);
-			status_code = 1;
+			g_status = 1;
 			// pers->status_code = 1;
 			return (1);
 		}

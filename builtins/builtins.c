@@ -6,13 +6,11 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/29 17:32:00 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:38:38 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-extern int	status_code;
 
 int	is_a_builtin(t_cmd *cmd)
 {
@@ -71,22 +69,22 @@ int	redirect_out(t_exec *exec)
 
 int	exec_builtin_parent(t_exec *exec, t_persistent *pers)
 {
-	int	i;
+	int			i;
 
 	i = is_a_builtin(exec->cmd);
 	if (i == 0)
-		status_code = exec_echo(exec);
+		g_status = exec_echo(exec);
 	else if (i == 1)
-		status_code = exec_cd(exec, pers);
+		g_status = exec_cd(exec, pers);
 	else if (i == 2)
-		status_code = exec_pwd(exec);
+		g_status = exec_pwd(exec);
 	else if (i == 3)
-		status_code = exec_export(exec, pers);
+		g_status = exec_export(exec, pers);
 	else if (i == 4)
-		status_code = exec_unset(exec, pers);
+		g_status = exec_unset(exec, pers);
 	else if (i == 5)
-		status_code = exec_env(exec);
+		g_status = exec_env(exec);
 	else if (i == 6)
 		exec_exit_parent(exec);
-	return (status_code);
+	return (g_status);
 }

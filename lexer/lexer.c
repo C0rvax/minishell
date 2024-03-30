@@ -6,14 +6,12 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:00:25 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/29 17:36:16 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:31:16 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
-
-extern int	status_code;
 
 static int	create_node_pipe(t_lst *list, int i, int *j)
 {

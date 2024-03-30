@@ -6,20 +6,22 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/29 17:37:21 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:51:20 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer.h"
 #include "file_checks.h"
-#include "env_parsing.h"
 #include "exec.h"
 
-int	status_code;
+int				g_status = 0;
 
 void	ft_make_hist(void)
 {
+	char	*s;
+
+	s = "cat -ens <<STOP <infile | grep <loremipsum >outfile la | cat >outfile";
 	add_history("chevron à la fin | fin<");
 	add_history("chevron avant pipe < | fin");
 	add_history("3 chevrons <<<infile | fin");
@@ -28,7 +30,7 @@ void	ft_make_hist(void)
 	add_history("2 pipes à la suite | | fin");
 	add_history("guillemet ' pas fermé");
 	add_history("<<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
-	add_history("cat -e -n -s <<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
+	add_history(s);
 }
 
 static char	*get_read(char **env)
@@ -49,8 +51,8 @@ static char	*get_read(char **env)
 
 static void	main_loop(t_persistent *pers)
 {
-	char	*read;
-	t_cmd	*cmd;
+	char		*read;
+	t_cmd		*cmd;
 
 	read = NULL;
 	signals(1);
@@ -66,9 +68,9 @@ static void	main_loop(t_persistent *pers)
 	{
 		cmd = parse_read(read, pers);
 		if (!cmd)
-			status_code = 1;
+			(g_status) = 1;
 		if (cmd && !error_checks(cmd, pers->mini_env))
-			status_code = exec(cmd, pers);
+			(g_status) = exec(cmd, pers);
 	}
 }
 
@@ -76,6 +78,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_persistent	persistent;
 
+	g_status = 0;
 	ft_bzero(&persistent, sizeof(t_persistent));
 	(void)av;
 	if (ac > 1)
@@ -88,5 +91,5 @@ int	main(int ac, char **av, char **env)
 		main_loop(&persistent);
 	ft_freetab(persistent.mini_env);
 	rl_clear_history();
-	return (status_code);
+	return (g_status);
 }

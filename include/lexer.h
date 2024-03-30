@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/28 20:37:33 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:22:13 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ int		delete_quotes(t_lst **list);
 /*------- PARSER -------*/
 int		create_cmd_list(t_parse *parse);
 char	**create_arg_array(t_lst *lexer);
+
+int		replace_status(t_lst *lst, int index);
 
 #endif

@@ -3,22 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/29 17:20:17 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:36:19 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
 #include "builtin.h"
-#include "env_parsing.h"
 #include "file_checks.h"
 #include "minishell.h"
-
-extern int status_code;
-
 
 int	initialize_child(t_child *child, t_exec *exec)
 {
@@ -88,9 +83,9 @@ int	exec_uno(t_exec *exec)
 	}
 	waitpid(exec->pid[0], &status, 0);
 	if (WIFEXITED(status))
-		status_code = WEXITSTATUS(status);
+		g_status = WEXITSTATUS(status);
 	clean_exit_parent(exec, 0);
-	return (status_code);
+	return (g_status);
 }
 
 int	initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env)
@@ -129,8 +124,8 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 	if (exec.total_cmd == 1)
 	{
 		if (exec.cmd->type == KILLED)
-			return (clean_exit_parent(&exec, 0), status_code);
-			// return (clean_exit_parent(&exec, 0), pers->status_code);
+			return (clean_exit_parent(&exec, 0), g_status);
+			// return (clean_exit_parent(&exec, 0), pers->g_status);
 		else if (exec.cmd->type == BUILTPAR)
 			return (exec_builtin_parent(&exec, pers));
 		else
@@ -142,10 +137,10 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 			return (1);
 		if (ft_fork(&exec) != 0)
 			return (1);
-		status_code = clean_end(&exec);
-		// pers->status_code = clean_end(&exec, pers);
+		g_status = clean_end(&exec);
+		// pers->g_status = clean_end(&exec, pers);
 
 	}
-	return (status_code);
-	// return (pers->status_code);
+	return (g_status);
+	// return (pers->g_status);
 }

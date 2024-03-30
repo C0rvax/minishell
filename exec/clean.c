@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/29 17:10:29 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:35:22 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-extern int status_code;
+#include "minishell.h"
 
 int	clean_end(t_exec *exec)
 {
@@ -28,10 +27,10 @@ int	clean_end(t_exec *exec)
 		if (WIFEXITED(status))
 		{
 			if (buf->code_err == 127)
-				status_code = 127;
+				g_status = 127;
 				// pers->status_code = 127;
 			else
-				status_code = WEXITSTATUS(status);
+				g_status = WEXITSTATUS(status);
 				// pers->status_code = WEXITSTATUS(status);
 		}
 		j++;
@@ -39,7 +38,7 @@ int	clean_end(t_exec *exec)
 	}
 	clean_exit_parent(exec, 0);
 	// return (pers->status_code);
-	return (status_code);
+	return (g_status);
 
 }
 

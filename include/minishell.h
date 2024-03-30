@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/29 17:31:23 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:50:53 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
-
-// #include "lexer.h"
-// #include "file_checks.h"
-// #include "env_parsing.h"
-// #include "exec.h"
 
 /*------- ENUM -------*/
 typedef enum e_mode
@@ -76,10 +71,14 @@ typedef struct s_persistent
 	char	**mini_env;
 }		t_persistent;
 
+/*------- GLOBAL -------*/
+extern int	g_status;
+
 /*------- UTILS -------*/
 char		*ft_getenv(char **env, char *str);
 char		*get_prompt(char **env);
 int			msg_error(char *s1, char *s2, int status);
+void		parse_env_array(t_persistent *pers, char **env);
 
 /*------- LIST CMD -------*/
 void		print_cmd_lst(t_cmd *cmd);

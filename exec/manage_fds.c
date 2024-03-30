@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   manage_fds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:07:39 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/27 17:02:19 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:44:06 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 #include "builtin.h"
-#include "env_parsing.h"
 #include "file_checks.h"
 #include "minishell.h"
 

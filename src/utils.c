@@ -38,6 +38,25 @@ char	*ft_getenv(char **env, char *str)
 	return (value);
 }
 
+void	parse_env_array(t_persistent *pers, char **env) // necessaire ?
+{
+	char	**tab;
+	int		i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	tab = malloc(sizeof(char *) * (i + 1));
+	tab[i] = NULL;
+	i = 0;
+	while (env[i])
+	{
+		tab[i] = ft_strdup(env[i]);
+		i++;
+	}
+	pers->mini_env = tab;
+}
+
 int	msg_error(char *s1, char *s2, int status)
 {
 	ft_putstr_fd(s1, 2);

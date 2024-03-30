@@ -11,8 +11,6 @@ LEX			= $(addprefix ./lexer/, lexer.c list.c lex_utils.c parse_read.c	\
 BUILTINS	= $(addprefix ./builtins/, builtins.c clearing.c echo.c			\
 			  env_exit.c pwd.c export.c unset.c cd.c)
 
-ENV_PARSING	= $(addprefix ./env_parsing/, env_parsing.c utils.c)
-
 EXEC		= $(addprefix ./exec/, exec.c exec_multiple_cmd.c manage_fds.c	\
 				clean.c utils_exec.c)
 
@@ -23,7 +21,7 @@ ERRORS		= $(addprefix ./file_checks/, checker.c infile_checks.c 		\
 MAIN		= $(addprefix ./src/, main.c list_cmd.c list_redirect.c			\
 			  list_read.c prompt.c utils.c signals.c)
 
-SRC			= $(LEX) $(MAIN) $(ERRORS) $(ENV_PARSING) $(EXEC) $(BUILTINS)
+SRC			= $(LEX) $(MAIN) $(ERRORS) $(EXEC) $(BUILTINS)
 
 #------------ FLAGS + INCLUDE -------------#
 CFLAGS		= -Wextra -Wall -Werror -g
