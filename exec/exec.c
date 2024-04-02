@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/30 15:36:19 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:20:37 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	exec_uno(t_exec *exec)
 	char	*path_cmd;
 
 	path_cmd = exec->cmd->path_cmd;
-	if (!exec->cmd->argv || !exec->cmd->argv[0]) //? @Corvax, revoir le parsing car prend le infile ou outfile en argv
+	if (!exec->cmd->argv || !exec->cmd->argv[0])
 		return (1);
 	exec->pid[0] = fork();
 	signals(2);

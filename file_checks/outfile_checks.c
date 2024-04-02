@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:37:33 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 11:28:24 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:30:58 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_out(t_redirect *out)
 	while (out)
 	{
 		if (!out->path)
-			return (1); // @Corvax: verifier que message dérreur prevu au parsing
+			return (1);
 		if (access(out->path, F_OK) == 0 && access(out->path, W_OK) != 0)
 		{
 			print_str_fd("minishell: ", out->path, ": Permission denied\n", 2);

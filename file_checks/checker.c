@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/30 15:37:18 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:20:53 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,9 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 	total_cmd = ft_cmd_lstsize(cmd);
 	if (total_cmd != 0)
 	{
-
-		if ((check_infiles(cmd, total_cmd) != 0)
-			|| (check_outfiles(cmd, total_cmd) != 0)
-			|| (check_cmd(cmd, total_cmd, mini_env) != 0))
+		if ((check_infiles(cmd, total_cmd) != 0) || (check_outfiles(cmd,
+					total_cmd) != 0) || (check_cmd(cmd, total_cmd,
+					mini_env) != 0))
 		{
 			if (access(".tmpheredoc", F_OK) == 0)
 				unlink(".tmpheredoc");
