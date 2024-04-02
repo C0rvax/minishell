@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 17:07:12 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:23:35 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	exec_builtin_parent(t_exec *exec, t_persistent *pers)
 	else if (i == 4)
 		g_status = exec_unset(exec, pers);
 	else if (i == 5)
-		g_status = exec_env(exec, 1);
+		g_status = exec_env(exec);
 	else if (i == 6)
 		exec_exit_parent(exec);
 	return (g_status);
