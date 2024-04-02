@@ -6,15 +6,16 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/30 16:02:24 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:45:02 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define G_STATUS
 #include "minishell.h"
 #include "lexer.h"
 #include "file_checks.h"
 #include "exec.h"
+
+int	g_status = 0;
 
 void	ft_make_hist(void)
 {

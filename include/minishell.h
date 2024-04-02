@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/30 16:03:01 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 12:44:23 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,7 @@ typedef struct s_persistent
 }		t_persistent;
 
 /*------- GLOBAL -------*/
-# ifdef G_STATUS
-
-int			g_status = 0;
-# else
-
 extern int	g_status;
-# endif
 
 /*------- UTILS -------*/
 char		*ft_getenv(char **env, char *str);
