@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:57:43 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/23 13:42:39 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:25:53 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_getenv(char **env, char *str)
 	return (value);
 }
 
-void	parse_env_array(t_persistent *pers, char **env) // necessaire ?
+void	parse_env_array(t_persistent *pers, char **env)
 {
 	char	**tab;
 	int		i;

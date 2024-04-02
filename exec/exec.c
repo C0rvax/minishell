@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 13:20:37 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:24:50 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 	{
 		if (exec.cmd->type == KILLED)
 			return (clean_exit_parent(&exec, 0), g_status);
-			// return (clean_exit_parent(&exec, 0), pers->g_status);
 		else if (exec.cmd->type == BUILTPAR)
 			return (exec_builtin_parent(&exec, pers));
 		else
@@ -138,9 +137,6 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 		if (ft_fork(&exec) != 0)
 			return (1);
 		g_status = clean_end(&exec);
-		// pers->g_status = clean_end(&exec, pers);
-
 	}
 	return (g_status);
-	// return (pers->g_status);
 }

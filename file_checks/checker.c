@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 13:20:53 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:27:27 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 				unlink(".tmpheredoc");
 			ft_cmd_lstclear(&cmd);
 			g_status = 1;
-			// pers->status_code = 1;
 			return (1);
 		}
 	}

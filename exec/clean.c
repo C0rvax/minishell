@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 13:19:08 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:25:23 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,14 @@ int	clean_end(t_exec *exec)
 		{
 			if (buf->code_err == 127)
 				g_status = 127;
-				// pers->status_code = 127;
 			else
 				g_status = WEXITSTATUS(status);
-				// pers->status_code = WEXITSTATUS(status);
 		}
 		j++;
 		buf = buf->next;
 	}
 	clean_exit_parent(exec, 0);
-	// return (pers->status_code);
 	return (g_status);
-
 }
 
 // to end parent, free all malloc vars and delete the temporary heredoc file
