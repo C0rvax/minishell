@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:57:43 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 13:25:53 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:34:59 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_getenv(char **env, char *str)
 	while (env[i])
 	{
 		len = ft_strlen(str);
-		if (ft_strnstr(env[i], str, len))
+		if (ft_strnstr(env[i], str, len) && env[i][len] == '=')
 		{
 			value = ft_substr(env[i], len + 1, ft_strlen(env[i]) - (len + 1));
 			if (!value)

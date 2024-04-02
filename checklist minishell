@@ -1,3 +1,8 @@
+cd file ---> doit mettre um msg si pas directory
+export ----> doit afficher env avec declare -x devant chaque ligne
+export c ---> doit l'afficher dans une liste //
+export suivi de chiffres ---> doit mettre un msg d'erreur
+
 1. bouger avec les fleches ------------------------------------OK
 2. history ----------------------------------------------------OK
 3. gerer les single quotes ex. "tr 'r' ' '" -------------------OK

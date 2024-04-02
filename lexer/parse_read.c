@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 13:22:19 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:48:16 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ t_cmd	*parse_read(char *read, t_persistent *pers)
 		return (NULL);
 	if (append_new_read(&read, pers))
 		return (NULL);
+	if (replace_argument(&read, pers))
+		return (ft_listclear(&parse.lexer), NULL);
 	add_history(read);
 	if (create_token_list(&parse.lexer, read))
-		return (ft_listclear(&parse.lexer), NULL);
-	if (replace_argument(&parse.lexer, pers))
-		return (ft_listclear(&parse.lexer), NULL);
+		return (free(read), ft_listclear(&parse.lexer), NULL);
+	free(read);
 	if (delete_quotes(&parse.lexer))
 		return (ft_listclear(&parse.lexer), NULL);
 	if (create_cmd_list(&parse))
