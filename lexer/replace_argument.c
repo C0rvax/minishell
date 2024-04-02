@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 13:22:37 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:45:21 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ static int	find_and_replace(t_lst *lst, int index, char **env)
 	arg = ft_substr(lst->str, index + 1, j - index - 1);
 	if (!arg)
 		return (msg_lex(MALLOC, 0, ""), 1);
+	if (arg[0] == '\0')
+		return (free(arg), 0);
 	value = check_in_env(arg, env);
 	if (!value)
 		return (1);
