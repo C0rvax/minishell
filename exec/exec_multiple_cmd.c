@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/30 14:43:52 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:34:11 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "builtin.h"
 #include "file_checks.h"
 
-int	redirections(t_exec *exec, t_child *child)
+int	redirect(t_exec *exec, t_child *child)
 {
 	if (exec->cmdno == 0)
 	{
@@ -53,8 +53,7 @@ int	ft_fork(t_exec *exec)
 		if (exec->pid[exec->cmdno] == 0)
 		{
 			initialize_child(&child, exec);
-			if ((child.current_cmd->type == KILLED) || (redirections(exec,
-						&child) != 0))
+			if ((child.current_cmd->type == KILLED) || redirect(exec, &child))
 			{
 				close_all_fds(exec);
 				clean_exit_child(exec, &child, 0);

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 13:25:23 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:01:46 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	clean_end(t_exec *exec)
 		{
 			if (buf->code_err == 127)
 				g_status = 127;
+			else if (buf->code_err == 126)
+				g_status = 126;
 			else
 				g_status = WEXITSTATUS(status);
 		}
