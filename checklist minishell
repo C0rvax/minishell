@@ -33,7 +33,7 @@ ctruchot@bess-f4r1s10:~$ echo "+2 | cat 2
 
 echo bonjour ; |
 echo bonjour | |
-|
+NOK ---- |
 echo bonjour |;
 echo bonjour ; ls
 echo bonjour > test\ 1
@@ -41,9 +41,9 @@ cd $HOME/Documents
 echo "\s" & echo "\s"
 // ok echo > 
 // ok echo -n -n -nnnn -nnnnm  
-cat /dev/random | head -n 1 | cat -e
+NOK --- cat /dev/random | head -n 1 | cat -e
 unset var1 # with undefined var1
-export "" et unset ""
+?????  export "" et unset ""
 echo test > file test1
 $
 not_cmd bonjour > salut
@@ -55,7 +55,7 @@ echo bonjour >>> test
 echo bonjour > > out
 echo 2 >> out1 > out2
 echo 2 > out1 >> out2
-cat < test # with non-existent test
+??? cat < test # with non-existent test
 export var; export var=test
 echo bonjour > $test # with test not defined
 file_name_in_current_dir
@@ -65,7 +65,7 @@ ctrl-\ .131 sur bin
 echo "bip | bip ; coyotte > < " "
 cat | cat | cat | ls # check outputs order
 $bla # with bla not defined
-export var ="cat Makefile | grep >"
+NOK ---- export var ="cat Makefile | grep >"
 export "test=ici"=coucou
 c$var Makefile # with var=at
 $LESS$VAR

@@ -6,14 +6,14 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/29 17:17:15 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 18:01:29 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file_checks.h"
 #include "minishell.h"
 
-extern int status_code;
+extern int	g_status_code;
 
 // checks through cmd list the infiles.
 // in case of error in some infiles, kills the child
@@ -121,16 +121,14 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 	total_cmd = ft_cmd_lstsize(cmd);
 	if (total_cmd != 0)
 	{
-
-		if ((check_infiles(cmd, total_cmd) != 0)
-			|| (check_outfiles(cmd, total_cmd) != 0)
-			|| (check_cmd(cmd, total_cmd, mini_env) != 0))
+		if ((check_infiles(cmd, total_cmd) != 0) || (check_outfiles(cmd,
+					total_cmd) != 0) || (check_cmd(cmd, total_cmd,
+					mini_env) != 0))
 		{
 			if (access(".tmpheredoc", F_OK) == 0)
 				unlink(".tmpheredoc");
 			ft_cmd_lstclear(&cmd);
-			status_code = 1;
-			// pers->status_code = 1;
+			g_status_code = 1;
 			return (1);
 		}
 	}

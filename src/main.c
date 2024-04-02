@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/29 17:18:58 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/03/29 17:42:55 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "env_parsing.h"
 #include "exec.h"
 
-int status_code;
+int g_status_code;
 
 void	ft_make_hist(void)
 {
@@ -66,9 +66,9 @@ static void	main_loop(t_persistent *pers)
 	{
 		cmd = parse_read(read, pers);
 		if (!cmd)
-			status_code = 1;
+			g_status_code = 1;
 		if (cmd && !error_checks(cmd, pers->mini_env))
-			status_code = exec(cmd, pers);
+			g_status_code = exec(cmd, pers);
 	}
 }
 
@@ -88,5 +88,5 @@ int	main(int ac, char **av, char **env)
 		main_loop(&persistent);
 	ft_freetab(persistent.mini_env);
 	rl_clear_history();
-	return (status_code);
+	return (g_status_code);
 }
