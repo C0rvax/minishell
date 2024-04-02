@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_checks.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/29 17:29:56 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:11:23 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int			get_here_doc(char *path);
 
 // cmd_checks.c
 int			check_builtins(t_cmd *cmd, int total_cmd);
+int			is_directory(t_cmd *cmd);
 int			get_cmd_path(t_cmd *cmd, char **env);
 
 // cmd_checks2.c

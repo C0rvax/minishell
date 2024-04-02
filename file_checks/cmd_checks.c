@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/29 16:20:22 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:11:07 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ int	check_builtins(t_cmd *cmd, int total_cmd)
 			cmd->type = BUILTCHILD;
 			return (1);
 		}
+	}
+	return (0);
+}
+
+int	is_directory(t_cmd *cmd)
+{
+	int	fd;
+
+	fd = 0;
+	fd = open(cmd->argv[0], O_DIRECTORY);
+	if (fd > 0)
+	{
+		close(fd);
+		print_str_fd("minishell: ", cmd->argv[0], ": Is a directory\n", 2);
+		kill_child(cmd, 126);
+		return (1);
 	}
 	return (0);
 }
