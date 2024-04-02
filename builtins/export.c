@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/27 18:13:46 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:02:51 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ int	exec_export(t_exec *exec, t_persistent *pers)
 	if (exec->total_cmd != 1)
 		return (clear_one(exec, 0));
 	argv = exec->cmd->argv;
+	if (!argv[1])
+		exec_env(exec, 2);
 	cpy = exec->mini_env;
 	new = ft_joinarr(argv, cpy);
 	if (!new)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 13:18:49 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:07:12 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	exec_builtin_parent(t_exec *exec, t_persistent *pers)
 	else if (i == 4)
 		g_status = exec_unset(exec, pers);
 	else if (i == 5)
-		g_status = exec_env(exec);
+		g_status = exec_env(exec, 1);
 	else if (i == 6)
 		exec_exit_parent(exec);
 	return (g_status);

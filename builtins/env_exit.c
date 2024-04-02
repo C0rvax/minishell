@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 14:40:46 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:06:25 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	exec_env_c(t_exec *exec, t_child *child)
 		clear_built(exec, child, msg_built(ENV, argv[1], 127));
 }
 
-int	exec_env(t_exec *exec)
+int	exec_env(t_exec *exec, int mode)
 {
 	int	i;
 	int	fd;
@@ -63,6 +63,8 @@ int	exec_env(t_exec *exec)
 	{
 		while (exec->mini_env[i])
 		{
+			if (mode == 2)
+				ft_putstr_fd("declare -x ", fd);
 			ft_putstr_fd(exec->mini_env[i], fd);
 			ft_putstr_fd("\n", fd);
 			i++;
