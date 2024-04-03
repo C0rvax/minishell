@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 17:23:40 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/03 23:10:20 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,17 @@ void	exec_exit_c(t_exec *exec, t_child *child)
 	clear_built(exec, child, 0);
 }
 
-void	exec_exit_parent(t_exec *exec)
+void	exec_exit_parent(t_exec *exec, t_persistent *pers)
 {
 	ft_printf("exit\n");
 	if (exec->cmd->argv[1])
 	{
 		if (exec->cmd->argv[2])
-			final_exit(exec, msg_built(ARGS, "exit", 1));
+			final_exit(exec, pers, msg_built(ARGS, "exit", 1));
 		else if (str_isdigit(exec->cmd->argv[1]))
-			final_exit(exec, ft_atoi(exec->cmd->argv[1]));
+			final_exit(exec, pers, ft_atoi(exec->cmd->argv[1]));
 		else
-			final_exit(exec, msg_built(EXIT, exec->cmd->argv[1], 2));
+			final_exit(exec, pers, msg_built(EXIT, exec->cmd->argv[1], 2));
 	}
-	final_exit(exec, 0);
+	final_exit(exec, pers, 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 13:23:03 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:01:51 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (ac > 1)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
+	persistent.export = NULL;
 	parse_env_array(&persistent, env);
 	if (!persistent.mini_env)
 		return (ft_putstr_fd("minishell: Cannot allocate memory\n", 2), 1);

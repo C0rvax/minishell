@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 12:44:23 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/03 22:01:01 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_read
 typedef struct s_persistent
 {
 	char	**mini_env;
+	char	**export;
 }		t_persistent;
 
 /*------- GLOBAL -------*/

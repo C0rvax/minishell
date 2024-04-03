@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 16:45:08 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/03 23:10:16 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	clear_one(t_exec *exec, int code)
 	return (code);
 }
 
-int	final_exit(t_exec *exec, int code)
+int	final_exit(t_exec *exec, t_persistent *pers, int code)
 {
 	rl_clear_history();
 	ft_cmd_lstclear(&exec->cmd);
@@ -100,6 +100,8 @@ int	final_exit(t_exec *exec, int code)
 		free(exec->pid);
 	exec->pid = NULL;
 	ft_freetab(exec->mini_env);
+	ft_freetab(pers->export);
+	pers->export = NULL;
 	exec->mini_env = NULL;
 	exit (code);
 }

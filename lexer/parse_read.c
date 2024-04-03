@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 16:48:16 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:12:55 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ t_cmd	*parse_read(char *read, t_persistent *pers)
 		return (NULL);
 	if (append_new_read(&read, pers))
 		return (NULL);
+	add_history(read);
 	if (replace_argument(&read, pers))
 		return (ft_listclear(&parse.lexer), NULL);
-	add_history(read);
 	if (create_token_list(&parse.lexer, read))
 		return (free(read), ft_listclear(&parse.lexer), NULL);
 	free(read);
