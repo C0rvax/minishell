@@ -6,17 +6,18 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/03 18:12:55 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:05:24 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
 
-static void	exit_parse(char **env, char *read)
+static void	exit_parse(t_persistent *pers, char *read)
 {
 	free(read);
-	ft_freetab(env);
+	ft_freetab(pers->mini_env);
+	ft_freetab(pers->export);
 	rl_clear_history();
 	exit (0);
 }
@@ -34,7 +35,7 @@ static int	append_new_read(char **read, t_persistent *pers)
 	{
 		read2 = readline("> ");
 		if (!read2)
-			exit_parse(pers->mini_env, *read);
+			exit_parse(pers, *read);
 		cpy = read[0];
 		*read = ft_strjoin(cpy, read2);
 		free(cpy);

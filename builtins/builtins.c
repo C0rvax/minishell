@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/03 23:11:55 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:08:33 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	is_a_builtin(t_cmd *cmd)
 {
-	char	*str;
+	char	*builtstr;
 	char	**builtarr;
 	int		i;
 
 	i = 0;
-	str = "echo;cd;pwd;export;unset;env;exit";
-	builtarr = ft_split(str, ';');
+	builtstr = "echo;cd;pwd;export;unset;env;exit";
+	builtarr = ft_split(builtstr, ';');
 	if (!builtarr)
 		return (-2);
 	while (builtarr[i])
