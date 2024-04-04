@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 14:51:36 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:46:37 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	exec_uno(t_exec *exec)
 	return (g_status);
 }
 
-int	initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env)
+static int	initialize_exec(t_exec *exec, t_cmd *cmd, t_persistent *pers)
 {
 	int	k;
 
@@ -111,7 +111,8 @@ int	initialize_exec(t_exec *exec, t_cmd *cmd, char **mini_env)
 	if (!exec->pid)
 		return (clean_exit_parent(exec, 1), 1);
 	exec->cmd = cmd;
-	exec->mini_env = mini_env;
+	exec->mini_env = pers->mini_env;
+	exec->export = pers->export;
 	return (0);
 }
 
@@ -119,7 +120,7 @@ int	exec(t_cmd *cmd, t_persistent *pers)
 {
 	t_exec	exec;
 
-	if (initialize_exec(&exec, cmd, pers->mini_env) != 0)
+	if (initialize_exec(&exec, cmd, pers) != 0)
 		return (1);
 	if (exec.total_cmd == 1)
 	{

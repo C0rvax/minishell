@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/29 16:05:42 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:46:41 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_exec
 	int		*pid;
 	t_cmd	*cmd;
 	char	**mini_env;
+	char	**export;
 }			t_exec;
 
 typedef struct s_child

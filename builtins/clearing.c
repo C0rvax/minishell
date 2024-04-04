@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/03 23:10:16 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:46:32 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	clear_built(t_exec *exec, t_child *child, int code)
 	exec->pid = NULL;
 	ft_freetab(exec->mini_env);
 	exec->mini_env = NULL;
+	ft_freetab(exec->export);
+	exec->export = NULL;
 	exit (code);
 }
 
