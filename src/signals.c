@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:09:10 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 13:23:20 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:47:30 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@ void	handle_sigint_inprocess(int sig)
 	rl_on_new_line();
 	(void)sig;
 }
+
+// void	handle_sigint_inheredoc(int sig)
+// {
+// 	g_status = 130;
+// 	ft_printf("\n");
+// 	rl_replace_line("", 0);
+// 	rl_on_new_line();
+// 	return (free(line), free(lim), close(fd), 0);
+// 	(void)sig;
+// }
 
 void	handle_sigquit(int sig)
 {

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:37:33 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/29 17:30:58 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/03 18:13:06 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ int	check_out(t_redirect *out)
 			print_str_fd("minishell: ", out->path, ": Permission denied\n", 2);
 			return (1);
 		}
-		else if (access(out->path, F_OK) != 0)
-			if (create_outfile(out) != 0)
-				return (3);
+		if (create_outfile(out) != 0)
+			return (3);
 		out = out->next;
 	}
 	return (0);
