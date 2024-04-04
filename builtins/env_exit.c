@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/03 23:10:20 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:11:26 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	exec_exit_c(t_exec *exec, t_child *child)
 	char	**argv;
 
 	argv = child->current_cmd->argv;
-	ft_printf("exit\n");
 	if (argv[1])
 	{
 		if (argv[2])
