@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 15:01:46 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:21:55 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,18 @@ int	clean_end(t_exec *exec)
 	{
 		waitpid(exec->pid[j], &status, 0);
 		if (WIFEXITED(status))
+			g_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
 		{
-			if (buf->code_err == 127)
-				g_status = 127;
-			else if (buf->code_err == 126)
-				g_status = 126;
+			if (status == 139)
+			{
+				ft_putstr_fd("Segmentation fault (core dumped)\n", 2);
+				g_status = status;
+			}
+			else if (status == 131)
+				g_status = status;
 			else
-				g_status = WEXITSTATUS(status);
+				g_status = status + 128;
 		}
 		j++;
 		buf = buf->next;

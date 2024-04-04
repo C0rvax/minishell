@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 14:51:36 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:21:25 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,18 @@ int	exec_uno(t_exec *exec)
 	waitpid(exec->pid[0], &status, 0);
 	if (WIFEXITED(status))
 		g_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		if (status == 139)
+		{
+			ft_putstr_fd("Segmentation fault (core dumped)\n", 2);
+			g_status = status;
+		}
+		else if (status == 131)
+			g_status = status;
+		else
+			g_status = status + 128;
+	}
 	clean_exit_parent(exec, 0);
 	return (g_status);
 }
