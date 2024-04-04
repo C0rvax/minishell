@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 15:46:32 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:52:32 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int	final_exit(t_exec *exec, t_persistent *pers, int code)
 		free(exec->pid);
 	exec->pid = NULL;
 	ft_freetab(exec->mini_env);
+	exec->mini_env = NULL;
 	ft_freetab(pers->export);
 	pers->export = NULL;
-	exec->mini_env = NULL;
 	exit (code);
 }

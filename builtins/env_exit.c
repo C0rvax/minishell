@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 17:11:26 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 17:53:36 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void	exec_exit_c(t_exec *exec, t_child *child)
 		else
 			clear_built(exec, child, msg_built(EXIT, argv[1], 2));
 	}
-	clear_built(exec, child, 0);
+	else
+		clear_built(exec, child, 0);
 }
 
 void	exec_exit_parent(t_exec *exec, t_persistent *pers)
