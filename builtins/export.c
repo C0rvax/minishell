@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/03 22:51:29 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 16:02:51 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,31 @@ static char	**get_export(t_persistent *pers)
 	return (export);
 }
 
+static int	ft_putexport_fd(char *str, int fd)
+{
+	int	i;
+	int	quote;
+
+	i = 0;
+	quote = 0;
+	if (str)
+	{
+		while (str[i])
+		{
+			ft_putchar_fd(str[i], fd);
+			if (str[i] == '=')
+			{
+				ft_putchar_fd('"', fd);
+				quote = 1;
+			}
+			i++;
+		}
+	}
+	if (quote)
+		ft_putchar_fd('"', fd);
+	return (i);
+}
+
 static int	print_env(t_exec *exec, t_persistent *pers)
 {
 	int		i;
@@ -80,7 +105,7 @@ static int	print_env(t_exec *exec, t_persistent *pers)
 	while (export[i])
 	{
 		ft_putstr_fd("declare -x ", fd);
-		ft_putstr_fd(export[i], fd);
+		ft_putexport_fd(export[i], fd);
 		ft_putstr_fd("\n", fd);
 		i++;
 	}
