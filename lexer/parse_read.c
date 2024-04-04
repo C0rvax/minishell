@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 15:53:39 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:19:48 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static int	append_new_read(char **read, t_persistent *pers)
 {
 	char	*cpy;
 	char	*read2;
-	int		i;
+	int		len;
 
 	if (search_errors(*read))
 		return (free(*read), 1);
-	i = ft_strlen(read[0]);
-	while (i > 0 && read[0][i - 1] == '|')
+	len = ft_strlen(read[0]);
+	while (len > 0 && read[0][len - 1] == '|')
 	{
 		read2 = readline("> ");
 		if (!read2)
@@ -44,7 +44,7 @@ static int	append_new_read(char **read, t_persistent *pers)
 			return (msg_lex(MALLOC, 0, ""), 1);
 		if (search_errors(*read))
 			return (free(*read), 1);
-		i = ft_strlen(read[0]);
+		len = ft_strlen(read[0]);
 	}
 	return (0);
 }

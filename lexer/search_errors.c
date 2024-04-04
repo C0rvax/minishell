@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:04:58 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/29 17:24:16 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:16:39 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int	search_errors(char *read)
 		return (1);
 	while (read[i])
 	{
+		if (read[0] == '|')
+			return (msg_lex(TOKEN, read[0], ""), 1);
 		if (pass_quote(read, &i))
 			return (1);
 		if (read[i] && is_special(read[i]))
