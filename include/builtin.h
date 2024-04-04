@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/03 23:10:12 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:57:36 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ typedef enum e_built
 	ENV,
 	EXIT,
 	ARGS,
-	FD
+	FD,
+	EXPORT
 }		t_built;
 
 /*------- CLEARING -------*/
@@ -45,6 +46,7 @@ int		ft_lenarr(char **arr, char **env);
 int		redirect_out(t_exec *exec);
 char	**ft_joinarr(char **argv, char **env);
 char	**ft_joinexp(char **argv, char **env);
+int		arg_isok(char *str);
 
 /*------- EXEC -------*/
 void	exec_export_c(t_exec *exec, t_child *child);

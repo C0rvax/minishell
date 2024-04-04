@@ -6,29 +6,11 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:10:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/03 22:51:12 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:58:40 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-int	str_isdigit(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (1);
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 static int	is_inenv(char *str, char **env)
 {
@@ -75,6 +57,20 @@ static int	dup_arr(char ***new, char **env, char **argv)
 	return (i);
 }
 
+int	arg_isok(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i] != '\0' && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_lenarr(char **argv, char **env)
 {
 	int	i;
@@ -91,7 +87,8 @@ int	ft_lenarr(char **argv, char **env)
 	{
 		while (argv[i])
 		{
-			if (argv[i] && ft_strchr(argv[i], '=') && !is_inenv(argv[i], env))
+			if (argv[i] && ft_strchr(argv[i], '=') && !is_inenv(argv[i], env)
+				&& !arg_isok(argv[i]))
 				res++;
 			i++;
 		}
@@ -114,7 +111,9 @@ char	**ft_joinarr(char **argv, char **env)
 	j = 0;
 	while (argv && argv[j])
 	{
-		if (ft_strchr(argv[j], '=') != NULL)
+		if (arg_isok(argv[j]))
+			msg_built(EXPORT, argv[j], 1);
+		else if (ft_strchr(argv[j], '=') != NULL)
 		{
 			new[i++] = ft_strdup(argv[j]);
 			if (!new[i - 1])

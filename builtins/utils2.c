@@ -6,11 +6,29 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 22:43:03 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/03 22:53:15 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:56:39 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+int	str_isdigit(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (1);
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 static int	is_inenv2(char *str, char **env)
 {
@@ -66,7 +84,8 @@ static int	ft_lenarr2(char **argv, char **env)
 	{
 		while (argv[i])
 		{
-			if (!ft_strchr(argv[i], '=') && !is_inenv2(argv[i], env))
+			if (!ft_strchr(argv[i], '=') && !is_inenv2(argv[i], env)
+				&& !arg_isok(argv[i]))
 				res++;
 			i++;
 		}
@@ -89,7 +108,9 @@ char	**ft_joinexp(char **argv, char **env)
 	j = 1;
 	while (argv && argv[j])
 	{
-		if (ft_strchr(argv[j], '=') == NULL)
+		if (ft_strchr(argv[j], '=') == NULL && !arg_isok(argv[j]))
+			msg_built(EXPORT, argv[j], 1);
+		else if (ft_strchr(argv[j], '=') == NULL)
 		{
 			new[i++] = ft_strdup(argv[j]);
 			if (!new[i - 1])

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 17:52:32 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/04 19:00:37 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ static void	msg_built2(t_built msg, char *str)
 	{
 		ft_putstr_fd("cd: ", 2);
 		ft_putstr_fd("HOME not set\n", 2);
+	}
+	if (msg == EXPORT)
+	{
+		ft_putstr_fd("export: '", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
 	}
 }
 
