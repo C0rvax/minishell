@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:56:26 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/23 12:37:58 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:49:52 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "minishell.h"
 
 char	*gnl_cleanstash(char *stash, unsigned int start, size_t len)
 {
@@ -87,6 +88,7 @@ char	*gnl_read(int fd, char *stash)
 
 	r = 1;
 	buffer = NULL;
+	signals(3);
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
@@ -95,7 +97,7 @@ char	*gnl_read(int fd, char *stash)
 		r = read(fd, buffer, BUFFER_SIZE);
 		if (r == 0)
 			return (free(buffer), stash);
-		if (r < 0)
+		if (r < 0 || g_status == 130)
 			return (free(stash), free(buffer), NULL);
 		buffer[r] = '\0';
 		stv0 = stash;
@@ -120,9 +122,9 @@ char	*get_next_line(int fd)
 	if (!stash)
 		stash = gnl_mallocstash(stash);
 	stash = gnl_read(fd, stash);
-	while (stash[i] != '\0' && stash[i] != '\n')
+	while (stash && stash[i] != '\0' && stash[i] != '\n')
 		i++;
-	if (stash[i] == '\n' || stash[i] == '\0')
+	if (stash && (stash[i] == '\n' || stash[i] == '\0'))
 	{
 		line = gnl_getline(stash, i);
 		stv1 = stash;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:09:10 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/04 15:47:30 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/05 14:11:39 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@ void	handle_sigint_inprocess(int sig)
 	(void)sig;
 }
 
-// void	handle_sigint_inheredoc(int sig)
-// {
-// 	g_status = 130;
-// 	ft_printf("\n");
-// 	rl_replace_line("", 0);
-// 	rl_on_new_line();
-// 	return (free(line), free(lim), close(fd), 0);
-// 	(void)sig;
-// }
+void	handle_heredoc(int sig)
+{
+	g_status = 130;
+	ft_printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	(void)sig;
+}
 
 void	handle_sigquit(int sig)
 {
@@ -50,6 +49,11 @@ void	handle_sigquit(int sig)
 
 void	signals(int sig)
 {
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = handle_heredoc;
+	sa.sa_flags = 0;
 	if (sig == 1)
 	{
 		signal(SIGINT, handle_sigint);
@@ -60,4 +64,6 @@ void	signals(int sig)
 		signal(SIGINT, handle_sigint_inprocess);
 		signal(SIGQUIT, handle_sigquit);
 	}
+	if (sig == 3)
+		sigaction(SIGINT, &sa, NULL);
 }
