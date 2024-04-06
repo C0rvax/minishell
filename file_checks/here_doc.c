@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:37:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/05 13:55:58 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:52:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	get_here_doc(char *path)
 		ft_putstr_fd(line, fd);
 		free(line);
 		line = get_next_line(0);
-		if (line == NULL)
+		if (g_status == 130 || line == NULL)
 			return (clean_exit_here_doc(lim, fd, 0), 1);
 	}
 	return (free(line), free(lim), close(fd), 0);

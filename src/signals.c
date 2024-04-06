@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:09:10 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/05 14:11:39 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:54:36 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	signals(int sig)
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = handle_heredoc;
+	sa.sa_handler = &handle_heredoc;
 	sa.sa_flags = 0;
 	if (sig == 1)
 	{
