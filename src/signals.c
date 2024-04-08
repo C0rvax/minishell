@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:09:10 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/05 17:54:36 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:21:46 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,15 @@ void	handle_sigquit(int sig)
 
 void	signals(int sig)
 {
-	struct sigaction	sa;
+	struct sigaction	hdint;
+	struct sigaction	hdquit;
 
-	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = &handle_heredoc;
-	sa.sa_flags = 0;
+	sigemptyset(&hdint.sa_mask);
+	hdint.sa_handler = &handle_heredoc;
+	hdint.sa_flags = 0;
+	sigemptyset(&hdquit.sa_mask);
+	hdquit.sa_handler = SIG_IGN;
+	hdquit.sa_flags = 0;
 	if (sig == 1)
 	{
 		signal(SIGINT, handle_sigint);
@@ -65,5 +69,8 @@ void	signals(int sig)
 		signal(SIGQUIT, handle_sigquit);
 	}
 	if (sig == 3)
-		sigaction(SIGINT, &sa, NULL);
+	{
+		sigaction(SIGINT, &hdint, NULL);
+		sigaction(SIGQUIT, &hdquit, NULL);
+	}
 }
