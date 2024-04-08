@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 15:48:30 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/01/31 17:27:03 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:32:47 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ char	*gnl_strjoin(char *s1, char *s2)
 	}
 	s3[i + j] = 0;
 	return (s3);
+}
+
+char	*update_stash(char *stash, char *buffer)
+{
+	char	*stv0;
+
+	stv0 = stash;
+	stash = gnl_strjoin(stv0, buffer);
+	if (!stash)
+		return (NULL);
+	free(stv0);
+	return (stash);
 }
 
 char	*gnl_mallocstash(char *stash)

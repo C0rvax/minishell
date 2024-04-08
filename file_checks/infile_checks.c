@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/26 17:20:33 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/08 19:43:47 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@ t_redirect	*get_valid_in(t_redirect *in)
 	first_in = in;
 	valid_in = ft_in_lstlast(in);
 	if (valid_in->mode == DOUBLE)
-		valid_in->path = ft_strdup(".tmpheredoc");
+	{
+		free(in->path);
+		valid_in->path = ft_strdup("/tmp/.tmpheredoc");
+	}
 	if (valid_in->mode == SIMPLE)
 	{
 		while (in)
 		{
 			if (in->mode == DOUBLE)
-				unlink(".tmpheredoc");
+				unlink("/tmp/.tmpheredoc");
 			in = in->next;
 		}
 	}

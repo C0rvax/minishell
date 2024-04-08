@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:57:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/02/23 12:34:47 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:49:12 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		gnl_isline(char *s);
 char	*gnl_getline(char *s, size_t lineend);
 char	*gnl_read(int fd, char *stash);
 char	*get_next_line(int fd);
+char	*update_stash(char *stash, char *buffer);
 
 #endif

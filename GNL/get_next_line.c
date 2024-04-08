@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:56:26 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/05 13:49:52 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/08 14:12:26 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*gnl_getline(char *s, size_t lineend)
 char	*gnl_read(int fd, char *stash)
 {
 	char	*buffer;
-	char	*stv0;
 	int		r;
 
 	r = 1;
@@ -100,9 +99,9 @@ char	*gnl_read(int fd, char *stash)
 		if (r < 0 || g_status == 130)
 			return (free(stash), free(buffer), NULL);
 		buffer[r] = '\0';
-		stv0 = stash;
-		stash = gnl_strjoin(stv0, buffer);
-		free(stv0);
+		stash = update_stash(stash, buffer);
+		if (!stash)
+			return (NULL);
 		if (gnl_isline(buffer) == 1)
 			break ;
 	}
@@ -121,6 +120,8 @@ char	*get_next_line(int fd)
 		return (free(stash), stash = NULL, NULL);
 	if (!stash)
 		stash = gnl_mallocstash(stash);
+	if (!stash)
+		return (NULL);
 	stash = gnl_read(fd, stash);
 	while (stash && stash[i] != '\0' && stash[i] != '\n')
 		i++;
@@ -129,6 +130,8 @@ char	*get_next_line(int fd)
 		line = gnl_getline(stash, i);
 		stv1 = stash;
 		stash = gnl_cleanstash(stash, i + 1, gnl_strlen(stash));
+		if (!stash)
+			return (free(stv1), stv1 = NULL, line);
 		return (free(stv1), stv1 = NULL, free(stash), stash = NULL, line);
 	}
 	return (free(stash), NULL);

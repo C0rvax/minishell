@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/03 17:46:30 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:17:39 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,16 @@ char	*check_paths(char **paths, char *command, t_cmd *cmd)
 	ptr = NULL;
 	if (!command)
 		return (ft_freetab(paths), NULL);
-	if (paths)
+	while (paths && paths[i])
 	{
-		while (paths[i])
-		{
-			valid = is_valid_path(paths[i], &ptr, command);
-			if (valid == 1)
-				return (ft_freetab(paths), NULL);
-			else if (valid == 0)
-				return (ft_freetab(paths), ptr);
-			i++;
-		}
+		valid = is_valid_path(paths[i], &ptr, command);
+		if (valid == 1)
+			return (ft_freetab(paths), NULL);
+		else if (valid == 0)
+			return (ft_freetab(paths), ptr);
+		i++;
 	}
-	if (access(command, F_OK | X_OK) == 0)
+	if (command[0] == '.' && command[1] == '/' && access(command, F_OK | X_OK) == 0)
 	{
 		ptr = ft_strdup(command);
 		return (ft_freetab(paths), ptr);
@@ -80,6 +77,7 @@ char	*check_paths(char **paths, char *command, t_cmd *cmd)
 char	**get_all_paths(char *ptr)
 {
 	char	**paths;
+
 	if (!ptr)
 		return (NULL);
 	ptr = ft_substr(ptr, 5, ft_strlen(ptr));

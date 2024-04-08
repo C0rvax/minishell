@@ -6,12 +6,12 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/04 15:53:18 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:35:03 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "builtin.h"
+#include "exec.h"
 #include "file_checks.h"
 #include "minishell.h"
 
@@ -82,20 +82,7 @@ int	exec_uno(t_exec *exec)
 			return (1);
 	}
 	waitpid(exec->pid[0], &status, 0);
-	if (WIFEXITED(status))
-		g_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-	{
-		if (status == 139)
-		{
-			ft_putstr_fd("Segmentation fault (core dumped)\n", 2);
-			g_status = status;
-		}
-		else if (status == 131)
-			g_status = status;
-		else
-			g_status = status + 128;
-	}
+	get_status(status);
 	clean_exit_parent(exec, 0);
 	return (g_status);
 }

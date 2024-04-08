@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/03 18:14:02 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/08 20:29:58 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,10 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 					if (get_cmd_path(cmd, env) != 0)
 						return (1);
 		}
+		// ft_printf("cmd=%p\n", cmd->argv);
+		// ft_printf("cmd=%s\n", cmd->argv[0]);
+		// ft_printf("cmd path=%s\n", cmd->path_cmd);
+		// ft_printf("cmd type=%d\n", cmd->type);
 		cmd_nb++;
 		cmd = cmd->next;
 	}
@@ -124,10 +128,11 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 					total_cmd) != 0) || (check_cmd(cmd, total_cmd,
 					mini_env) != 0))
 		{
-			if (access(".tmpheredoc", F_OK) == 0)
-				unlink(".tmpheredoc");
+			if (access("/tmp/.tmpheredoc", F_OK) == 0)
+				unlink("/tmp/.tmpheredoc");
 			ft_cmd_lstclear(&cmd);
-			g_status = 1;
+			if (g_status != 130 && g_status != 131)
+				g_status = 1;
 			return (1);
 		}
 	}

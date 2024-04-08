@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/03 17:21:55 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:20:18 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,7 @@ int	clean_end(t_exec *exec)
 	while (j < exec->total_cmd)
 	{
 		waitpid(exec->pid[j], &status, 0);
-		if (WIFEXITED(status))
-			g_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-		{
-			if (status == 139)
-			{
-				ft_putstr_fd("Segmentation fault (core dumped)\n", 2);
-				g_status = status;
-			}
-			else if (status == 131)
-				g_status = status;
-			else
-				g_status = status + 128;
-		}
+		get_status(status);
 		j++;
 		buf = buf->next;
 	}
@@ -58,9 +45,9 @@ int	clean_exit_parent(t_exec *exec, int err)
 		free(exec->pid);
 		exec->pid = NULL;
 	}
-	if (access(".tmpheredoc", F_OK) == 0)
+	if (access("/tmp/.tmpheredoc", F_OK) == 0)
 	{
-		if (unlink(".tmpheredoc") != 0)
+		if (unlink("/tmp/.tmpheredoc") != 0)
 			ft_putstr_fd(strerror(errno), 2);
 	}
 	ft_cmd_lstclear(&exec->cmd);
@@ -75,9 +62,9 @@ void	clean_exit_child(t_exec *exec, t_child *child, int err)
 		free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid != NULL)
 		free(exec->pid);
-	if (access(".tmpheredoc", F_OK) == 0)
+	if (access("/tmp/.tmpheredoc", F_OK) == 0)
 	{
-		if (unlink(".tmpheredoc") != 0)
+		if (unlink("/tmp/.tmpheredoc") != 0)
 		{
 			ft_putstr_fd(strerror(errno), 2);
 		}
@@ -119,9 +106,9 @@ void	close_all_fds(t_exec *exec)
 			close(exec->fd[l][1]);
 		l++;
 	}
-	if (access(".tmpheredoc", F_OK) == 0)
+	if (access("/tmp/.tmpheredoc", F_OK) == 0)
 	{
-		if (unlink(".tmpheredoc") != 0)
+		if (unlink("/tmp/.tmpheredoc") != 0)
 			ft_putstr_fd(strerror(errno), 2);
 	}
 }
