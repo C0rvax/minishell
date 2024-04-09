@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_fds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:07:39 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/03/30 14:44:06 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:21:59 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	close_higher_fds(t_exec *exec)
 	close(exec->fd[exec->cmdno][0]);
 }
 
-int	find_fdout(t_exec *exec, t_child *child)
+static int	find_fdout(t_exec *exec, t_child *child)
 {
 	if (child->current_cmd->out->mode == SIMPLE)
 		child->fdout = open(child->current_cmd->out->path, O_WRONLY | O_TRUNC);

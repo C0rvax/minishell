@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/08 20:29:58 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:16:30 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // if no error is encountered, only keeps the last infile for exec.
 // return (1) in case of error (malloc or fd error - errno already displayed)
 
-int	check_infiles(t_cmd *cmd, int total_cmd)
+static int	check_infiles(t_cmd *cmd, int total_cmd)
 {
 	int	cmd_nb;
 	int	error;
@@ -51,7 +51,7 @@ int	check_infiles(t_cmd *cmd, int total_cmd)
 // if all outfiles are OK, it only keeps the last one.
 // return 1 in case of mistake in fd opening (strerror already displayed)
 
-int	check_outfiles(t_cmd *cmd, int total_cmd)
+static int	check_outfiles(t_cmd *cmd, int total_cmd)
 {
 	int	cmd_nb;
 	int	error;
@@ -85,14 +85,14 @@ int	check_outfiles(t_cmd *cmd, int total_cmd)
 // checks if is a builtin and mark them as such
 // returns 1 in case of malloc issue
 
-int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
+static int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 {
 	int	cmd_nb;
 
 	cmd_nb = 0;
 	while (cmd_nb < total_cmd && cmd != NULL)
 	{
-		if (!cmd->argv || !cmd->argv[0] || cmd->argv[0][0] == '\0')
+		if (!cmd->argv || !cmd->argv[0])
 			kill_child(cmd, 0);
 		if (cmd->type != KILLED)
 		{
@@ -101,10 +101,6 @@ int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 					if (get_cmd_path(cmd, env) != 0)
 						return (1);
 		}
-		// ft_printf("cmd=%p\n", cmd->argv);
-		// ft_printf("cmd=%s\n", cmd->argv[0]);
-		// ft_printf("cmd path=%s\n", cmd->path_cmd);
-		// ft_printf("cmd type=%d\n", cmd->type);
 		cmd_nb++;
 		cmd = cmd->next;
 	}

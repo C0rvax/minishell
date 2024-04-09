@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:27:17 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/08 20:14:16 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:24:57 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	test_path(char *path, int malloc)
 	int	fd;
 
 	fd = open(path, O_DIRECTORY);
-	ft_printf("path=%s\n", path);
 	if (fd == -1)
 	{
 		if (malloc)

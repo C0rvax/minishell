@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 13:34:11 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:22:41 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "builtin.h"
 #include "file_checks.h"
 
-int	redirect(t_exec *exec, t_child *child)
+static int	redirect(t_exec *exec, t_child *child)
 {
 	if (exec->cmdno == 0)
 	{

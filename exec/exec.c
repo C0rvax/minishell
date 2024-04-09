@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/08 15:35:03 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:21:34 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	initialize_child(t_child *child, t_exec *exec)
 	return (0);
 }
 
-int	manage_fds(t_cmd *cmd)
+static int	manage_fds(t_cmd *cmd)
 {
 	int	fdin;
 	int	fdout;
@@ -62,7 +62,7 @@ int	manage_fds(t_cmd *cmd)
 	return (0);
 }
 
-int	exec_uno(t_exec *exec)
+static int	exec_uno(t_exec *exec)
 {
 	int		status;
 	char	*path_cmd;
