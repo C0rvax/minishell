@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/08 20:17:39 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:15:26 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,35 +41,42 @@ int	is_valid_path(char *path, char **ptr, char *command)
 		return (free(cpypath2), 2);
 }
 
+static void	not_found(char **paths, char *comnd, t_cmd *cmd)
+{
+	print_str_fd(comnd, " : command not found", "\n", 2);
+	kill_child(cmd, 127);
+	ft_freetab(paths);
+}
+
 // checks all possible paths to keep only the valid path
 
-char	*check_paths(char **paths, char *command, t_cmd *cmd)
+char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
 {
 	int		i;
 	int		valid;
 	char	*ptr;
 
-	i = 0;
+	i = -1;
 	valid = 1;
 	ptr = NULL;
-	if (!command)
+	if (!comnd)
 		return (ft_freetab(paths), NULL);
-	while (paths && paths[i])
+	if (comnd[0] == '\0')
+		return (not_found(paths, comnd, cmd), NULL);
+	while (paths && paths[i++])
 	{
-		valid = is_valid_path(paths[i], &ptr, command);
+		valid = is_valid_path(paths[i], &ptr, comnd);
 		if (valid == 1)
 			return (ft_freetab(paths), NULL);
 		else if (valid == 0)
 			return (ft_freetab(paths), ptr);
-		i++;
 	}
-	if (command[0] == '.' && command[1] == '/' && access(command, F_OK | X_OK) == 0)
+	if (comnd[0] == '.' && comnd[1] == '/' && access(comnd, F_OK | X_OK) == 0)
 	{
-		ptr = ft_strdup(command);
+		ptr = ft_strdup(comnd);
 		return (ft_freetab(paths), ptr);
 	}
-	print_str_fd(command, ": command not found", "\n", 2);
-	return (kill_child(cmd, 127), ft_freetab(paths), NULL);
+	return (not_found(paths, comnd, cmd), NULL);
 }
 
 // gets all the possible paths, splitting them

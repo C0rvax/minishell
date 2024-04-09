@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:37:33 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/03 18:13:06 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:17:20 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_redirect	*get_valid_out(t_redirect *out)
 
 // creates the outfile depending on the simple < or double <<
 
-int	create_outfile(t_redirect *out)
+static int	create_outfile(t_redirect *out)
 {
 	int	fd;
 

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/08 19:43:47 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:17:04 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_redirect	*get_valid_in(t_redirect *in)
 
 // checks the existence and permissions in the infile if simple <
 
-int	check_infile_errors(char *path)
+static int	check_infile_errors(char *path)
 {
 	if (!path)
 		return (3);

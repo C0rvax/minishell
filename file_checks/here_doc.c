@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:37:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/09 18:01:55 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:05:10 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // in case of error in get_here_doc
 
-void	clean_exit_here_doc(char *lim, int fd, int err)
+static void	clean_exit_here_doc(char *lim, int fd, int err)
 {
 	if (err == 1)
 		ft_putstr_fd(strerror(errno), 2);
@@ -32,7 +32,7 @@ void	clean_exit_here_doc(char *lim, int fd, int err)
 				ft_putstr_fd(strerror(errno), 2);
 }
 
-int	loop_get_here_doc(char *line, char *lim, int fd)
+static int	loop_get_here_doc(char *line, char *lim, int fd)
 {
 	while (ft_strncmp(line, lim, ft_strlen(lim)) != 0)
 	{

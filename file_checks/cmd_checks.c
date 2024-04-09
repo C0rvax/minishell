@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/08 20:14:24 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:15:52 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	is_directory(t_cmd *cmd)
 
 // gets the env PATH variable
 
-char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
+static char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
 {
 	int	i;
 
