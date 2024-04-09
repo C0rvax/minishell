@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:37:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/09 18:05:10 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:47:28 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	loop_get_here_doc(char *line, char *lim, int fd)
 	{
 		ft_putstr_fd(line, fd);
 		free(line);
-		line = get_next_line(0);
+		line = prompted_gnl("> ", 0, 1);
 		if (line == NULL && g_status != 130)
 			return (clean_exit_here_doc(lim, fd, 2), 0);
 		if (g_status == 130 || line == NULL)
