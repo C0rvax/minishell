@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 18:43:29 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:40:03 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	ft_putexport_fd(char *str, int fd)
 		while (str[i])
 		{
 			ft_putchar_fd(str[i], fd);
-			if (str[i] == '=')
+			if (str[i] == '=' && quote == 0)
 			{
 				ft_putchar_fd('"', fd);
 				quote = 1;

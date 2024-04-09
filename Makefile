@@ -4,7 +4,8 @@ CC			= cc
 NAME		= minishell
 
 #------------ SOURCE -------------#
-GNL			= $(addprefix ./GNL/, get_next_line.c get_next_line_utils.c)
+GNL			= $(addprefix ./GNL/, get_next_line.c get_next_line_utils.c		\
+			  Prompted_gnl.c)
 
 LEX			= $(addprefix ./lexer/, lexer.c list.c lex_utils.c parse_read.c	\
 			  replace_argument.c delete_quotes.c create_cmd_list.c			\

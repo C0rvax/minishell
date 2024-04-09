@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:09:10 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/09 15:14:51 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:17:07 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	handle_sigint(int sig)
 	(void)sig;
 }
 
-void	handle_sigint_inprocess(int sig)
+void	handle_sigint_read(int sig)
 {
 	g_status = 130;
 	ft_printf("\n");
@@ -65,7 +65,7 @@ void	signals(int sig)
 	}
 	if (sig == 2)
 	{
-		signal(SIGINT, handle_sigint_inprocess);
+		signal(SIGINT, handle_heredoc);
 		signal(SIGQUIT, handle_sigquit);
 	}
 	if (sig == 3)

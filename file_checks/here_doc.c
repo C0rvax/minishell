@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:37:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/08 15:48:28 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:01:55 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	get_here_doc(char *path)
 	fd = open("/tmp/.tmpheredoc", O_RDWR | O_TRUNC | O_CREAT, 0777);
 	if (fd == -1)
 		return (clean_exit_here_doc(lim, fd, 1), 1);
-	line = get_next_line(0);
+	line = prompted_gnl("> ", 0, 1);
 	if (line == NULL && g_status != 130)
 		return (clean_exit_here_doc(lim, fd, 2), 0);
 	else if (g_status == 130 || line == NULL)

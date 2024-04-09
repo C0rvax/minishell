@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/03 22:01:01 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:58:50 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,6 @@ void		print_redir_lst(t_redirect *list);
 
 /*------- SIGNALS -------*/
 void		signals(int sig);
+void		handle_sigint_read(int sig);
 
 #endif

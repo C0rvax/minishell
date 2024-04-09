@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 11:14:24 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:49:17 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	replace_argument(char **read, t_persistent *pers)
 			return (1);
 		else if (read[0][i] == '$' && find_and_replace(read, i, pers->mini_env))
 			return (1);
-		if (read[0][i] != '\0')
+		if (read[0][i] != '\0' && read[0][i] != '$')
 			i++;
 	}
 	return (0);

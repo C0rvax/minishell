@@ -6,16 +6,28 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 15:15:24 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:03:07 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
 
+static void	sig_parse(void)
+{
+	struct sigaction	parsig;
+
+	sigemptyset(&parsig.sa_mask);
+	parsig.sa_handler = &handle_sigint_read;
+	parsig.sa_flags = 0;
+	sigaction(SIGINT, &parsig, NULL);
+}
+
 static void	exit_parse(t_persistent *pers, char *read)
 {
 	free(read);
+	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
+	ft_printf("exit\n");
 	ft_freetab(pers->mini_env);
 	ft_freetab(pers->export);
 	rl_clear_history();
@@ -24,14 +36,14 @@ static void	exit_parse(t_persistent *pers, char *read)
 
 static int	last_ispipe(char *str)
 {
-	int		i;
 	size_t	len;
 
-	i = 0;
 	len = ft_strlen(str);
-	while (len && str[len] == ' ')
+	if (len >= 1)
 		len--;
-	if (len && str[len] == '|')
+	while (str[len] == ' ')
+		len--;
+	if (str[len] == '|')
 		return (1);
 	else
 		return (0);
@@ -44,21 +56,23 @@ static int	append_new_read(char **read, t_persistent *pers)
 	int		len;
 
 	if (search_errors(*read))
-		return (free(*read), 1);
+		return (add_history(*read), free(*read), 1);
 	len = ft_strlen(read[0]);
 	while (len > 0 && last_ispipe(*read))
 	{
-		read2 = readline("> ");
-		if (!read2)
+		read2 = prompted_gnl("> ", 0, 2);
+		if (!read2 && g_status != 130)
 			exit_parse(pers, *read);
+		if (g_status == 130)
+			return (add_history(*read), free(read2), free(*read), 1);
 		cpy = read[0];
 		*read = ft_strjoin(cpy, read2);
 		free(cpy);
 		free(read2);
 		if (!*read)
-			return (msg_lex(MALLOC, 0, ""), 1);
+			return (add_history(cpy), msg_lex(MALLOC, 0, ""), 1);
 		if (search_errors(*read))
-			return (free(*read), 1);
+			return (add_history(*read), free(*read), 1);
 		len = ft_strlen(read[0]);
 	}
 	return (0);
@@ -68,6 +82,7 @@ t_cmd	*parse_read(char *read, t_persistent *pers)
 {
 	t_parse	parse;
 
+	sig_parse();
 	ft_bzero(&parse, sizeof(t_parse));
 	if (!read || read[0] == '\0')
 		return (NULL);

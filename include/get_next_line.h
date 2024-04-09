@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 11:57:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/08 12:49:12 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 17:59:05 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ char	*gnl_getline(char *s, size_t lineend);
 char	*gnl_read(int fd, char *stash);
 char	*get_next_line(int fd);
 char	*update_stash(char *stash, char *buffer);
+char	*prompted_gnl(char *prompt, int fd, int mode);
 
 #endif
