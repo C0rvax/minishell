@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_checks2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/09 17:15:26 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:22:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
 		return (ft_freetab(paths), NULL);
 	if (comnd[0] == '\0')
 		return (not_found(paths, comnd, cmd), NULL);
-	while (paths && paths[i++])
+	while (paths && paths[++i])
 	{
 		valid = is_valid_path(paths[i], &ptr, comnd);
 		if (valid == 1)
