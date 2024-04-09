@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 19:19:48 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:07:02 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@ static void	exit_parse(t_persistent *pers, char *read)
 	ft_freetab(pers->export);
 	rl_clear_history();
 	exit (0);
+}
+
+static int	last_ispipe(char *str)
+{
+	int		i;
+	size_t	len;
+
+	i = 0;
+	len = ft_strlen(str);
+	while (len && str[len] == ' ')
+	{
+		while (str[len] == ' ')
+			len--;
+		if (str[len] == '|')
+	}
 }
 
 static int	append_new_read(char **read, t_persistent *pers)
