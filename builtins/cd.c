@@ -6,26 +6,25 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:27:17 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/08 20:14:16 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:41:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static int	test_path(char *path, int malloc)
+static int	test_path(char *path)
 {
 	int	fd;
 
 	fd = open(path, O_DIRECTORY);
 	ft_printf("path=%s\n", path);
 	if (fd == -1)
-	{
-		if (malloc)
-			free(path);
 		return (1);
+	else
+	{
+		close(fd);
+		return (0);
 	}
-	close(fd);
-	return (0);
 }
 
 static char	*get_oldpwd(char **env)
@@ -70,32 +69,60 @@ static int	update_env(t_exec *exec, t_persistent *pers)
 
 int	exec_cd(t_exec *exec, t_persistent *pers)
 {
-	int		malloc;
-	char	*built;
+	char	*path;
 
-	malloc = 0;
 	if (exec->cmd->argv[1] && exec->cmd->argv[2])
 		return (clear_one(exec, msg_built(ARGS, "cd", 1)));
-	built = exec->cmd->argv[1];
-	if (!built)
-	{
-		built = ft_getenv(exec->mini_env, "HOME");
-		malloc = 1;
-	}
-	if (!built)
+	if (!exec->cmd->argv[1])
+		path = ft_getenv(exec->mini_env, "HOME");
+	else
+		path = ft_strdup(exec->cmd->argv[1]);
+	if (!path)
 		return (clear_one(exec, msg_built(BMALLOC, strerror(errno), 1)));
-	if (!built[0])
-		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
-	if (test_path(built, malloc))
-		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
-	chdir(built);
-	if (malloc)
-		free(built);
+	if (!path[0])
+		return (free(path), clear_one(exec, msg_built(CD, "HOME not set", 1)));
+	if (test_path(path))
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		print_str_fd(": ", strerror(errno), "\n", 2);
+		return (free(path), clear_one(exec, 1));
+	}
+	chdir(path);
+	free(path);
 	if (update_env(exec, pers))
 		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
 	return (clear_one(exec, 0));
 }
 /*
+int	exec_cd(t_exec *exec, t_persistent *pers)
+{
+	int		malloc;
+	char	*path;
+
+	malloc = 0;
+	if (exec->cmd->argv[1] && exec->cmd->argv[2])
+		return (clear_one(exec, msg_built(ARGS, "cd", 1)));
+	path = exec->cmd->argv[1];
+	if (!path)
+	{
+		path = ft_getenv(exec->mini_env, "HOME");
+		malloc = 1;
+	}
+	if (!path)
+		return (clear_one(exec, msg_built(BMALLOC, strerror(errno), 1)));
+	if (!path[0])
+		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
+	if (test_path(path, malloc))
+		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
+	chdir(path);
+	if (malloc)
+		free(path);
+	if (update_env(exec, pers))
+		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
+	return (clear_one(exec, 0));
+}
+
 void	exec_cd_c(t_exec *exec, t_child *child)
 {
 	int		malloc;

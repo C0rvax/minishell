@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:04:58 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/08 19:24:34 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:45:04 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	msg_lex(t_msg msg, char c, char *str)
 		ft_putchar_fd('\'', 2);
 	}
 	if (msg == QUOTE || msg == DQUOTE)
-		write(2, str, 8);
+		ft_putstr_fd(str, 2);
 	ft_putchar_fd('\n', 2);
 }
 

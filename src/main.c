@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 15:53:49 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:02:22 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,6 @@
 #include "exec.h"
 
 int	g_status = 0;
-
-void	ft_make_hist(void)
-{
-	char	*s;
-
-	s = "cat -ens <<STOP <infile | grep <loremipsum >outfile la | cat >outfile";
-	add_history("chevron à la fin | fin<");
-	add_history("chevron avant pipe < | fin");
-	add_history("3 chevrons <<<infile | fin");
-	add_history("3 chevrons >>>outfile | fin");
-	add_history("pipe à la fin |");
-	add_history("2 pipes à la suite | | fin");
-	add_history("guillemet ' pas fermé");
-	add_history("<<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
-	add_history(s);
-}
 
 static char	*get_read(char **env)
 {
@@ -86,10 +70,27 @@ int	main(int ac, char **av, char **env)
 	parse_env_array(&persistent, env);
 	if (!persistent.mini_env)
 		return (ft_putstr_fd("minishell: Cannot allocate memory\n", 2), 1);
-	ft_make_hist();
 	while (1)
 		main_loop(&persistent);
 	ft_freetab(persistent.mini_env);
+	ft_freetab(persistent.export);
 	rl_clear_history();
 	return (g_status);
 }
+/*
+void	ft_make_hist(void)
+{
+	char	*s;
+
+	s = "cat -ens <<STOP <infile | grep <loremipsum >outfile la | cat >outfile";
+	add_history("chevron à la fin | fin<");
+	add_history("chevron avant pipe < | fin");
+	add_history("3 chevrons <<<infile | fin");
+	add_history("3 chevrons >>>outfile | fin");
+	add_history("pipe à la fin |");
+	add_history("2 pipes à la suite | | fin");
+	add_history("guillemet ' pas fermé");
+	add_history("<<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
+	add_history(s);
+}
+*/
