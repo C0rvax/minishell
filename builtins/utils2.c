@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 22:43:03 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 18:56:39 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:27:58 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,9 @@ char	**ft_joinexp(char **argv, char **env)
 	j = 1;
 	while (argv && argv[j])
 	{
-		if (ft_strchr(argv[j], '=') == NULL && !arg_isok(argv[j]))
+		if (!ft_strchr(argv[j], '=') && arg_isok(argv[j]))
 			msg_built(EXPORT, argv[j], 1);
-		else if (ft_strchr(argv[j], '=') == NULL)
+		else if (!ft_strchr(argv[j], '='))
 		{
 			new[i++] = ft_strdup(argv[j]);
 			if (!new[i - 1])
