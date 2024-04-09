@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:27:17 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 12:26:22 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:41:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,14 @@ int	exec_cd(t_exec *exec, t_persistent *pers)
 		path = ft_strdup(exec->cmd->argv[1]);
 	if (!path)
 		return (clear_one(exec, msg_built(BMALLOC, strerror(errno), 1)));
+	if (!path[0])
+		return (free(path), clear_one(exec, msg_built(CD, "HOME not set", 1)));
 	if (test_path(path))
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(path, 2);
 		print_str_fd(": ", strerror(errno), "\n", 2);
-		free(path);
-		return (clear_one(exec, 1));
+		return (free(path), clear_one(exec, 1));
 	}
 	chdir(path);
 	free(path);
