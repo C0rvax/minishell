@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 18:57:36 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:26:24 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int		clear_built(t_exec *exec, t_child *child, int status_code);
 int		clear_one(t_exec *exec, int status_code);
 int		msg_built(t_built msg, char *str, int status_code);
 int		final_exit(t_exec *exec, t_persistent *pers, int status_code);
+void	print_str_fd(char *s1, char *s2, char *s3, int fd);
 
 /*------- MAIN -------*/
 int		is_a_builtin(t_cmd *cmd);
