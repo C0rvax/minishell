@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 15:07:02 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 15:15:24 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static int	last_ispipe(char *str)
 	i = 0;
 	len = ft_strlen(str);
 	while (len && str[len] == ' ')
-	{
-		while (str[len] == ' ')
-			len--;
-		if (str[len] == '|')
-	}
+		len--;
+	if (len && str[len] == '|')
+		return (1);
+	else
+		return (0);
 }
 
 static int	append_new_read(char **read, t_persistent *pers)
@@ -46,7 +46,7 @@ static int	append_new_read(char **read, t_persistent *pers)
 	if (search_errors(*read))
 		return (free(*read), 1);
 	len = ft_strlen(read[0]);
-	while (len > 0 && read[0][len - 1] == '|')
+	while (len > 0 && last_ispipe(*read))
 	{
 		read2 = readline("> ");
 		if (!read2)
