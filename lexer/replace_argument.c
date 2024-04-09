@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 16:36:02 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:14:24 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,20 @@ static int	replace_status(char **read, int index)
 int	replace_argument(char **read, t_persistent *pers)
 {
 	int		i;
+	int		dquote;
 
 	i = 0;
+	dquote = 1;
 	while (*read && read[0][i])
 	{
-		pass_simple_quote(*read, &i);
+		if (read[0][i] == 34)
+			dquote *= -1;
+		if (dquote > 0)
+			pass_simple_quote(*read, &i);
 		if (read[0][i] == '$' && read[0][i + 1] == '?'
 			&& replace_status(read, i))
 			return (1);
-		if (read[0][i] == '$' && find_and_replace(read, i, pers->mini_env))
+		else if (read[0][i] == '$' && find_and_replace(read, i, pers->mini_env))
 			return (1);
 		if (read[0][i] != '\0')
 			i++;
