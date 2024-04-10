@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 18:03:07 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:49:03 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ static int	append_new_read(char **read, t_persistent *pers)
 			return (add_history(*read), free(read2), free(*read), 1);
 		cpy = read[0];
 		*read = ft_strjoin(cpy, read2);
-		free(cpy);
 		free(read2);
 		if (!*read)
-			return (add_history(cpy), msg_lex(MALLOC, 0, ""), 1);
+			return (add_history(cpy), free(cpy), msg_lex(MALLOC, 0, ""), 1);
+		free(cpy);
 		if (search_errors(*read))
 			return (add_history(*read), free(*read), 1);
 		len = ft_strlen(read[0]);

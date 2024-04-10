@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 15:49:17 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:31:56 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,26 +68,27 @@ static int	replace_in_list(char **read, char *arg, char *value, int index)
 	return (0);
 }
 
-static int	find_and_replace(char **read, int index, char **env)
+static int	find_and_replace(char **read, int *index, char **env)
 {
 	int		j;
 	char	*arg;
 	char	*value;
 
-	j = index + 1;
-	if (read[0][j] == '\0')
-		return (0);
+	j = *index + 1;
 	while (ft_isalnum(read[0][j]) || read[0][j] == '_')
 		j++;
-	arg = ft_substr(*read, index + 1, j - index - 1);
+	arg = ft_substr(*read, *index + 1, j - *index - 1);
 	if (!arg)
 		return (msg_lex(MALLOC, 0, ""), 1);
 	if (arg[0] == '\0')
+	{
+		*index = *index + 1;
 		return (free(arg), 0);
+	}
 	value = check_in_env(arg, env);
 	if (!value)
 		return (1);
-	if (replace_in_list(read, arg, value, index))
+	if (replace_in_list(read, arg, value, *index))
 		return (free(arg), 1);
 	free(arg);
 	return (0);
@@ -111,9 +112,11 @@ int	replace_argument(char **read, t_persistent *pers)
 {
 	int		i;
 	int		dquote;
+	char	**env;
 
 	i = 0;
 	dquote = 1;
+	env = pers->mini_env;
 	while (*read && read[0][i])
 	{
 		if (read[0][i] == 34)
@@ -123,7 +126,7 @@ int	replace_argument(char **read, t_persistent *pers)
 		if (read[0][i] == '$' && read[0][i + 1] == '?'
 			&& replace_status(read, i))
 			return (1);
-		else if (read[0][i] == '$' && find_and_replace(read, i, pers->mini_env))
+		else if (read[0][i] == '$' && find_and_replace(read, &i, env))
 			return (1);
 		if (read[0][i] != '\0' && read[0][i] != '$')
 			i++;
