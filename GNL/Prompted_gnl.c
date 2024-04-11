@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 17:32:43 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 18:01:21 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/11 14:34:05 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*prompted_gnl(char *prompt, int fd, int mode)
 
 	ft_putstr(prompt);
 	cpy = get_next_line(fd);
+	if (!cpy)
+		return (NULL);
 	if (mode == 1)
 		return (cpy);
 	else
