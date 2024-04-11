@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/09 18:49:37 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/11 18:42:38 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	is_valid_path(char *path, char **ptr, char *command)
 	free(cpypath);
 	if (!cpypath2)
 		return (ft_putstr_fd(strerror(errno), 2), 1);
+	ft_printf("%s\n", cpypath2);
 	if (access(cpypath2, F_OK | X_OK) == 0)
 	{
 		*ptr = ft_strdup(cpypath2);
@@ -71,7 +72,9 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
 		else if (valid == 0)
 			return (ft_freetab(paths), ptr);
 	}
-	if (comnd[0] == '.' && comnd[1] == '/' && access(comnd, F_OK | X_OK) == 0)
+	if (ft_strcmp(comnd, "a.out") == 0 || ft_strcmp(comnd, "minishell") == 0)
+		return (not_found(paths, comnd, cmd), NULL);
+	if (access(comnd, F_OK | X_OK) == 0)
 	{
 		ptr = ft_strdup(comnd);
 		return (ft_freetab(paths), ptr);
@@ -84,7 +87,6 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
 char	**get_all_paths(char *ptr)
 {
 	char	**paths;
-
 	if (!ptr)
 		return (NULL);
 	ptr = ft_substr(ptr, 5, ft_strlen(ptr));
