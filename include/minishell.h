@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 17:58:50 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:20:00 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_persistent
 {
 	char	**mini_env;
 	char	**export;
+	int		status_code;
 }		t_persistent;
 
 /*------- GLOBAL -------*/

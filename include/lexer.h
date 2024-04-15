@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/02 16:23:22 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:12:50 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		search_errors(char *read);
 void	msg_lex(t_msg msg, char c, char *str);
 
 /*------- LEXER -------*/
+int		append_new_read(char **read, t_persistent *pers);
 int		create_token_list(t_lst **lexer, char *read);
 t_cmd	*parse_read(char *read, t_persistent *pers);
 int		replace_argument(char **read, t_persistent *pers);
