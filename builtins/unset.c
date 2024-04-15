@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 12:44:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/27 12:22:24 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 15:22:01 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,7 @@ int	exec_unset(t_exec *exec, t_persistent *pers)
 	}
 	ft_freetab(cpy);
 	pers->mini_env = new;
+	if (unset_exp(exec, pers))
+		return (1);
 	return (clear_one(exec, 0));
 }
