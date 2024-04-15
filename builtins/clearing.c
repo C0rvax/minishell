@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/08 19:50:34 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	clear_one(t_exec *exec, int code)
 	return (code);
 }
 
-int	final_exit(t_exec *exec, t_persistent *pers, int code)
+int	final_exit(t_exec *exec, t_pers *pers, int code)
 {
 	rl_clear_history();
 	ft_cmd_lstclear(&exec->cmd);

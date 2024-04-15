@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 14:02:22 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:48:42 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*get_read(char **env)
 	return (read);
 }
 
-static void	main_loop(t_persistent *pers)
+static void	main_loop(t_pers *pers)
 {
 	char		*read;
 	t_cmd		*cmd;
@@ -53,17 +53,17 @@ static void	main_loop(t_persistent *pers)
 	{
 		cmd = parse_read(read, pers);
 		if (!cmd)
-			(g_status) = 1;
-		if (cmd && !error_checks(cmd, pers->mini_env))
-			(g_status) = exec(cmd, pers);
+			pers->status_code = 1;
+		if (cmd && !error_checks(cmd, pers->mini_env, pers))
+			pers->status_code = exec(cmd, pers);
 	}
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_persistent	persistent;
+	t_pers	persistent;
 
-	ft_bzero(&persistent, sizeof(t_persistent));
+	ft_bzero(&persistent, sizeof(t_pers));
 	(void)av;
 	if (ac > 1)
 		return (ft_putstr_fd("Error\nminishell take no argument!\n", 2), 1);
@@ -75,7 +75,7 @@ int	main(int ac, char **av, char **env)
 	ft_freetab(persistent.mini_env);
 	ft_freetab(persistent.export);
 	rl_clear_history();
-	return (g_status);
+	return (persistent.status_code);
 }
 /*
 void	ft_make_hist(void)

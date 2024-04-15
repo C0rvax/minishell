@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:16:25 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/09 15:10:43 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:36:06 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,20 @@ int	free_tab_int(int **fd, int nb)
 	return (0);
 }
 
-void	get_status(int status)
+void	get_status(int status, t_pers *pers)
 {
 	if (WIFEXITED(status))
-		g_status = WEXITSTATUS(status);
+		pers->status_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
 		if (status == 139)
 		{
 			ft_putstr_fd("Segmentation fault (core dumped)\n", 2);
-			g_status = status;
+			pers->status_code = status;
 		}
 		else if (status == 131)
-			g_status = status;
+			pers->status_code = status;
 		else
-			g_status = status + 128;
+			pers->status_code = status + 128;
 	}
 }

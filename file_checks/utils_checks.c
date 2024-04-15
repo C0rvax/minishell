@@ -6,17 +6,20 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 11:14:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/02 13:21:22 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:39:07 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file_checks.h"
 
-void	kill_child(t_cmd *cmd, int code)
+int	kill_child(t_cmd *cmd, int code, t_pers *pers, int total_cmd)
 {
 	cmd->type = KILLED;
 	cmd->code_err = code;
-	g_status = code;
+	pers->status_code = code;
+	if (total_cmd == 1)
+		return (1);
+	return (0);
 }
 
 void	print_str_fd(char *s1, char *s2, char *s3, int fd)

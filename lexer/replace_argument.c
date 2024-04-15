@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/10 14:31:56 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:55:36 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,13 @@ static int	find_and_replace(char **read, int *index, char **env)
 	return (0);
 }
 
-static int	replace_status(char **read, int index)
+static int	replace_status(char **read, int index, t_pers *pers)
 {
 	char		*arg;
 	char		*value;
 
 	arg = "?";
-	value = ft_itoa(g_status);
+	value = ft_itoa(pers->status_code);
 	if (!value)
 		return (msg_lex(MALLOC, 0, ""), 1);
 	if (replace_in_list(read, arg, value, index))
@@ -108,7 +108,7 @@ static int	replace_status(char **read, int index)
 	return (0);
 }
 
-int	replace_argument(char **read, t_persistent *pers)
+int	replace_argument(char **read, t_pers *pers)
 {
 	int		i;
 	int		dquote;
@@ -124,7 +124,7 @@ int	replace_argument(char **read, t_persistent *pers)
 		if (dquote > 0)
 			pass_simple_quote(*read, &i);
 		if (read[0][i] == '$' && read[0][i + 1] == '?'
-			&& replace_status(read, i))
+			&& replace_status(read, i, pers))
 			return (1);
 		else if (read[0][i] == '$' && find_and_replace(read, &i, env))
 			return (1);
@@ -162,7 +162,7 @@ int	replace_argument(t_lst **lexer, char **env)
 	return (0);
 }
 
-int	replace_argument(t_lst **lexer, t_persistent *pers)
+int	replace_argument(t_lst **lexer, t_pers *pers)
 {
 	t_lst	*buf;
 	int		i;

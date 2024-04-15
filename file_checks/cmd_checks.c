@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/11 18:07:45 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:14:37 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_builtins(t_cmd *cmd, int total_cmd)
 	return (0);
 }
 
-int	is_directory(t_cmd *cmd)
+int	is_directory(t_cmd *cmd, t_pers *pers)
 {
 	int	fd;
 
@@ -47,7 +47,7 @@ int	is_directory(t_cmd *cmd)
 	{
 		close(fd);
 		print_str_fd("minishell: ", cmd->argv[0], ": Is a directory\n", 2);
-		kill_child(cmd, 126);
+		kill_child(cmd, 126, pers, 0);
 		return (1);
 	}
 	return (0);
@@ -81,7 +81,7 @@ static char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
 	return (ptr);
 }
 
-int	get_cmd_path(t_cmd *cmd, char **env)
+int	get_cmd_path(t_cmd *cmd, char **env, t_pers *pers, int total_cmd)
 {
 	char	*ptr;
 	char	**paths;
@@ -92,14 +92,15 @@ int	get_cmd_path(t_cmd *cmd, char **env)
 	{
 		if (cmd->path_cmd == NULL)
 		{
-			kill_child(cmd, 0);
+			if (kill_child(cmd, 0, pers, total_cmd) != 0)
+				return (1);
 			return (0);
 		}
 	}
 	paths = get_all_paths(ptr);
 	if (cmd->path_cmd == NULL)
 	{
-		cmd->path_cmd = check_paths(paths, cmd->argv[0], cmd);
+		cmd->path_cmd = check_paths(paths, cmd->argv[0], cmd, pers);
 		if (cmd->path_cmd == NULL && cmd->type != KILLED)
 			return (1);
 	}

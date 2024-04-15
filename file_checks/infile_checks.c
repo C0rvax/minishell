@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/09 17:17:04 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:48:18 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	check_infile_errors(char *path)
 // then prints the error message, even if the infile with error is before
 // here_doc
 
-int	check_in(t_redirect *in)
+int	check_in(t_redirect *in, t_pers *pers)
 {
 	t_redirect	*buf;
 
@@ -72,7 +72,7 @@ int	check_in(t_redirect *in)
 	while (buf)
 	{
 		if (buf->mode == DOUBLE)
-			if (get_here_doc(buf->path) != 0)
+			if (get_here_doc(buf->path, pers) != 0)
 				return (2);
 		buf = buf->next;
 	}

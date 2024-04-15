@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 17:53:36 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	exec_exit_c(t_exec *exec, t_child *child)
 		clear_built(exec, child, 0);
 }
 
-void	exec_exit_parent(t_exec *exec, t_persistent *pers)
+void	exec_exit_parent(t_exec *exec, t_pers *pers)
 {
 	ft_printf("exit\n");
 	if (exec->cmd->argv[1])

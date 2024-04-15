@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/11 17:30:15 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	sig_parse(void)
 	sigaction(SIGINT, &parsig, NULL);
 }
 
-static void	exit_parse(t_persistent *pers, char *read)
+static void	exit_parse(t_pers *pers, char *read)
 {
 	free(read);
 	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
@@ -49,7 +49,7 @@ static int	last_ispipe(char *str)
 		return (0);
 }
 
-static int	append_new_read(char **read, t_persistent *pers)
+static int	append_new_read(char **read, t_pers *pers)
 {
 	char	*cpy;
 	char	*read2;
@@ -78,7 +78,7 @@ static int	append_new_read(char **read, t_persistent *pers)
 	return (0);
 }
 
-t_cmd	*parse_read(char *read, t_persistent *pers)
+t_cmd	*parse_read(char *read, t_pers *pers)
 {
 	t_parse	parse;
 

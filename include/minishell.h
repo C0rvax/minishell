@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 17:58:50 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef struct s_persistent
 {
 	char	**mini_env;
 	char	**export;
-}		t_persistent;
+	int		status_code;
+}		t_pers;
 
 /*------- GLOBAL -------*/
 extern int	g_status;
@@ -79,7 +80,7 @@ extern int	g_status;
 char		*ft_getenv(char **env, char *str);
 char		*get_prompt(char **env);
 int			msg_error(char *s1, char *s2, int status);
-void		parse_env_array(t_persistent *pers, char **env);
+void		parse_env_array(t_pers *pers, char **env);
 
 /*------- LIST CMD -------*/
 void		print_cmd_lst(t_cmd *cmd);

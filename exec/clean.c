@@ -6,14 +6,14 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/08 13:20:18 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:36:57 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "minishell.h"
 
-int	clean_end(t_exec *exec)
+int	clean_end(t_exec *exec, t_pers *pers)
 {
 	int		j;
 	int		status;
@@ -24,12 +24,12 @@ int	clean_end(t_exec *exec)
 	while (j < exec->total_cmd)
 	{
 		waitpid(exec->pid[j], &status, 0);
-		get_status(status);
+		get_status(status, pers);
 		j++;
 		buf = buf->next;
 	}
 	clean_exit_parent(exec, 0);
-	return (g_status);
+	return (pers->status_code);
 }
 
 // to end parent, free all malloc vars and delete the temporary heredoc file
