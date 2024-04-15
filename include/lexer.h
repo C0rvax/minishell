@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:46:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:00:28 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:02:37 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int		search_errors(char *read);
 void	msg_lex(t_msg msg, char c, char *str);
 
 /*------- LEXER -------*/
-int		append_new_read(char **read, t_persistent *pers);
+int		append_new_read(char **read, t_pers *pers);
 int		create_token_list(t_lst **lexer, char *read);
 t_cmd	*parse_read(char *read, t_pers *pers);
 int		replace_argument(char **read, t_pers *pers);
 int		delete_quotes(t_lst **list);
-int		replace_home(t_persistent *pers, char **read, int index);
+int		replace_home(t_pers *pers, char **read, int index);
 
 /*------- PARSER -------*/
 int		create_cmd_list(t_parse *parse);

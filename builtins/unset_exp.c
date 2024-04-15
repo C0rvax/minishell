@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:01:17 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 15:41:02 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:04:14 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	copy_export(char ***new, char **exp, char **argv)
 	return (0);
 }
 
-int	unset_exp(t_exec *exec, t_persistent *pers)
+int	unset_exp(t_exec *exec, t_pers *pers)
 {
 	int		count;
 	char	**cpy;

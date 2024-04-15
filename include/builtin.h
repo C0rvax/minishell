@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:00:22 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:03:51 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	exec_cd_c(t_exec *exec, t_child *child);
 void	exec_pwd_c(t_exec *exec, t_child *child);
 void	exec_env_c(t_exec *exec, t_child *child);
 void	exec_exit_c(t_exec *exec, t_child *child);
-int		unset_exp(t_exec *exec, t_persistent *pers);
+int		unset_exp(t_exec *exec, t_pers *pers);
 
 /*------- EXEC PARENT -------*/
 int		exec_export(t_exec *exec, t_pers *pers);

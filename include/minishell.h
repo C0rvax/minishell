@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:01:03 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:05:01 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_read
 	struct s_read	*next;
 }		t_read;
 
-typedef struct s_persistent
+typedef struct s_pers
 {
 	char	**mini_env;
 	char	**export;

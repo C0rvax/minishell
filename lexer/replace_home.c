@@ -6,14 +6,14 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:33:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 16:54:34 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:03:32 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
 
-int	replace_home(t_persistent *pers, char **read, int index)
+int	replace_home(t_pers *pers, char **read, int index)
 {
 	char	*arg;
 	char	*value;

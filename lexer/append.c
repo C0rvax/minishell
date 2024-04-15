@@ -6,14 +6,14 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:11:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 16:20:29 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:03:15 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "minishell.h"
 
-static void	exit_parse(t_persistent *pers, char *read)
+static void	exit_parse(t_pers *pers, char *read)
 {
 	free(read);
 	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
@@ -39,7 +39,7 @@ static int	last_ispipe(char *str)
 		return (0);
 }
 
-static int	append_new(char **read, t_persistent *pers)
+static int	append_new(char **read, t_pers *pers)
 {
 	char	*cpy;
 	char	*read2;
@@ -64,7 +64,7 @@ static int	append_new(char **read, t_persistent *pers)
 	return (0);
 }
 
-int	append_new_read(char **read, t_persistent *pers)
+int	append_new_read(char **read, t_pers *pers)
 {
 	int		len;
 
