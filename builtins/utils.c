@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:10:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/04 18:58:40 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:38:26 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	arg_isok(char *str)
 	int	i;
 
 	i = 0;
+	if (str && str[i] != '_' && !ft_isalpha(str[i]))
+		return (1);
 	while (str && str[i] != '\0' && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
@@ -111,7 +113,7 @@ char	**ft_joinarr(char **argv, char **env)
 	j = 0;
 	while (argv && argv[j])
 	{
-		if (arg_isok(argv[j]))
+		if (ft_strchr(argv[j], '=') && arg_isok(argv[j]))
 			msg_built(EXPORT, argv[j], 1);
 		else if (ft_strchr(argv[j], '=') != NULL)
 		{
