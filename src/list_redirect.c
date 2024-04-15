@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 18:07:41 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:52:00 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_redir_listadd_back(t_redirect **list, t_redirect *new)
 	}
 }
 
-void	print_redir_lst(t_redirect *list)
+void	print_redir_lst(t_redirect *list) // supprimer ??
 {
 	int			i;
 	t_redirect	*buf;

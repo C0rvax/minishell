@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:37:48 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 14:51:18 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:02:47 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	clean_exit_heredoc(char *lim, int fd, int err, t_pers *pers)
 		ft_putstr_fd(strerror(errno), 2);
 	if (err == 2)
 	{
-		ft_putstr_fd("minishell: warning: here-document", 2);
+		ft_putstr_fd("\nminishell: warning: here-document", 2);
 		ft_putstr_fd(" delimited by end-of-file\n", 2);
 	}
 	pers->status_code = g_status;

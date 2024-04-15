@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 16:57:18 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:43:43 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,10 @@ int	error_checks(t_cmd *cmd, char **mini_env, t_pers *pers)
 					mini_env, pers) != 0))
 		{
 			if (access("/tmp/.tmpheredoc", F_OK) == 0)
+			{
+				ft_printf("ICIII\n");
 				unlink("/tmp/.tmpheredoc");
+			}
 			ft_cmd_lstclear(&cmd);
 			if (pers->status_code != 130 && pers->status_code != 131)
 				pers->status_code = 1;

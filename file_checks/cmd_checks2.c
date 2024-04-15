@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 15:42:06 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:09:28 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_valid_path(char *path, char **ptr, char *command)
 static void	not_found(char **paths, char *comnd, t_cmd *cmd, t_pers *pers)
 {
 	print_str_fd(comnd, " : command not found", "\n", 2);
-	kill_child(cmd, 127, pers, 0); // if ?? 
+	kill_child(cmd, 127, pers, 0);
 	ft_freetab(paths);
 }
 

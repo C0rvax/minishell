@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:11:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:03:15 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:02:13 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 static void	exit_parse(t_pers *pers, char *read)
 {
 	free(read);
-	ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
+	ft_putstr_fd("\nminishell: syntax error: unexpected end of file\n", 2);
 	ft_printf("exit\n");
 	ft_freetab(pers->mini_env);
 	ft_freetab(pers->export);
 	rl_clear_history();
-	exit (0);
+	exit (2);
 }
 
 static int	last_ispipe(char *str)

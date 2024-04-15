@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 14:00:12 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 16:36:57 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 19:08:19 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,12 @@ void	clean_exit_child(t_exec *exec, t_child *child, int err)
 		free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid != NULL)
 		free(exec->pid);
-	if (access("/tmp/.tmpheredoc", F_OK) == 0)
-	{
-		if (unlink("/tmp/.tmpheredoc") != 0)
-		{
-			ft_putstr_fd(strerror(errno), 2);
-		}
-	}
+	if (exec->cmd->type == COMMAND)
+		if (exec->cmd->in)
+			if (exec->cmd->in->mode == DOUBLE)
+				if (access("/tmp/.tmpheredoc", F_OK) == 0)
+					if (unlink("/tmp/.tmpheredoc") != 0)
+						ft_putstr_fd(strerror(errno), 2);
 	if (exec->mini_env != NULL)
 		ft_freetab(exec->mini_env);
 	if (child->current_cmd->code_err == 127)
@@ -82,7 +81,6 @@ void	clean_exit_child(t_exec *exec, t_child *child, int err)
 
 int	clean_exit_fds(t_exec *exec, t_child *child)
 {
-	ft_putstr_fd(strerror(errno), 2);
 	if (child->fdout > 0)
 		close(child->fdout);
 	if (child->fdin > 0)
@@ -106,9 +104,10 @@ void	close_all_fds(t_exec *exec)
 			close(exec->fd[l][1]);
 		l++;
 	}
-	if (access("/tmp/.tmpheredoc", F_OK) == 0)
-	{
-		if (unlink("/tmp/.tmpheredoc") != 0)
-			ft_putstr_fd(strerror(errno), 2);
-	}
+	if (exec->cmd->type == COMMAND)
+		if (exec->cmd->in)
+			if (exec->cmd->in->mode == DOUBLE)
+				if (access("/tmp/.tmpheredoc", F_OK) == 0)
+					if (unlink("/tmp/.tmpheredoc") != 0)
+						ft_putstr_fd(strerror(errno), 2);
 }
