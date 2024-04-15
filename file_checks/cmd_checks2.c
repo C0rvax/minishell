@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/11 18:42:38 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 12:51:57 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	is_valid_path(char *path, char **ptr, char *command)
 	free(cpypath);
 	if (!cpypath2)
 		return (ft_putstr_fd(strerror(errno), 2), 1);
-	ft_printf("%s\n", cpypath2);
 	if (access(cpypath2, F_OK | X_OK) == 0)
 	{
 		*ptr = ft_strdup(cpypath2);
@@ -49,6 +48,16 @@ static void	not_found(char **paths, char *comnd, t_cmd *cmd)
 	ft_freetab(paths);
 }
 
+static char	*check_executables(char **paths, char *comnd, char *ptr)
+{
+	if (access(comnd, F_OK | X_OK) == 0)
+	{
+		ptr = ft_strdup(comnd);
+		return (ft_freetab(paths), ptr);
+	}
+	return (NULL);
+}
+
 // checks all possible paths to keep only the valid path
 
 char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
@@ -64,7 +73,7 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
 		return (ft_freetab(paths), NULL);
 	if (comnd[0] == '\0')
 		return (not_found(paths, comnd, cmd), NULL);
-	while (paths && paths[++i])
+	while (paths && *paths[++i])
 	{
 		valid = is_valid_path(paths[i], &ptr, comnd);
 		if (valid == 1)
@@ -74,11 +83,8 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
 	}
 	if (ft_strcmp(comnd, "a.out") == 0 || ft_strcmp(comnd, "minishell") == 0)
 		return (not_found(paths, comnd, cmd), NULL);
-	if (access(comnd, F_OK | X_OK) == 0)
-	{
-		ptr = ft_strdup(comnd);
-		return (ft_freetab(paths), ptr);
-	}
+	if (check_executables(paths, comnd, ptr) != NULL)
+		return (ptr);
 	return (not_found(paths, comnd, cmd), NULL);
 }
 
@@ -87,6 +93,7 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
 char	**get_all_paths(char *ptr)
 {
 	char	**paths;
+
 	if (!ptr)
 		return (NULL);
 	ptr = ft_substr(ptr, 5, ft_strlen(ptr));
