@@ -9,7 +9,7 @@ GNL			= $(addprefix ./GNL/, get_next_line.c get_next_line_utils.c		\
 
 LEX			= $(addprefix ./lexer/, lexer.c list.c lex_utils.c parse_read.c	\
 			  replace_argument.c delete_quotes.c create_cmd_list.c			\
-			  search_errors.c create_parsarray.c append.c)
+			  search_errors.c create_parsarray.c append.c replace_home.c)
 
 BUILTINS	= $(addprefix ./builtins/, builtins.c clearing.c echo.c			\
 			  env_exit.c pwd.c export.c unset.c cd.c utils.c utils2.c		\

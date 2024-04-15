@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/10 14:31:56 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:44:36 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*check_in_env(char *arg, char **env)
 	return (value);
 }
 
-static int	replace_in_list(char **read, char *arg, char *value, int index)
+int	replace_in_list(char **read, char *arg, char *value, int index)
 {
 	char	*cpy;
 	char	*cpy2;
@@ -127,6 +127,8 @@ int	replace_argument(char **read, t_persistent *pers)
 			&& replace_status(read, i))
 			return (1);
 		else if (read[0][i] == '$' && find_and_replace(read, &i, env))
+			return (1);
+		else if (read[0][i] == '~' && replace_home(pers, read, i))
 			return (1);
 		if (read[0][i] != '\0' && read[0][i] != '$')
 			i++;
