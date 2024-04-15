@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/09 15:40:03 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	sort_alpharr(char **export, int len)
 	}
 }
 
-static char	**get_export(t_persistent *pers)
+static char	**get_export(t_pers *pers)
 {
 	char	**export;
 	int		len;
@@ -89,7 +89,7 @@ static int	ft_putexport_fd(char *str, int fd)
 	return (i);
 }
 
-static int	print_env(t_exec *exec, t_persistent *pers)
+static int	print_env(t_exec *exec, t_pers *pers)
 {
 	int		i;
 	int		fd;
@@ -115,7 +115,7 @@ static int	print_env(t_exec *exec, t_persistent *pers)
 	return (0);
 }
 
-int	exec_export(t_exec *exec, t_persistent *pers)
+int	exec_export(t_exec *exec, t_pers *pers)
 {
 	char	**new;
 	char	**argv;

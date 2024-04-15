@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:27:17 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 15:46:33 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:00:04 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*get_oldpwd(char **env)
 	return (old_pwd);
 }
 
-static int	update_env(t_exec *exec, t_persistent *pers)
+static int	update_env(t_exec *exec, t_pers *pers)
 {
 	char	**new;
 	char	*argv[3];
@@ -66,7 +66,7 @@ static int	update_env(t_exec *exec, t_persistent *pers)
 	return (free(argv[0]), free(argv[1]), 0);
 }
 
-int	exec_cd(t_exec *exec, t_persistent *pers)
+int	exec_cd(t_exec *exec, t_pers *pers)
 {
 	char	*path;
 
@@ -94,7 +94,7 @@ int	exec_cd(t_exec *exec, t_persistent *pers)
 	return (clear_one(exec, 0));
 }
 /*
-int	exec_cd(t_exec *exec, t_persistent *pers)
+int	exec_cd(t_exec *exec, t_pers *pers)
 {
 	int		malloc;
 	char	*path;

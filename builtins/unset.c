@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 12:44:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 15:22:01 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:00:17 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int	copy_unset(char ***new, char **env, char **argv)
 	return (0);
 }
 
-int	exec_unset(t_exec *exec, t_persistent *pers)
+int	exec_unset(t_exec *exec, t_pers *pers)
 {
 	char	**cpy;
 	char	**argv;

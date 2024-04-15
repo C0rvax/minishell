@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/09 17:16:30 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:57:18 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // if no error is encountered, only keeps the last infile for exec.
 // return (1) in case of error (malloc or fd error - errno already displayed)
 
-static int	check_infiles(t_cmd *cmd, int total_cmd)
+static int	check_infiles(t_cmd *cmd, int total_cmd, t_pers *pers)
 {
 	int	cmd_nb;
 	int	error;
@@ -28,10 +28,11 @@ static int	check_infiles(t_cmd *cmd, int total_cmd)
 	{
 		if (cmd->in)
 		{
-			error = check_in(cmd->in);
+			error = check_in(cmd->in, pers);
 			if (error == 1)
-				kill_child(cmd, 1);
-			else if (error == 0)
+				if (kill_child(cmd, 1, pers, total_cmd) != 0)
+					return (1);
+			if (error == 0)
 			{
 				cmd->in = get_valid_in(cmd->in);
 				if (!cmd->in)
@@ -51,7 +52,23 @@ static int	check_infiles(t_cmd *cmd, int total_cmd)
 // if all outfiles are OK, it only keeps the last one.
 // return 1 in case of mistake in fd opening (strerror already displayed)
 
-static int	check_outfiles(t_cmd *cmd, int total_cmd)
+static int	check_outfiles2(int error, t_cmd *cmd, int total_cmd, t_pers *pers)
+{
+	if (error == 1)
+		if (kill_child(cmd, 1, pers, total_cmd) != 0)
+			return (1);
+	if (error == 0)
+	{
+		cmd->out = get_valid_out(cmd->out);
+		if (!cmd->out)
+			return (1);
+		return (0);
+	}
+	else
+		return (1);
+}
+
+static int	check_outfiles(t_cmd *cmd, int total_cmd, t_pers *pers)
 {
 	int	cmd_nb;
 	int	error;
@@ -63,15 +80,7 @@ static int	check_outfiles(t_cmd *cmd, int total_cmd)
 		if (cmd->out && cmd->type != KILLED)
 		{
 			error = check_out(cmd->out);
-			if (error == 1)
-				kill_child(cmd, 1);
-			else if (error == 0)
-			{
-				cmd->out = get_valid_out(cmd->out);
-				if (!cmd->out)
-					return (1);
-			}
-			else
+			if (check_outfiles2(error, cmd, total_cmd, pers) == 1)
 				return (1);
 		}
 		cmd_nb++;
@@ -85,7 +94,7 @@ static int	check_outfiles(t_cmd *cmd, int total_cmd)
 // checks if is a builtin and mark them as such
 // returns 1 in case of malloc issue
 
-static int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
+static int	check_cmd(t_cmd *cmd, int total_cmd, char **env, t_pers *pers)
 {
 	int	cmd_nb;
 
@@ -93,12 +102,12 @@ static int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 	while (cmd_nb < total_cmd && cmd != NULL)
 	{
 		if (!cmd->argv || !cmd->argv[0])
-			kill_child(cmd, 0);
+			kill_child(cmd, 0, pers, 0);
 		if (cmd->type != KILLED)
 		{
 			if (check_builtins(cmd, total_cmd) == 0)
-				if (is_directory(cmd) == 0)
-					if (get_cmd_path(cmd, env) != 0)
+				if (is_directory(cmd, pers) == 0)
+					if (get_cmd_path(cmd, env, pers, total_cmd) != 0)
 						return (1);
 		}
 		cmd_nb++;
@@ -111,7 +120,7 @@ static int	check_cmd(t_cmd *cmd, int total_cmd, char **env)
 // checks all files in all cmd, then all outfiles in all cmd
 // and finally all options and cmd
 
-int	error_checks(t_cmd *cmd, char **mini_env)
+int	error_checks(t_cmd *cmd, char **mini_env, t_pers *pers)
 {
 	int	total_cmd;
 
@@ -120,15 +129,15 @@ int	error_checks(t_cmd *cmd, char **mini_env)
 	total_cmd = ft_cmd_lstsize(cmd);
 	if (total_cmd != 0)
 	{
-		if ((check_infiles(cmd, total_cmd) != 0) || (check_outfiles(cmd,
-					total_cmd) != 0) || (check_cmd(cmd, total_cmd,
-					mini_env) != 0))
+		if ((check_infiles(cmd, total_cmd, pers) != 0) || (check_outfiles(cmd,
+					total_cmd, pers) != 0) || (check_cmd(cmd, total_cmd,
+					mini_env, pers) != 0))
 		{
 			if (access("/tmp/.tmpheredoc", F_OK) == 0)
 				unlink("/tmp/.tmpheredoc");
 			ft_cmd_lstclear(&cmd);
-			if (g_status != 130 && g_status != 131)
-				g_status = 1;
+			if (pers->status_code != 130 && pers->status_code != 131)
+				pers->status_code = 1;
 			return (1);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 16:25:31 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:01:34 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	sig_parse(void)
 	sigaction(SIGINT, &parsig, NULL);
 }
 
-t_cmd	*parse_read(char *read, t_persistent *pers)
+t_cmd	*parse_read(char *read, t_pers *pers)
 {
 	t_parse	parse;
 

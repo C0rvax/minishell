@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/08 15:49:11 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:36:45 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_child
 
 // exec.c
 int			initialize_child(t_child *child, t_exec *exec);
-int			exec(t_cmd *cmd, t_persistent *pers);
+int			exec(t_cmd *cmd, t_pers *pers);
 
 // exec_multiple_cmd.c
 int			create_pipes(t_exec *exec, int total_cmd);
@@ -50,7 +50,7 @@ int			manage_fd_middlechild(t_exec *exec, t_child *child);
 int			manage_fd_lastchild(t_exec *exec, t_child *child);
 
 //  clean.c
-int			clean_end(t_exec *exec);
+int			clean_end(t_exec *exec, t_pers *pers);
 int			clean_exit_parent(t_exec *exec, int err);
 void		clean_exit_child(t_exec *exec, t_child *child, int err);
 int			clean_exit_fds(t_exec *exec, t_child *child);
@@ -58,6 +58,6 @@ void		close_all_fds(t_exec *exec);
 
 // utils_exec.c
 int			free_tab_int(int **fd, int nb);
-void		get_status(int status);
+void		get_status(int status, t_pers *pers);
 
 #endif

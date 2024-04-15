@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/04 15:08:33 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	redirect_out(t_exec *exec)
 	return (fd);
 }
 
-int	exec_builtin_parent(t_exec *exec, t_persistent *pers)
+int	exec_builtin_parent(t_exec *exec, t_pers *pers)
 {
 	int			i;
 
