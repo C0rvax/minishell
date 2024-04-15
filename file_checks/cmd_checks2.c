@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 12:51:57 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:23:13 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
 		return (ft_freetab(paths), NULL);
 	if (comnd[0] == '\0')
 		return (not_found(paths, comnd, cmd), NULL);
-	while (paths && *paths[++i])
+	while (paths && paths[++i])
 	{
 		valid = is_valid_path(paths[i], &ptr, comnd);
 		if (valid == 1)
@@ -83,8 +83,9 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd)
 	}
 	if (ft_strcmp(comnd, "a.out") == 0 || ft_strcmp(comnd, "minishell") == 0)
 		return (not_found(paths, comnd, cmd), NULL);
-	if (check_executables(paths, comnd, ptr) != NULL)
-		return (ptr);
+	ptr = check_executables(paths, comnd, ptr);
+	if (ptr != NULL)
+			return (ptr);
 	return (not_found(paths, comnd, cmd), NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:37:58 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 12:51:30 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 14:20:46 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_freetab(char **tab)
 {
 	int	i;
 
-	ft_putstr_fd(*tab, 2);
 	i = 0;
 	if (tab)
 	{
