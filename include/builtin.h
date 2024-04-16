@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 12:48:37 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:00:08 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		redirect_out(t_exec *exec);
 char	**ft_joinarr(char **argv, char **env);
 char	**ft_joinexp(char **argv, char **env);
 int		arg_isok(char *str);
+int		print_export(t_exec *exec, t_persistent *pers);
 
 /*------- EXEC -------*/
 void	exec_export_c(t_exec *exec, t_child *child);
