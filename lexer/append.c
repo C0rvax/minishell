@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:11:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 15:51:21 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:34:14 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int	append_new_read(char **read, t_pers *pers)
 	{
 		if (append_new(read, pers))
 			return (1);
-		len = ft_strlen(read[0]);
+		// len = ft_strlen(read[0]);
+		// ft_printf("lem=%d\n", len);
 	}
 	return (0);
 }

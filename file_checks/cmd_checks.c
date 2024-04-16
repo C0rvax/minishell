@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/16 15:40:31 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:09:34 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ static char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
 // then, if path_cmd was not found as an executable in the absence of PATH,
 // send to check_paths
 // if path_cmd still null while the child is not killed - this is an issue
+
 int	get_cmd_path(t_cmd *cmd, char **env, t_pers *pers, int total_cmd)
 {
 	char	*ptr;

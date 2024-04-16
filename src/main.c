@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 18:44:30 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:37:46 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	main_loop(t_pers *pers)
 	if (read[0] != '\0')
 	{
 		cmd = parse_read(read, pers);
-		if (!cmd)
+		if (!cmd && pers->status_code != 130)
 			pers->status_code = 1;
 		if (cmd && !error_checks(cmd, pers->mini_env, pers))
 			pers->status_code = exec(cmd, pers);

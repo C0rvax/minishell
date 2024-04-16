@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/16 16:12:04 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:42:34 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,9 @@ static int	check_outfiles(t_cmd *cmd, int total_cmd, t_pers *pers)
 	return (0);
 }
 
-// checks through cmd list the cmd path.
-// if no argv[0], kills the child.
+// checks through cmd list the cmd path. if no argv[0], kills the child.
 // checks if is a builtin and mark them as such
-// checks that the command is not a directory,
-// returns 1 only if is a directory and only child
+// checks that the command is not a directory, returns 1 if it is and only child
 // Then checks the path - get_cmd_path will return 1 or 2 if there is an issue
 // or if no path is found and there was only one child -> return 1 to checker
 // otherwise, whether there is a path or not, continues checking the commands
@@ -103,7 +101,7 @@ static int	check_outfiles(t_cmd *cmd, int total_cmd, t_pers *pers)
 // returns 0 si builtin, si directory ds plusieurs enfants
 // ou si path/pas path ds plusieurs enfants
 
-//  returns 1 only if is a directory and only child + issue
+// returns 1 only if is a directory and only child + issue
 // or no path is found and only one child
 
 static int	check_cmd(t_cmd *cmd, int total_cmd, char **env, t_pers *pers)
@@ -135,9 +133,9 @@ static int	check_cmd(t_cmd *cmd, int total_cmd, char **env, t_pers *pers)
 	return (0);
 }
 
-// check errors in files and cmd given
+// check errors in files and cmd
 // checks all files in all cmd, then all outfiles in all cmd
-// and finally all options and cmd
+// and finally all cmd
 
 int	error_checks(t_cmd *cmd, char **mini_env, t_pers *pers)
 {
@@ -152,7 +150,6 @@ int	error_checks(t_cmd *cmd, char **mini_env, t_pers *pers)
 					total_cmd, pers) != 0) || (check_cmd(cmd, total_cmd,
 					mini_env, pers) != 0))
 		{
-			ft_printf("ICI\n");
 			if (access("/tmp/.tmpheredoc", F_OK) == 0)
 				unlink("/tmp/.tmpheredoc");
 			ft_cmd_lstclear(&cmd);
@@ -163,12 +160,3 @@ int	error_checks(t_cmd *cmd, char **mini_env, t_pers *pers)
 	}
 	return (0);
 }
-
-		// if (check_infiles(cmd, total_cmd, pers) != 0)
-		// // return 1 si pb, ou si 1 seule commande killed
-		// // fin du check et pas dexec
-		// if (check_outfiles(cmd, total_cmd, pers) != 0)  // return 1 si pareil
-		// // fin du check et pas dexec
-		// if (check_cmd(cmd, total_cmd, mini_env, pers) != 0)
-		// //  returns 1 only if is a directory and only child + issue
-		// // or no path is found and only one child
