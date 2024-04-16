@@ -36,7 +36,7 @@ static void	sort_alpharr(char **export, int len)
 	}
 }
 
-static char	**get_export(t_persistent *pers)
+static char	**get_export(t_pers *pers)
 {
 	char	**export;
 	int		len;
@@ -89,7 +89,7 @@ static int	ft_putexport_fd(char *str, int fd)
 	return (i);
 }
 
-int	print_export(t_exec *exec, t_persistent *pers)
+int	print_export(t_exec *exec, t_pers *pers)
 {
 	int		i;
 	int		fd;

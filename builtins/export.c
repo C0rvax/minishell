@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 14:33:53 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:48:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static int	exp_exp(t_exec *exec, t_persistent *pers)
+static int	exp_exp(t_exec *exec, t_pers *pers)
 {
 	char	**new;
 	char	**argv;
@@ -28,7 +28,7 @@ static int	exp_exp(t_exec *exec, t_persistent *pers)
 	return (0);
 }
 
-static int	exp_env(t_exec *exec, t_persistent *pers)
+static int	exp_env(t_exec *exec, t_pers *pers)
 {
 	char	**new;
 	char	**argv;
@@ -58,7 +58,7 @@ static int	check_valid(char **argv)
 	return (0);
 }
 
-int	exec_export(t_exec *exec, t_persistent *pers)
+int	exec_export(t_exec *exec, t_pers *pers)
 {
 	char	**argv;
 	int		status_code;
