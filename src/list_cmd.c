@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 14:13:14 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/26 15:29:55 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:42:53 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,5 @@ void	ft_cmd_lstadd_back(t_cmd **list, t_cmd *new)
 	{
 		buf = ft_cmd_lstlast(*(list));
 		buf->next = new;
-	}
-}
-
-void	print_cmd_lst(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (cmd)
-	{
-		while (cmd)
-		{
-			ft_putar(cmd->argv);
-			print_redir_lst(cmd->in);
-			print_redir_lst(cmd->out);
-			cmd = cmd->next;
-			i++;
-		}
 	}
 }

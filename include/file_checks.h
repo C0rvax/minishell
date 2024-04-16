@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:11:31 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 16:39:45 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:51:33 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			get_here_doc(char *path, t_pers *pers);
 
 // cmd_checks.c
 int			check_builtins(t_cmd *cmd, int total_cmd);
-int			is_directory(t_cmd *cmd, t_pers *pers);
+int			is_directory(t_cmd *cmd, t_pers *pers, int total_cmd);
 int			get_cmd_path(t_cmd *cmd, char **env, t_pers *pers, int cmd_nb);
 
 // cmd_checks2.c

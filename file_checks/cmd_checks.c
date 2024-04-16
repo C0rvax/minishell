@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 16:14:37 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:40:31 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_builtins(t_cmd *cmd, int total_cmd)
 	return (0);
 }
 
-int	is_directory(t_cmd *cmd, t_pers *pers)
+int	is_directory(t_cmd *cmd, t_pers *pers, int total_cmd)
 {
 	int	fd;
 
@@ -47,8 +47,9 @@ int	is_directory(t_cmd *cmd, t_pers *pers)
 	{
 		close(fd);
 		print_str_fd("minishell: ", cmd->argv[0], ": Is a directory\n", 2);
-		kill_child(cmd, 126, pers, 0);
-		return (1);
+		if (kill_child(cmd, 126, pers, total_cmd) == 0)
+			return (1);
+		return (2);
 	}
 	return (0);
 }
@@ -60,8 +61,6 @@ static char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	if (!command)
-		return (NULL);
 	while (ptr == NULL && env[i])
 	{
 		ptr = ft_strnstr(env[i], "PATH=", 5);
@@ -80,7 +79,19 @@ static char	*get_env(char **env, char *ptr, char *command, t_cmd *cmd)
 	}
 	return (ptr);
 }
+// first get the env variable PATH. 
+// If it is not found, it tests whether the command is executable by itself
+// (either because absolute path, or because is executable).
+// if not, kill the child - either it was the only child and therefore returns
+// 1, or it is not the only one and return 0, so that the program continues
+// to check whether other commands may be executed
 
+// update status_code ????
+
+// creates an array from the paths - in case of malloc issue, returns 2
+// then, if path_cmd was not found as an executable in the absence of PATH,
+// send to check_paths
+// if path_cmd still null while the child is not killed - this is an issue
 int	get_cmd_path(t_cmd *cmd, char **env, t_pers *pers, int total_cmd)
 {
 	char	*ptr;
@@ -98,11 +109,14 @@ int	get_cmd_path(t_cmd *cmd, char **env, t_pers *pers, int total_cmd)
 		}
 	}
 	paths = get_all_paths(ptr);
+	if (paths == NULL)
+		return (2);
 	if (cmd->path_cmd == NULL)
 	{
 		cmd->path_cmd = check_paths(paths, cmd->argv[0], cmd, pers);
-		if (cmd->path_cmd == NULL && cmd->type != KILLED)
-			return (1);
+		if (cmd->path_cmd == NULL)
+			if (cmd->type != KILLED || total_cmd == 1)
+				return (2);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_read.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:13:19 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/14 16:07:11 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:43:31 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,5 @@ void	ft_read_listadd_back(t_read **list, t_read *new)
 	{
 		buf = ft_read_listlast(*(list));
 		buf->next = new;
-	}
-}
-
-void	print_read_lst(t_read *list)
-{
-	int			i;
-	t_read		*buf;
-
-	i = 0;
-	buf = list;
-	if (buf)
-	{
-		while (buf)
-		{
-			ft_printf("read[%d] = %s\n", i, buf->read);
-			buf = buf->next;
-			i++;
-		}
 	}
 }
