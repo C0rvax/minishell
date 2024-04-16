@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:33:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:03:32 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:21:37 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	replace_home(t_pers *pers, char **read, int index)
 {
 	char	*arg;
 	char	*value;
+	char	c;
 
-	if (read[0][index + 1] == ' ' || read[0][index + 1] == '/')
+	c = read[0][index + 1];
+	if (c == '\0' || c == ' ' || c == '/')
 	{
 		arg = "";
 		value = ft_getenv(pers->mini_env, "HOME");

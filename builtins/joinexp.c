@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   joinexp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 22:43:03 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 14:37:21 by aduvilla         ###   ########.fr       */
+/*   Created: 2024/04/16 12:27:51 by aduvilla          #+#    #+#             */
+/*   Updated: 2024/04/16 12:40:30 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-int	str_isdigit(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return (1);
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 static int	is_inenv2(char *str, char **env)
 {
@@ -68,7 +50,7 @@ static int	dup_arr2(char ***new, char **env, char **argv)
 	return (i);
 }
 
-static int	ft_lenarr2(char **argv, char **env)
+static int	lenarr_exp(char **argv, char **env)
 {
 	int	i;
 	int	res;
@@ -99,7 +81,7 @@ char	**ft_joinexp(char **argv, char **env)
 	int		j;
 	char	**new;
 
-	new = malloc(sizeof(char *) * (ft_lenarr2(argv, env) + 1));
+	new = malloc(sizeof(char *) * (lenarr_exp(argv, env) + 1));
 	if (!new)
 		return (NULL);
 	i = dup_arr2(&new, env, argv);
