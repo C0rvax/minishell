@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:05:01 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:43:20 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int			msg_error(char *s1, char *s2, int status);
 void		parse_env_array(t_pers *pers, char **env);
 
 /*------- LIST CMD -------*/
-void		print_cmd_lst(t_cmd *cmd);
 void		ft_cmd_lstadd_back(t_cmd **list, t_cmd *new);
 t_cmd		*ft_cmd_lstlast(t_cmd *list);
 t_cmd		*ft_cmd_lstnew(char **argv);
@@ -94,14 +93,12 @@ void		ft_read_listclear(t_read **list);
 t_read		*ft_read_listnew(char *str);
 t_read		*ft_read_listlast(t_read *list);
 void		ft_read_listadd_back(t_read **list, t_read *new);
-void		print_read_lst(t_read *list);
 
 /*------- LIST REIDRECT -------*/
 void		ft_redir_listclear(t_redirect **list);
 t_redirect	*ft_redir_listnew(char *str, t_mode mode);
 t_redirect	*ft_redir_listlast(t_redirect *list);
 void		ft_redir_listadd_back(t_redirect **list, t_redirect *new);
-void		print_redir_lst(t_redirect *list);
 
 /*------- SIGNALS -------*/
 void		signals(int sig);

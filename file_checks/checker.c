@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 16:57:18 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:41:55 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ static int	check_infiles(t_cmd *cmd, int total_cmd, t_pers *pers)
 		if (cmd->in)
 		{
 			error = check_in(cmd->in, pers);
-			if (error == 1)
-				if (kill_child(cmd, 1, pers, total_cmd) != 0)
-					return (1);
 			if (error == 0)
 			{
 				cmd->in = get_valid_in(cmd->in);
 				if (!cmd->in)
 					return (1);
 			}
-			else
+			else if (error == 2)
 				return (1);
+			else if (error == 1)
+				if (kill_child(cmd, 1, pers, total_cmd) != 0)
+					return (1);
 		}
 		cmd_nb++;
 		cmd = cmd->next;
@@ -54,9 +54,6 @@ static int	check_infiles(t_cmd *cmd, int total_cmd, t_pers *pers)
 
 static int	check_outfiles2(int error, t_cmd *cmd, int total_cmd, t_pers *pers)
 {
-	if (error == 1)
-		if (kill_child(cmd, 1, pers, total_cmd) != 0)
-			return (1);
 	if (error == 0)
 	{
 		cmd->out = get_valid_out(cmd->out);
@@ -64,8 +61,12 @@ static int	check_outfiles2(int error, t_cmd *cmd, int total_cmd, t_pers *pers)
 			return (1);
 		return (0);
 	}
-	else
+	else if (error == 2)
 		return (1);
+	else if (error == 1)
+		if (kill_child(cmd, 1, pers, total_cmd) != 0)
+			return (1);
+	return (0);
 }
 
 static int	check_outfiles(t_cmd *cmd, int total_cmd, t_pers *pers)
@@ -92,23 +93,41 @@ static int	check_outfiles(t_cmd *cmd, int total_cmd, t_pers *pers)
 // checks through cmd list the cmd path.
 // if no argv[0], kills the child.
 // checks if is a builtin and mark them as such
-// returns 1 in case of malloc issue
+// checks that the command is not a directory,
+// returns 1 only if is a directory and only child
+// Then checks the path - get_cmd_path will return 1 or 2 if there is an issue
+// or if no path is found and there was only one child -> return 1 to checker
+// otherwise, whether there is a path or not, continues checking the commands
+// status was updated through not_found
+
+// returns 0 si builtin, si directory ds plusieurs enfants
+// ou si path/pas path ds plusieurs enfants
+
+//  returns 1 only if is a directory and only child + issue
+// or no path is found and only one child
 
 static int	check_cmd(t_cmd *cmd, int total_cmd, char **env, t_pers *pers)
 {
 	int	cmd_nb;
+	int	dir;
 
 	cmd_nb = 0;
+	dir = 0;
 	while (cmd_nb < total_cmd && cmd != NULL)
 	{
 		if (!cmd->argv || !cmd->argv[0])
-			kill_child(cmd, 0, pers, 0);
+			kill_child(cmd, 0, pers, total_cmd);
 		if (cmd->type != KILLED)
 		{
 			if (check_builtins(cmd, total_cmd) == 0)
-				if (is_directory(cmd, pers) == 0)
+			{
+				dir = is_directory(cmd, pers, total_cmd);
+				if (dir == 1)
+					return (1);
+				if (dir == 0)
 					if (get_cmd_path(cmd, env, pers, total_cmd) != 0)
 						return (1);
+			}
 		}
 		cmd_nb++;
 		cmd = cmd->next;
@@ -133,6 +152,7 @@ int	error_checks(t_cmd *cmd, char **mini_env, t_pers *pers)
 					total_cmd, pers) != 0) || (check_cmd(cmd, total_cmd,
 					mini_env, pers) != 0))
 		{
+			ft_printf("ICI\n");
 			if (access("/tmp/.tmpheredoc", F_OK) == 0)
 				unlink("/tmp/.tmpheredoc");
 			ft_cmd_lstclear(&cmd);
@@ -143,3 +163,12 @@ int	error_checks(t_cmd *cmd, char **mini_env, t_pers *pers)
 	}
 	return (0);
 }
+
+		// if (check_infiles(cmd, total_cmd, pers) != 0)
+		// // return 1 si pb, ou si 1 seule commande killed
+		// // fin du check et pas dexec
+		// if (check_outfiles(cmd, total_cmd, pers) != 0)  // return 1 si pareil
+		// // fin du check et pas dexec
+		// if (check_cmd(cmd, total_cmd, mini_env, pers) != 0)
+		// //  returns 1 only if is a directory and only child + issue
+		// // or no path is found and only one child

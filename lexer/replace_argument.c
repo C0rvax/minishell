@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:01:40 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 17:10:54 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ static int	replace_status(char **read, int index, t_pers *pers)
 	char		*value;
 
 	arg = "?";
+	if (g_status != 0)
+		pers->status_code = g_status;
 	value = ft_itoa(pers->status_code);
 	if (!value)
 		return (msg_lex(MALLOC, 0, ""), 1);

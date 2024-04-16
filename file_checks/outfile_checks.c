@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 17:37:33 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/09 17:17:20 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:01:27 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	check_out(t_redirect *out)
 			return (1);
 		}
 		if (create_outfile(out) != 0)
-			return (3);
+			return (2);
 		out = out->next;
 	}
 	return (0);

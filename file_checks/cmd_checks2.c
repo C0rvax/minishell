@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 15:42:06 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:27:58 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_valid_path(char *path, char **ptr, char *command)
 static void	not_found(char **paths, char *comnd, t_cmd *cmd, t_pers *pers)
 {
 	print_str_fd(comnd, " : command not found", "\n", 2);
-	kill_child(cmd, 127, pers, 0); // if ?? 
+	kill_child(cmd, 127, pers, 0);
 	ft_freetab(paths);
 }
 
@@ -59,6 +59,15 @@ static char	*check_executables(char **paths, char *comnd, char *ptr)
 }
 
 // checks all possible paths to keep only the valid path
+// if comnd[0] is \0 (if "" for instance) - returns NULL after
+// printing a not found message and killing the child
+// them for each path, it tests its validity
+// 1 is for an issue, 0 if path is valid or 2 if not valid
+// returns NULL in case of issue and ptr if path is found
+// continunes only if path not found yes - checks whether the command
+// is a.out or minishell - they should not execute as is but with ./ before
+// then it checks whether the command is executable per itself
+// returns NULL if not after killing the child.
 
 char	*check_paths(char **paths, char *comnd, t_cmd *cmd, t_pers *pers)
 {
@@ -69,8 +78,6 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd, t_pers *pers)
 	i = -1;
 	valid = 1;
 	ptr = NULL;
-	if (!comnd)
-		return (ft_freetab(paths), NULL);
 	if (comnd[0] == '\0')
 		return (not_found(paths, comnd, cmd, pers), NULL);
 	while (paths && paths[++i])
@@ -84,7 +91,7 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd, t_pers *pers)
 	if (ft_strcmp(comnd, "a.out") == 0 || ft_strcmp(comnd, "minishell") == 0)
 		return (not_found(paths, comnd, cmd, pers), NULL);
 	ptr = check_executables(paths, comnd, ptr);
-	if (ptr != NULL)
+	if (ptr)
 		return (ptr);
 	return (not_found(paths, comnd, cmd, pers), NULL);
 }

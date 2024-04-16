@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:16:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/20 18:07:41 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:38:24 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,5 @@ void	ft_redir_listadd_back(t_redirect **list, t_redirect *new)
 	{
 		buf = ft_redir_listlast(*(list));
 		buf->next = new;
-	}
-}
-
-void	print_redir_lst(t_redirect *list)
-{
-	int			i;
-	t_redirect	*buf;
-
-	i = 0;
-	buf = list;
-	if (buf)
-	{
-		while (buf)
-		{
-			ft_printf("path[%d] = %s\n", i, buf->path);
-			if (buf->mode == SIMPLE)
-				ft_printf("mode : simple\n");
-			if (buf->mode == DOUBLE)
-				ft_printf("mode : double\n");
-			buf = buf->next;
-			i++;
-		}
 	}
 }

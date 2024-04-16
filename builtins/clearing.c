@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:43:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/15 18:50:24 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	msg_built(t_built msg, char *str, int code)
 int	clear_built(t_exec *exec, t_child *child, int code)
 {
 	(void)child;
+	close_all_fds(exec);
 	ft_cmd_lstclear(&exec->cmd);
 	exec->cmd = NULL;
-	close_all_fds(exec);
 	free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid)
 		free(exec->pid);
@@ -87,9 +87,9 @@ int	clear_built(t_exec *exec, t_child *child, int code)
 
 int	clear_one(t_exec *exec, int code)
 {
+	close_all_fds(exec);
 	ft_cmd_lstclear(&exec->cmd);
 	exec->cmd = NULL;
-	close_all_fds(exec);
 	free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid)
 		free(exec->pid);
@@ -100,9 +100,9 @@ int	clear_one(t_exec *exec, int code)
 int	final_exit(t_exec *exec, t_pers *pers, int code)
 {
 	rl_clear_history();
+	close_all_fds(exec);
 	ft_cmd_lstclear(&exec->cmd);
 	exec->cmd = NULL;
-	close_all_fds(exec);
 	free_tab_int(exec->fd, exec->total_cmd - 1);
 	if (exec->pid)
 		free(exec->pid);
