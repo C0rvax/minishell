@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:01:17 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:04:14 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:11:43 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,5 @@ int	unset_exp(t_exec *exec, t_pers *pers)
 		ft_freetab(cpy);
 		pers->export = new;
 	}
-	return (clear_one(exec, 0));
+	return (0);
 }

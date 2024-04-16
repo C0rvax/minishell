@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 15:48:29 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:52:44 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	exec_export(t_exec *exec, t_pers *pers)
 		if (print_export(exec, pers))
 			return (1);
 	}
-	else	
+	else
 	{
 		if (check_valid(argv))
 			status_code = 1;
