@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:10:54 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:38:59 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,60 +137,3 @@ int	replace_argument(char **read, t_pers *pers)
 	}
 	return (0);
 }
-/*
-int	replace_argument(t_lst **lexer, char **env)
-{
-	t_lst	*buf;
-	int		i;
-
-	buf = *lexer;
-	while (buf)
-	{
-		i = 0;
-		if (buf->token == DIN && buf->next)
-			buf = buf->next->next;
-		while (buf && buf->str[i])
-		{
-			pass_simple_quote(buf->str, &i);
-			if (buf->str[i] == '$' && buf->str[i + 1] == '$'
-				&& replace_dollar(buf, i, env))
-				return (1);
-			if (buf->str[i] == '$' && find_and_replace(buf, i, env))
-				return (1);
-			if (buf->str[i] != '\0')
-				i++;
-		}
-		if (buf)
-			buf = buf->next;
-	}
-	return (0);
-}
-
-int	replace_argument(t_lst **lexer, t_pers *pers)
-{
-	t_lst	*buf;
-	int		i;
-
-	buf = *lexer;
-	while (buf)
-	{
-		i = 0;
-		if (buf->token == DIN && buf->next)
-			buf = buf->next->next;
-		while (buf && buf->str[i])
-		{
-			pass_simple_quote(buf->str, &i);
-			if (buf->str[i] == '$' && buf->str[i + 1] == '?'
-				&& replace_status(buf, i))
-				return (1);
-			if (buf->str[i] == '$' && find_and_replace(buf, i, pers->mini_env))
-				return (1);
-			if (buf->str[i] != '\0')
-				i++;
-		}
-		if (buf)
-			buf = buf->next;
-	}
-	return (0);
-}
-*/

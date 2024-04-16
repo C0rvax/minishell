@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:08:24 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/28 15:21:40 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:38:07 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,29 +113,3 @@ char	*get_prompt(char **env)
 		prompt = mix_all(user, session, path);
 	return (free(user), free(path), free(session), prompt);
 }
-/*
-static char	*get_path(char **env)
-{
-	char	*path_raw;
-	char	*path;
-	char	*pwd;
-	char	*home;
-	size_t	i;
-
-	pwd = ft_getenv(env, "PWD");
-	home = ft_getenv(env, "HOME");
-	if (!pwd || !home)
-		return (NULL);
-	path_raw = ft_substr(pwd, ft_strlen(home),
-			ft_strlen(pwd) - ft_strlen(home));
-	path = malloc(sizeof(char) * (ft_strlen(path_raw) + 2));
-	if (!path)
-		return (free(pwd), free(home), free(path_raw), NULL);
-	i = 0;
-	path[0] = '~';
-	while (++i < ft_strlen(path_raw))
-		path[i] = path_raw[i - 1];
-	path[i + 1] = '\0';
-	return (free(pwd), free(home), free(path_raw), path);
-}
-*/

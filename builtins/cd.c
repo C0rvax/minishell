@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 20:27:17 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:00:04 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:40:32 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,58 +93,3 @@ int	exec_cd(t_exec *exec, t_pers *pers)
 		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
 	return (clear_one(exec, 0));
 }
-/*
-int	exec_cd(t_exec *exec, t_pers *pers)
-{
-	int		malloc;
-	char	*path;
-
-	malloc = 0;
-	if (exec->cmd->argv[1] && exec->cmd->argv[2])
-		return (clear_one(exec, msg_built(ARGS, "cd", 1)));
-	path = exec->cmd->argv[1];
-	if (!path)
-	{
-		path = ft_getenv(exec->mini_env, "HOME");
-		malloc = 1;
-	}
-	if (!path)
-		return (clear_one(exec, msg_built(BMALLOC, strerror(errno), 1)));
-	if (!path[0])
-		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
-	if (test_path(path, malloc))
-		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
-	chdir(path);
-	if (malloc)
-		free(path);
-	if (update_env(exec, pers))
-		return (clear_one(exec, msg_built(CD, strerror(errno), 1)));
-	return (clear_one(exec, 0));
-}
-
-void	exec_cd_c(t_exec *exec, t_child *child)
-{
-	int		malloc;
-	char	*built;
-
-	malloc = 0;
-	if (child->current_cmd->argv[1] && child->current_cmd->argv[2])
-		clear_built(exec, child, msg_built(ARGS, "cd", 1));
-	built = child->current_cmd->argv[1];
-	if (!built)
-	{
-		built = ft_getenv(exec->mini_env, "HOME");
-		malloc = 1;
-	}
-	if (!built)
-		clear_built(exec, child, msg_built(BMALLOC, strerror(errno), 1));
-	if (!built[0])
-		clear_built(exec, child, msg_built(CD, strerror(errno), 1));
-	if (test_path(built, malloc))
-		clear_built(exec, child, msg_built(CD, strerror(errno), 1));
-	chdir(built);
-	if (malloc)
-		free(built);
-	clear_built(exec, child, 0);
-}
-*/

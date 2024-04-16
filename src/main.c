@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 18:44:30 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:37:58 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,3 @@ int	main(int ac, char **av, char **env)
 	rl_clear_history();
 	return (persistent.status_code);
 }
-/*
-void	ft_make_hist(void)
-{
-	char	*s;
-
-	s = "cat -ens <<STOP <infile | grep <loremipsum >outfile la | cat >outfile";
-	add_history("chevron à la fin | fin<");
-	add_history("chevron avant pipe < | fin");
-	add_history("3 chevrons <<<infile | fin");
-	add_history("3 chevrons >>>outfile | fin");
-	add_history("pipe à la fin |");
-	add_history("2 pipes à la suite | | fin");
-	add_history("guillemet ' pas fermé");
-	add_history("<<STOP <infile | grep <loremipsum >outfile la | cat >outfile");
-	add_history(s);
-}
-*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 13:07:55 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/08 15:48:56 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:38:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,81 +111,3 @@ int	create_cmd_list(t_parse *parse)
 	}
 	return (0);
 }
-/*
-char	*find_last_token(t_lst *lexer, t_token token)
-{
-	int		i;
-	int		j;
-	char	*path;
-	t_lst	*buf;
-
-	i = 0;
-	j = 0;
-	buf = lexer;
-	while (buf && buf->token != PIPE)
-	{
-		if (buf->token == token)
-			j = i;
-		i++;
-		buf = buf->next;
-	}
-	i = -1;
-	buf = lexer;
-	while (++i <= j && buf->next)
-		buf = buf->next;
-	path = ft_strdup(buf->str);
-	if (!path)
-		return (ft_printf("Error: mallocpath!\n"), NULL);
-	return (path);
-}
-
-void	get_redirect_stat(t_lst *lexer, t_cmd *cmd)
-{
-	t_lst	*buf;
-
-	buf = lexer;
-	cmd->in = NONE;
-	cmd->out = NONE;
-	while (buf && buf->token != PIPE)
-	{
-		if (buf->token == IN)
-			cmd->in = SIMPLE;
-		if (buf->token == OUT)
-			cmd->out = SIMPLE;
-		if (buf->token == DIN)
-			cmd->in = DOUBLE;
-		if (buf->token == DOUT)
-			cmd->out = DOUBLE;
-		buf = buf->next;
-	}
-}
-
-int	get_infile_outfile(t_cmd *cmd, t_lst *lexer)
-{
-	if (cmd->in == SIMPLE)
-	{
-		cmd->infile = find_last_token(lexer, IN);
-		if (!cmd->infile)
-			return (1);
-	}
-	if (cmd->in == DOUBLE)
-	{
-		cmd->infile = find_last_token(lexer, DIN);
-		if (!cmd->infile)
-			return (1);
-	}
-	if (cmd->out == SIMPLE)
-	{
-		cmd->outfile = find_last_token(lexer, OUT);
-		if (!cmd->outfile)
-			return (1);
-	}
-	if (cmd->out == DOUBLE)
-	{
-		cmd->outfile = find_last_token(lexer, DOUT);
-		if (!cmd->outfile)
-			return (1);
-	}
-	return (0);
-}
-*/
