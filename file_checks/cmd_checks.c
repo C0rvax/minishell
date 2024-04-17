@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_checks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/16 17:09:34 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:49:04 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_builtins(t_cmd *cmd, int total_cmd)
 
 	i = -1;
 	i = is_a_builtin(cmd);
-	if (i != -1)
+	if (i != -1 && i != 7)
 	{
 		if (total_cmd == 1)
 		{
