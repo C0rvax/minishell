@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 19:53:41 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 17:38:59 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:52:42 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,10 @@ static int	replace_status(char **read, int index, t_pers *pers)
 
 	arg = "?";
 	if (g_status != 0)
+	{
 		pers->status_code = g_status;
+		g_status = 0;
+	}
 	value = ft_itoa(pers->status_code);
 	if (!value)
 		return (msg_lex(MALLOC, 0, ""), 1);

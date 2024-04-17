@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:38:44 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 14:48:18 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:45:25 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_redirect	*get_valid_in(t_redirect *in)
 	valid_in = ft_in_lstlast(in);
 	if (valid_in->mode == DOUBLE)
 	{
-		free(in->path);
+		free(valid_in->path);
 		valid_in->path = ft_strdup("/tmp/.tmpheredoc");
 	}
 	if (valid_in->mode == SIMPLE)

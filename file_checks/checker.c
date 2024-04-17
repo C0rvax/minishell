@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:20:18 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/16 17:42:34 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:33:52 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ int	error_checks(t_cmd *cmd, char **mini_env, t_pers *pers)
 {
 	int	total_cmd;
 
+	if (g_status == 130)
+		g_status = 0;
 	if (!cmd)
 		return (1);
 	total_cmd = ft_cmd_lstsize(cmd);
@@ -153,7 +155,7 @@ int	error_checks(t_cmd *cmd, char **mini_env, t_pers *pers)
 			if (access("/tmp/.tmpheredoc", F_OK) == 0)
 				unlink("/tmp/.tmpheredoc");
 			ft_cmd_lstclear(&cmd);
-			if (pers->status_code != 130 && pers->status_code != 131)
+			if (pers->status_code == 0)
 				pers->status_code = 1;
 			return (1);
 		}

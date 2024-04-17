@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 18:31:39 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:21:35 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_fork(t_exec *exec)
 	while (exec->cmdno < exec->total_cmd)
 	{
 		exec->pid[exec->cmdno] = fork();
-		signals(2);
+		signals(4);
 		if (exec->pid[exec->cmdno] < 0)
 			return (close_all_fds(exec), clean_exit_parent(exec, 1), 2);
 		if (exec->pid[exec->cmdno] == 0)
