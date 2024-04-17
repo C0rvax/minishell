@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:32:11 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 14:26:04 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:38:44 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void	not_found(char **paths, char *comnd, t_cmd *cmd, t_pers *pers)
 {
 	print_str_fd(comnd, " : command not found", "\n", 2);
 	kill_child(cmd, 127, pers, 0);
-	ft_freetab(paths);
+	if (paths)
+		ft_freetab(paths);
 }
 
 static char	*check_executables(char **paths, char *comnd, char *ptr)
@@ -78,6 +79,8 @@ char	*check_paths(char **paths, char *comnd, t_cmd *cmd, t_pers *pers)
 	i = -1;
 	valid = 1;
 	ptr = NULL;
+	if (paths == NULL)
+		return (not_found(paths, comnd, cmd, pers), NULL);
 	if (comnd[0] == '\0')
 		return (not_found(paths, comnd, cmd, pers), NULL);
 	while (paths && paths[++i])
