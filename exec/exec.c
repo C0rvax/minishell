@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 15:17:26 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:44:16 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	exec(t_cmd *cmd, t_pers *pers)
 	{
 		if (create_pipes(&exec, exec.total_cmd) != 0)
 			return (1);
-		if (ft_fork(&exec) != 0)
+		if (ft_fork(&exec, pers) != 0)
 			return (1);
 		pers->status_code = clean_end(&exec, pers);
 	}

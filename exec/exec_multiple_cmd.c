@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 15:21:35 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:44:40 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "builtin.h"
 #include "file_checks.h"
 
-static int	redirect(t_exec *exec, t_child *child)
+static int	redirect(t_exec *exec, t_child *child, t_pers *pers)
 {
 	if (exec->cmdno == 0)
 	{
@@ -33,14 +33,14 @@ static int	redirect(t_exec *exec, t_child *child)
 	if (exec->cmdno == exec->total_cmd - 1)
 		if (manage_fd_lastchild(exec, child) != 0)
 			return (1);
-	exec_builtin(exec, child);
+	exec_builtin(exec, child, pers);
 	if (execve(child->current_cmd->path_cmd, child->current_cmd->argv,
 			exec->mini_env) == -1)
 		return (1);
 	return (0);
 }
 
-int	ft_fork(t_exec *exec)
+int	ft_fork(t_exec *exec, t_pers *pers)
 {
 	t_child	child;
 
@@ -53,7 +53,7 @@ int	ft_fork(t_exec *exec)
 		if (exec->pid[exec->cmdno] == 0)
 		{
 			initialize_child(&child, exec);
-			if ((child.current_cmd->type == KILLED) || redirect(exec, &child))
+			if ((child.current_cmd->type == KILLED) || redirect(exec, &child, pers))
 			{
 				close_all_fds(exec);
 				clean_exit_child(exec, &child, 0);
