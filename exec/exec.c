@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 16:44:16 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:08:24 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,10 @@ int	exec(t_cmd *cmd, t_pers *pers)
 		else if (exec.cmd->type == BUILTPAR)
 			return (exec_builtin_parent(&exec, pers));
 		else
+		{
+			exec_builtin_parent(&exec, pers);
 			return (exec_uno(&exec, pers));
+		}
 	}
 	else if (exec.total_cmd > 1)
 	{

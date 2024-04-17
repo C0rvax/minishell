@@ -6,13 +6,13 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 16:51:18 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:30:18 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static int	update_lvl(t_pers *pers)
+static int	update_lvl(t_exec *exec, t_pers *pers)
 {
 	int		i;
 	char	**new;
@@ -36,6 +36,7 @@ static int	update_lvl(t_pers *pers)
 		return (1);
 	ft_freetab(pers->mini_env);
 	pers->mini_env = new;
+	exec->mini_env = new;
 	return (0);
 }
 
@@ -65,7 +66,7 @@ int	is_a_builtin(t_cmd *cmd)
 	return (ft_freetab(builtarr), -1);
 }
 
-int	exec_builtin(t_exec *exec, t_child *child, t_pers *pers)
+int	exec_builtin(t_exec *exec, t_child *child)
 {
 	int	i;
 
@@ -84,8 +85,6 @@ int	exec_builtin(t_exec *exec, t_child *child, t_pers *pers)
 		exec_env_c(exec, child);
 	else if (i == 6)
 		exec_exit_c(exec, child);
-	else if (i == 7)
-		update_lvl(pers);
 	return (0);
 }
 
@@ -122,6 +121,6 @@ int	exec_builtin_parent(t_exec *exec, t_pers *pers)
 	else if (i == 6)
 		exec_exit_parent(exec, pers);
 	else if (i == 7)
-		update_lvl(pers);
+		update_lvl(exec, pers);
 	return (pers->status_code);
 }

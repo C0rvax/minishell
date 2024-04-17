@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 15:21:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/17 16:45:55 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:14:23 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_str_fd(char *s1, char *s2, char *s3, int fd);
 
 /*------- MAIN -------*/
 int		is_a_builtin(t_cmd *cmd);
-int		exec_builtin(t_exec *exec, t_child *child, t_pers *pers);
+int		exec_builtin(t_exec *exec, t_child *child);
 int		exec_builtin_parent(t_exec *exec, t_pers *pers);
 
 /*------- UTILS -------*/
