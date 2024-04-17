@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 17:08:24 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:53:54 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	exec(t_cmd *cmd, t_pers *pers)
 	{
 		if (create_pipes(&exec, exec.total_cmd) != 0)
 			return (1);
-		if (ft_fork(&exec, pers) != 0)
+		if (ft_fork(&exec) != 0)
 			return (1);
 		pers->status_code = clean_end(&exec, pers);
 	}

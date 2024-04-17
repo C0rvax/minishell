@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 10:55:45 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 16:44:57 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:52:45 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			exec(t_cmd *cmd, t_pers *pers);
 
 // exec_multiple_cmd.c
 int			create_pipes(t_exec *exec, int total_cmd);
-int			ft_fork(t_exec *exec, t_pers *pers);
+int			ft_fork(t_exec *exec);
 
 // manage_fds.c
 void		close_higher_fds(t_exec *exec);

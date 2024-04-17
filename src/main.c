@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/17 13:15:05 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:38:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	main_loop(t_pers *pers)
 	}
 }
 
-static int	init_env(t_pers *pers)
+static int	init_empty_env(t_pers *pers)
 {
 	char	*argv[4];
 	char	**new;
@@ -86,6 +86,29 @@ static int	init_env(t_pers *pers)
 	ft_freetab(pers->mini_env);
 	pers->mini_env = new;
 	return (free(argv[0]), free(argv[1]), free(argv[2]), 0);
+}
+
+static int	init_env(t_pers *pers)
+{
+	char	*argv[2];
+	char	**new;
+
+	if (!pers->mini_env || !pers->mini_env[0])
+	{
+		if (init_empty_env(pers))
+			return (1);
+	}
+	else
+	{
+		argv[0] = "_=/usr/bin/env";
+		argv[1] = NULL;
+		new = ft_joinarr(argv, pers->mini_env);
+		if (!new)
+			return (1);
+		ft_freetab(pers->mini_env);
+		pers->mini_env = new;
+	}
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
