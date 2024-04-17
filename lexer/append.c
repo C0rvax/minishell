@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:11:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/17 15:52:16 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:54:12 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static int	append_new(char **read, t_pers *pers)
 
 int	append_new_read(char **read, t_pers *pers)
 {
+	int len;
+	
 	if (search_errors(*read))
 	{
 		pers->status_code = 2;
