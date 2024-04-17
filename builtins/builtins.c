@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:56:24 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,18 @@ int	exec_builtin_parent(t_exec *exec, t_pers *pers)
 
 	i = is_a_builtin(exec->cmd);
 	if (i == 0)
-		g_status = exec_echo(exec);
+		pers->status_code = exec_echo(exec);
 	else if (i == 1)
-		g_status = exec_cd(exec, pers);
+		pers->status_code = exec_cd(exec, pers);
 	else if (i == 2)
-		g_status = exec_pwd(exec);
+		pers->status_code = exec_pwd(exec);
 	else if (i == 3)
-		g_status = exec_export(exec, pers);
+		pers->status_code = exec_export(exec, pers);
 	else if (i == 4)
-		g_status = exec_unset(exec, pers);
+		pers->status_code = exec_unset(exec, pers);
 	else if (i == 5)
-		g_status = exec_env(exec);
+		pers->status_code = exec_env(exec);
 	else if (i == 6)
 		exec_exit_parent(exec, pers);
-	return (g_status);
+	return (pers->status_code);
 }

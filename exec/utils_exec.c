@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:16:25 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 11:35:19 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:50:03 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void	get_status(int status, t_pers *pers)
 			pers->status_code = status;
 		else
 			pers->status_code = status + 128;
+		g_status = 0;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 15:43:20 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:37:23 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,9 @@ void		ft_redir_listadd_back(t_redirect **list, t_redirect *new);
 /*------- SIGNALS -------*/
 void		signals(int sig);
 void		handle_sigint_read(int sig);
+
+/*------- SIGNALS -------*/
+void		handle_sigquit(int sig);
+void		handle_sigquit_several(int sig);
 
 #endif
