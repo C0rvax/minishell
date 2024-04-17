@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:57:43 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:08:28 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,21 @@ void	parse_env_array(t_pers *pers, char **env)
 	while (env[i])
 		i++;
 	tab = malloc(sizeof(char *) * (i + 1));
-	tab[i] = NULL;
+	if (!tab)
+		return ;
 	i = 0;
 	while (env[i])
 	{
 		tab[i] = ft_strdup(env[i]);
+		if (!tab[i])
+		{
+			ft_freetab(tab);
+			tab = NULL;
+			return ;
+		}
 		i++;
 	}
+	tab[i] = NULL;
 	pers->mini_env = tab;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:11:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 16:34:14 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 12:38:42 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	append_new(char **read, t_pers *pers)
 		return (add_history(cpy), free(cpy), msg_lex(MALLOC, 0, ""), 1);
 	free(cpy);
 	if (search_errors(*read))
-		return (add_history(*read), free(*read), 1);
+		return (add_history(*read), free(*read), 2);
 	return (0);
 }
 
@@ -69,14 +69,16 @@ int	append_new_read(char **read, t_pers *pers)
 	int		len;
 
 	if (search_errors(*read))
+	{
+		pers->status_code = 2;
 		return (add_history(*read), free(*read), 1);
+	}
 	len = ft_strlen(read[0]);
 	while (len > 0 && last_ispipe(*read))
 	{
-		if (append_new(read, pers))
+		pers->status_code = append_new(read, pers);
+		if (pers->status_code)
 			return (1);
-		// len = ft_strlen(read[0]);
-		// ft_printf("lem=%d\n", len);
 	}
 	return (0);
 }

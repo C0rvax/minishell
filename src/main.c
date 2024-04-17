@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:17:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 17:45:11 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:15:05 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "builtin.h"
 #include "lexer.h"
 #include "file_checks.h"
 #include "exec.h"
@@ -52,11 +53,39 @@ static void	main_loop(t_pers *pers)
 	if (read[0] != '\0')
 	{
 		cmd = parse_read(read, pers);
-		if (!cmd && pers->status_code != 130)
+		if (!cmd && pers->status_code != 130 && pers->status_code != 2)
 			pers->status_code = 1;
 		if (cmd && !error_checks(cmd, pers->mini_env, pers))
 			pers->status_code = exec(cmd, pers);
 	}
+}
+
+static int	init_env(t_pers *pers)
+{
+	char	*argv[4];
+	char	**new;
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (1);
+	argv[0] = ft_strjoin("PWD=", pwd);
+	free(pwd);
+	if (!argv[0])
+		return (1);
+	argv[1] = ft_strdup("SHLVL=1");
+	if (!argv[1])
+		return (free(argv[0]), 1);
+	argv[2] = ft_strdup("_=/usr/bin/env");
+	if (!argv[2])
+		return (free(argv[0]), free(argv[1]), 1);
+	argv[3] = NULL;
+	new = ft_joinarr(argv, pers->mini_env);
+	if (!new)
+		return (free(argv[0]), free(argv[1]), free(argv[2]), 1);
+	ft_freetab(pers->mini_env);
+	pers->mini_env = new;
+	return (free(argv[0]), free(argv[1]), free(argv[2]), 0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -70,6 +99,11 @@ int	main(int ac, char **av, char **env)
 	parse_env_array(&persistent, env);
 	if (!persistent.mini_env)
 		return (ft_putstr_fd("minishell: Cannot allocate memory\n", 2), 1);
+	if (init_env(&persistent))
+	{
+		ft_freetab(persistent.mini_env);
+		return (ft_putstr_fd("minishell: Cannot allocate memory\n", 2), 1);
+	}
 	while (1)
 		main_loop(&persistent);
 	ft_freetab(persistent.mini_env);
