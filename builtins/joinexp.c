@@ -6,11 +6,30 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:27:51 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 12:40:30 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:32:03 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+static int	is_inarg2(char **argv, char *str)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (argv[i])
+	{
+		if (!ft_strcmp(str, argv[i]))
+			count++;
+		i++;
+	}
+	if (count > 1)
+		return (1);
+	else
+		return (0);
+}
 
 static int	is_inenv2(char *str, char **env)
 {
@@ -67,7 +86,7 @@ static int	lenarr_exp(char **argv, char **env)
 		while (argv[i])
 		{
 			if (!ft_strchr(argv[i], '=') && !is_inenv2(argv[i], env)
-				&& !arg_isok(argv[i]))
+				&& !is_inarg2(&argv[i], argv[i]) && !arg_isok(argv[i]))
 				res++;
 			i++;
 		}
@@ -92,7 +111,7 @@ char	**ft_joinexp(char **argv, char **env)
 	{
 		if (!ft_strchr(argv[j], '=') && arg_isok(argv[j]))
 			msg_built(EXPORT, argv[j], 1);
-		else if (!ft_strchr(argv[j], '='))
+		else if (!ft_strchr(argv[j], '=') && !is_inarg2(&argv[j], argv[j]))
 		{
 			new[i++] = ft_strdup(argv[j]);
 			if (!new[i - 1])

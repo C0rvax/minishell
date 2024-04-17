@@ -6,11 +6,28 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:10:00 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 12:58:36 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:23:53 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+
+int	no_loop(char *str, int i)
+{
+	int	j;
+
+	j = i;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			if (!ft_strncmp(str, &str[i + 1], j - 1))
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	arg_isok(char *str)
 {
@@ -24,6 +41,11 @@ int	arg_isok(char *str)
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (1);
 		i++;
+	}
+	if (str && str[i] == '=')
+	{
+		if (no_loop(str, i))
+			return (1);
 	}
 	return (0);
 }
