@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:05:34 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/17 15:37:23 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:25:20 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ typedef struct s_pers
 /*------- GLOBAL -------*/
 extern int	g_status;
 
+/*------- INIT -------*/
+int			init_env(t_pers *pers);
+
 /*------- UTILS -------*/
 char		*ft_getenv(char **env, char *str);
 char		*get_prompt(char **env);
@@ -101,11 +104,9 @@ t_redirect	*ft_redir_listlast(t_redirect *list);
 void		ft_redir_listadd_back(t_redirect **list, t_redirect *new);
 
 /*------- SIGNALS -------*/
-void		signals(int sig);
-void		handle_sigint_read(int sig);
-
-/*------- SIGNALS -------*/
 void		handle_sigquit(int sig);
 void		handle_sigquit_several(int sig);
+void		signals(int sig);
+void		handle_sigint_read(int sig);
 
 #endif

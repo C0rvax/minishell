@@ -6,39 +6,11 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 17:30:18 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/18 11:15:10 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-static int	update_lvl(t_exec *exec, t_pers *pers)
-{
-	int		i;
-	char	**new;
-	char	*argv[2];
-	char	*lvl;
-
-
-	i = ft_atoi(ft_getenv(pers->mini_env, "SHLVL"));
-	i++;
-	lvl = ft_itoa(i);
-	if (!lvl)
-		return (1);
-	argv[0] = ft_strjoin("SHLVL=", lvl);
-	free(lvl);
-	if (!argv[0])
-		return (1);
-	argv[1] = NULL;
-	new = ft_joinarr(argv, pers->mini_env);
-	free(argv[0]);
-	if (!new)
-		return (1);
-	ft_freetab(pers->mini_env);
-	pers->mini_env = new;
-	exec->mini_env = new;
-	return (0);
-}
 
 int	is_a_builtin(t_cmd *cmd)
 {
@@ -46,12 +18,8 @@ int	is_a_builtin(t_cmd *cmd)
 	char	*str;
 	char	**builtarr;
 	int		i;
-	int		size;
 
-	size = ft_strlen(cmd->argv[0]);
 	str = cmd->argv[0];
-	if (size - 11 >= 0 && !ft_strcmp(&str[size - 11], "./minishell"))
-		return (7);
 	i = 0;
 	builtstr = "echo;cd;pwd;export;unset;env;exit";
 	builtarr = ft_split(builtstr, ';');
@@ -120,7 +88,5 @@ int	exec_builtin_parent(t_exec *exec, t_pers *pers)
 		pers->status_code = exec_env(exec);
 	else if (i == 6)
 		exec_exit_parent(exec, pers);
-	else if (i == 7)
-		update_lvl(exec, pers);
 	return (pers->status_code);
 }

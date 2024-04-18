@@ -23,7 +23,7 @@ ERRORS		= $(addprefix ./file_checks/, checker.c infile_checks.c 		\
 			  utils_checks.c)
 
 MAIN		= $(addprefix ./src/, main.c list_cmd.c list_redirect.c			\
-			  list_read.c prompt.c utils.c signals.c signals2.c)
+			  list_read.c prompt.c utils.c signals.c signals2.c init_env.c)
 
 SRC			= $(LEX) $(MAIN) $(ERRORS) $(EXEC) $(BUILTINS) $(GNL)
 
