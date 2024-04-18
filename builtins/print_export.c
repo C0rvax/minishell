@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 13:58:49 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 13:59:37 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:52:38 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,27 @@ static void	sort_alpharr(char **export, int len)
 	}
 }
 
-static char	**get_export(t_pers *pers)
+static char	**get_export(t_exec *exec)
 {
 	char	**export;
 	int		len;
 	int		i;
 	int		j;
 
-	len = ft_lenarr(pers->mini_env, pers->export);
+	len = ft_lenarr(exec->mini_env, exec->export);
 	export = malloc(sizeof(char *) * (len + 1));
 	if (!export)
 		return (NULL);
 	i = 0;
-	while (pers->mini_env && pers->mini_env[i])
+	while (exec->mini_env && exec->mini_env[i])
 	{
-		export[i] = pers->mini_env[i];
+		export[i] = exec->mini_env[i];
 		i++;
 	}
 	j = 0;
-	while (pers->export && pers->export[j])
+	while (exec->export && exec->export[j])
 	{
-		export[i + j] = pers->export[j];
+		export[i + j] = exec->export[j];
 		j++;
 	}
 	export[i + j] = NULL;
@@ -89,17 +89,20 @@ static int	ft_putexport_fd(char *str, int fd)
 	return (i);
 }
 
-int	print_export(t_exec *exec, t_pers *pers)
+int	print_export(t_exec *exec, int mode)
 {
 	int		i;
 	int		fd;
 	char	**export;
 
 	i = 0;
-	fd = redirect_out(exec);
+	if (mode == 1)
+		fd = redirect_out(exec);
+	else
+		fd = 1;
 	if (fd < 0)
 		return (clear_one(exec, msg_built(FD, exec->cmd->argv[1], 1)));
-	export = get_export(pers);
+	export = get_export(exec);
 	if (!export)
 		return (clear_one(exec, msg_built(BMALLOC, strerror(errno), 1)));
 	while (export[i])

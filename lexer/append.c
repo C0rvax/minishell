@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:11:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/17 15:54:12 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:50:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	append_new_read(char **read, t_pers *pers)
 	if (search_errors(*read))
 	{
 		pers->status_code = 2;
+		g_status = 0;
 		return (add_history(*read), free(*read), 1);
 	}
 	len = ft_strlen(read[0]);
@@ -78,7 +79,10 @@ int	append_new_read(char **read, t_pers *pers)
 	{
 		pers->status_code = append_new(read, pers);
 		if (pers->status_code)
+		{
+			g_status = 0;
 			return (1);
+		}
 	}
 	return (0);
 }

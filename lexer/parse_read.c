@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 16:23:28 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 17:01:34 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:10:09 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ t_cmd	*parse_read(char *read, t_pers *pers)
 	if (create_cmd_list(&parse))
 		return (ft_listclear(&parse.lexer), ft_cmd_lstclear(&parse.cmd), NULL);
 	ft_listclear(&parse.lexer);
+	if (parse.cmd == NULL)
+		pers->status_code = -1;
 	return (parse.cmd);
 }

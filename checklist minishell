@@ -36,12 +36,12 @@ ctruchot@bess-f4r1s10:~$ echo "+2 | cat 2
 > ^C
 
 
-echo bonjour ; |
-echo bonjour | |
+echo bonbonbon ; |
+echo bonbonbon | |
 NOK ---- |
-echo bonjour |;
-echo bonjour ; ls
-echo bonjour > test\ 1
+echo bonbonbon |;
+echo bonbonbon ; ls
+echo bonbonbon > test\ 1
 cd $HOME/Documents
 echo "\s" & echo "\s"
 // ok echo > 
@@ -51,18 +51,18 @@ unset var1 # with undefined var1
 ?????  export "" et unset ""
 echo test > file test1
 $
-not_cmd bonjour > salut
+not_cmd bonbonbon > salut
 env puis export puis env # vars aren't sorted
 cat Makefile | grep pr | head -n 5 | cd test (mybin) # check status code
 cat Makefile | grep pr | head -n 5 | cat test (bin) # check status code
 cat Makefile | grep pr | head -n 5 | hello (NA) # check status code
-echo bonjour >>> test
-echo bonjour > > out
+echo bonbonbon >>> test
+echo bonbonbon > > out
 echo 2 >> out1 > out2
 echo 2 > out1 >> out2
 ??? cat < test # with non-existent test
 export var; export var=test
-echo bonjour > $test # with test not defined
+echo bonbonbon > $test # with test not defined
 file_name_in_current_dir
 cd ../../../../../.. ; pwd
 ctrl-C . 130 sur bin(ex : sleep 10)&line vide
@@ -74,10 +74,10 @@ NOK ---- export var ="cat Makefile | grep >"
 export "test=ici"=coucou
 c$var Makefile # with var=at
 $LESS$VAR
-/bin/echo bonjour
+/bin/echo bonbonbon
 not_cmd
 sleep 5 | exit
-echo bonjour > $test w/ t
+echo bonbonbon > $test w/ t
 "exit retour a la ligne"
 minishell # binary not in path without "./" before
 cat diufosgid # check exit code

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:33:18 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/16 16:14:27 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:52:29 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	exec_export(t_exec *exec, t_pers *pers)
 	argv = exec->cmd->argv;
 	if (!argv[1])
 	{
-		if (print_export(exec, pers))
+		if (print_export(exec, 1))
 			return (1);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/18 11:15:10 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:52:55 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	exec_builtin(t_exec *exec, t_child *child)
 		clear_built(exec, child, 0);
 	else if (i == 2)
 		exec_pwd_c(exec, child);
+	else if (i == 3 && !child->current_cmd->argv[1])
+		print_export(exec, 2);
 	else if (i == 3)
 		clear_built(exec, child, 0);
 	else if (i == 4)
