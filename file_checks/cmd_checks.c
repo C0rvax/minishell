@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 17:40:43 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:52:04 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	get_cmd_path(t_cmd *cmd, char **env, t_pers *pers, int total_cmd)
 	{
 		if (cmd->path_cmd == NULL)
 		{
-			if (kill_child(cmd, 0, pers, total_cmd) != 0)
+			if (kill_child(cmd, 127, pers, total_cmd) != 0)
 				return (1);
 			return (0);
 		}
