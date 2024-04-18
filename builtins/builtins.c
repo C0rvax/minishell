@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:48:49 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/18 14:52:55 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:14:15 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	exec_builtin(t_exec *exec, t_child *child)
 		clear_built(exec, child, 0);
 	else if (i == 5)
 		exec_env_c(exec, child);
-	else if (i == 6)
+	else if (i == 5)
 		exec_exit_c(exec, child);
 	return (0);
 }

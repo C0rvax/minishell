@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   append.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:11:39 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/18 14:50:29 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:14:20 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	exit_parse(t_pers *pers, char *read)
 	ft_freetab(pers->mini_env);
 	ft_freetab(pers->export);
 	rl_clear_history();
-	exit (2);
+	exit(2);
 }
 
 static int	last_ispipe(char *str)
@@ -66,8 +66,8 @@ static int	append_new(char **read, t_pers *pers)
 
 int	append_new_read(char **read, t_pers *pers)
 {
-	int len;
-	
+	int	len;
+
 	if (search_errors(*read))
 	{
 		pers->status_code = 2;
