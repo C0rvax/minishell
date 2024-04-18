@@ -6,7 +6,7 @@
 /*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 12:11:06 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 17:40:43 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:51:09 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,17 @@ int	is_directory(t_cmd *cmd, t_pers *pers, int total_cmd)
 	if (fd > 0)
 	{
 		close(fd);
+		if (ft_strcmp(cmd->argv[0], ".") == 0)
+		{
+			print_str_fd("minishell: .: filename argument required\n",
+				NULL, NULL, 2);
+			print_str_fd(".: usage: . filename [arguments]\n", NULL, NULL, 2);
+			if (kill_child(cmd, 2, pers, total_cmd) != 0)
+				return (1);
+			return (2);
+		}
 		print_str_fd("minishell: ", cmd->argv[0], ": Is a directory\n", 2);
-		if (kill_child(cmd, 126, pers, total_cmd) == 0)
+		if (kill_child(cmd, 126, pers, total_cmd) != 0)
 			return (1);
 		return (2);
 	}
@@ -104,7 +113,7 @@ int	get_cmd_path(t_cmd *cmd, char **env, t_pers *pers, int total_cmd)
 	{
 		if (cmd->path_cmd == NULL)
 		{
-			if (kill_child(cmd, 0, pers, total_cmd) != 0)
+			if (kill_child(cmd, 127, pers, total_cmd) != 0)
 				return (1);
 			return (0);
 		}

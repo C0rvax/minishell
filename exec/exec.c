@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 10:52:09 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 17:53:54 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:23:11 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,11 @@
 #include "file_checks.h"
 #include "minishell.h"
 
-int	initialize_child(t_child *child, t_exec *exec)
-{
-	int	i;
-
-	i = 0;
-	ft_bzero(child, sizeof(t_child));
-	child->cmdno = exec->cmdno;
-	child->current_cmd = exec->cmd;
-	if (child->cmdno > 0 && child->cmdno < exec->total_cmd)
-	{
-		while (i < child->cmdno)
-		{
-			child->current_cmd = child->current_cmd->next;
-			i++;
-		}
-	}
-	return (0);
-}
-
-static int	manage_fds(t_cmd *cmd)
+static int	manage_fds_in(t_cmd *cmd)
 {
 	int	fdin;
-	int	fdout;
 
 	fdin = 0;
-	fdout = 0;
 	if (cmd->in != NULL)
 	{
 		fdin = open(cmd->in->path, O_RDONLY);
@@ -50,9 +29,20 @@ static int	manage_fds(t_cmd *cmd)
 			return (ft_putstr_fd(strerror(errno), 2), 1);
 		close(fdin);
 	}
+	return (0);
+}
+
+static int	manage_fds_out(t_cmd *cmd)
+{
+	int	fdout;
+
+	fdout = 0;
 	if (cmd->out != NULL)
 	{
-		fdout = open(cmd->out->path, O_WRONLY);
+		if (cmd->out->mode == SIMPLE)
+			fdout = open(cmd->out->path, O_WRONLY | O_TRUNC);
+		else if (cmd->out->mode == DOUBLE)
+			fdout = open(cmd->out->path, O_WRONLY | O_APPEND);
 		if (fdout < 0)
 			return (ft_putstr_fd(strerror(errno), 2), 1);
 		if (dup2(fdout, STDOUT_FILENO) == -1)
@@ -76,7 +66,7 @@ static int	exec_uno(t_exec *exec, t_pers *pers)
 		return (ft_putstr_fd(strerror(errno), 2), 1);
 	if (exec->pid[0] == 0)
 	{
-		if (manage_fds(exec->cmd) != 0)
+		if (manage_fds_in(exec->cmd) != 0 || manage_fds_out(exec->cmd) != 0)
 			return (1);
 		if (execve(path_cmd, exec->cmd->argv, exec->mini_env) == -1)
 			return (1);

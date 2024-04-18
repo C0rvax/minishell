@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_multiple_cmd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 18:22:00 by ctruchot          #+#    #+#             */
-/*   Updated: 2024/04/17 17:40:30 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:23:41 by ctruchot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,25 @@
 #include "minishell.h" // garder tous ces headers?
 #include "builtin.h"
 #include "file_checks.h"
+
+int	initialize_child(t_child *child, t_exec *exec)
+{
+	int	i;
+
+	i = 0;
+	ft_bzero(child, sizeof(t_child));
+	child->cmdno = exec->cmdno;
+	child->current_cmd = exec->cmd;
+	if (child->cmdno > 0 && child->cmdno < exec->total_cmd)
+	{
+		while (i < child->cmdno)
+		{
+			child->current_cmd = child->current_cmd->next;
+			i++;
+		}
+	}
+	return (0);
+}
 
 static int	redirect(t_exec *exec, t_child *child)
 {
