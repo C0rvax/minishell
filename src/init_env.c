@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:19:12 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/18 11:48:39 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:15:23 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	update_lvl(t_pers *pers)
 	char	**new;
 	char	*argv[3];
 	char	*lvl;
-
 
 	i = get_lvl(pers->mini_env);
 	lvl = ft_itoa(i);
