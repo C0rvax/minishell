@@ -6,7 +6,7 @@
 /*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 00:08:43 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/03/13 00:24:08 by aduvilla         ###   ########.fr       */
+/*   Updated: 2024/04/18 16:23:41 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	delete_char(t_lst *list, char c, int *index)
 	i = 0;
 	count = 0;
 	cpy = list->str;
-	list->str = malloc(sizeof(char) * (ft_strlen(list->str) - 1));
+	list->str = malloc(sizeof(char) * (ft_strlen(cpy) - 1));
 	if (!list->str)
 		return (msg_lex(MALLOC, 0, ""), 1);
 	while (cpy[i + count])
@@ -62,7 +62,7 @@ int	delete_quotes(t_lst **list)
 				status_code2 = delete_char(buf, 34, &i);
 			if (status_code1 || status_code2)
 				return (1);
-			if (buf->str[i] && buf->str[i] != 39)
+			if (buf->str[i] && buf->str[i] != 39 && buf->str[i] != 34)
 				i++;
 		}
 		buf = buf->next;
