@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ctruchot <ctruchot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aduvilla <aduvilla@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 19:40:29 by aduvilla          #+#    #+#             */
-/*   Updated: 2024/04/15 14:42:21 by ctruchot         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:41:53 by aduvilla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,11 @@ void	exec_exit_parent(t_exec *exec, t_pers *pers)
 	ft_printf("exit\n");
 	if (exec->cmd->argv[1])
 	{
-		if (exec->cmd->argv[2])
-			final_exit(exec, pers, msg_built(ARGS, "exit", 1));
+		if (exec->cmd->argv[2] && str_isdigit(exec->cmd->argv[1]))
+		{
+			msg_built(ARGS, "exit", 1);
+			return ;
+		}
 		else if (str_isdigit(exec->cmd->argv[1]))
 			final_exit(exec, pers, ft_atoi(exec->cmd->argv[1]));
 		else
