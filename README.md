@@ -109,5 +109,5 @@ minishell$ exit
 
 This project was developed by:
 
-*   **C. Truchot** ([C0rvax](https://github.com/C0rvax))
-*   **A. Duvilla** ([aduvilla](https://github.com/aduvilla-s))
+*   **C. Truchot** ([Camille] (https://github.com/CamilleT123))
+*   **A. Duvillaret** ([C0rvax](https://github.com/C0rvax))
