@@ -94,7 +94,8 @@ minishell$ ls -l | grep ".txt"
 minishell$ export MESSAGE="Minishell is working"
 minishell$ echo $MESSAGE
 Minishell is working
-minishell$ exit```
+minishell$ exit
+```
 
 ## 💻 Technologies Used
 
