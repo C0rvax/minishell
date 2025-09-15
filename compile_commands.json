@@ -1,0 +1,770 @@
+[
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/lexer.c",
+   "-o",
+   "lexer/lexer.o"
+  ],
+  "file": "lexer/lexer.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/list.c",
+   "-o",
+   "lexer/list.o"
+  ],
+  "file": "lexer/list.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/lex_utils.c",
+   "-o",
+   "lexer/lex_utils.o"
+  ],
+  "file": "lexer/lex_utils.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/parse_read.c",
+   "-o",
+   "lexer/parse_read.o"
+  ],
+  "file": "lexer/parse_read.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/replace_argument.c",
+   "-o",
+   "lexer/replace_argument.o"
+  ],
+  "file": "lexer/replace_argument.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/delete_quotes.c",
+   "-o",
+   "lexer/delete_quotes.o"
+  ],
+  "file": "lexer/delete_quotes.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/create_cmd_list.c",
+   "-o",
+   "lexer/create_cmd_list.o"
+  ],
+  "file": "lexer/create_cmd_list.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/search_errors.c",
+   "-o",
+   "lexer/search_errors.o"
+  ],
+  "file": "lexer/search_errors.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/create_parsarray.c",
+   "-o",
+   "lexer/create_parsarray.o"
+  ],
+  "file": "lexer/create_parsarray.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/append.c",
+   "-o",
+   "lexer/append.o"
+  ],
+  "file": "lexer/append.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "lexer/replace_home.c",
+   "-o",
+   "lexer/replace_home.o"
+  ],
+  "file": "lexer/replace_home.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "src/main.c",
+   "-o",
+   "src/main.o"
+  ],
+  "file": "src/main.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "src/list_cmd.c",
+   "-o",
+   "src/list_cmd.o"
+  ],
+  "file": "src/list_cmd.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "src/list_redirect.c",
+   "-o",
+   "src/list_redirect.o"
+  ],
+  "file": "src/list_redirect.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "src/list_read.c",
+   "-o",
+   "src/list_read.o"
+  ],
+  "file": "src/list_read.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "src/prompt.c",
+   "-o",
+   "src/prompt.o"
+  ],
+  "file": "src/prompt.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "src/utils.c",
+   "-o",
+   "src/utils.o"
+  ],
+  "file": "src/utils.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "src/signals.c",
+   "-o",
+   "src/signals.o"
+  ],
+  "file": "src/signals.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "src/signals2.c",
+   "-o",
+   "src/signals2.o"
+  ],
+  "file": "src/signals2.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "src/init_env.c",
+   "-o",
+   "src/init_env.o"
+  ],
+  "file": "src/init_env.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "file_checks/checker.c",
+   "-o",
+   "file_checks/checker.o"
+  ],
+  "file": "file_checks/checker.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "file_checks/infile_checks.c",
+   "-o",
+   "file_checks/infile_checks.o"
+  ],
+  "file": "file_checks/infile_checks.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "file_checks/outfile_checks.c",
+   "-o",
+   "file_checks/outfile_checks.o"
+  ],
+  "file": "file_checks/outfile_checks.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "file_checks/cmd_checks.c",
+   "-o",
+   "file_checks/cmd_checks.o"
+  ],
+  "file": "file_checks/cmd_checks.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "file_checks/cmd_checks2.c",
+   "-o",
+   "file_checks/cmd_checks2.o"
+  ],
+  "file": "file_checks/cmd_checks2.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "file_checks/here_doc.c",
+   "-o",
+   "file_checks/here_doc.o"
+  ],
+  "file": "file_checks/here_doc.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "file_checks/utils_checks.c",
+   "-o",
+   "file_checks/utils_checks.o"
+  ],
+  "file": "file_checks/utils_checks.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "exec/exec.c",
+   "-o",
+   "exec/exec.o"
+  ],
+  "file": "exec/exec.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "exec/exec_multiple_cmd.c",
+   "-o",
+   "exec/exec_multiple_cmd.o"
+  ],
+  "file": "exec/exec_multiple_cmd.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "exec/manage_fds.c",
+   "-o",
+   "exec/manage_fds.o"
+  ],
+  "file": "exec/manage_fds.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "exec/clean.c",
+   "-o",
+   "exec/clean.o"
+  ],
+  "file": "exec/clean.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "exec/utils_exec.c",
+   "-o",
+   "exec/utils_exec.o"
+  ],
+  "file": "exec/utils_exec.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/builtins.c",
+   "-o",
+   "builtins/builtins.o"
+  ],
+  "file": "builtins/builtins.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/clearing.c",
+   "-o",
+   "builtins/clearing.o"
+  ],
+  "file": "builtins/clearing.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/echo.c",
+   "-o",
+   "builtins/echo.o"
+  ],
+  "file": "builtins/echo.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/env_exit.c",
+   "-o",
+   "builtins/env_exit.o"
+  ],
+  "file": "builtins/env_exit.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/pwd.c",
+   "-o",
+   "builtins/pwd.o"
+  ],
+  "file": "builtins/pwd.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/export.c",
+   "-o",
+   "builtins/export.o"
+  ],
+  "file": "builtins/export.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/unset.c",
+   "-o",
+   "builtins/unset.o"
+  ],
+  "file": "builtins/unset.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/cd.c",
+   "-o",
+   "builtins/cd.o"
+  ],
+  "file": "builtins/cd.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/utils.c",
+   "-o",
+   "builtins/utils.o"
+  ],
+  "file": "builtins/utils.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/unset_exp.c",
+   "-o",
+   "builtins/unset_exp.o"
+  ],
+  "file": "builtins/unset_exp.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/joinexp.c",
+   "-o",
+   "builtins/joinexp.o"
+  ],
+  "file": "builtins/joinexp.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/joinarr.c",
+   "-o",
+   "builtins/joinarr.o"
+  ],
+  "file": "builtins/joinarr.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "builtins/print_export.c",
+   "-o",
+   "builtins/print_export.o"
+  ],
+  "file": "builtins/print_export.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "GNL/get_next_line.c",
+   "-o",
+   "GNL/get_next_line.o"
+  ],
+  "file": "GNL/get_next_line.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "GNL/get_next_line_utils.c",
+   "-o",
+   "GNL/get_next_line_utils.o"
+  ],
+  "file": "GNL/get_next_line_utils.c"
+ },
+ {
+  "directory": "/home/c0rvax/Code/minishell",
+  "arguments": [
+   "cc",
+   "-Wextra",
+   "-Wall",
+   "-Werror",
+   "-g",
+   "-I./include",
+   "-c",
+   "GNL/Prompted_gnl.c",
+   "-o",
+   "GNL/Prompted_gnl.o"
+  ],
+  "file": "GNL/Prompted_gnl.c"
+ }
+]

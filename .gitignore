@@ -1,3 +1,5 @@
 outfile*
 out*
 !outfile_checks.c
+.cache
+.vscode
